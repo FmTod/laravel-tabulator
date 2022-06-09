@@ -2,9 +2,8 @@
 
 namespace FmTod\LaravelTabulator\Tests;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Orchestra\Testbench\TestCase as Orchestra;
 use FmTod\LaravelTabulator\LaravelTabulatorServiceProvider;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {

@@ -2,8 +2,6 @@
 
 namespace FmTod\LaravelTabulator\Concerns\Config;
 
-use FmTod\LaravelTabulator\Helpers\TabulatorConfig;
-
 trait PaginationConfig
 {
     /**

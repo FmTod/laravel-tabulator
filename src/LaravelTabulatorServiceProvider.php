@@ -2,9 +2,9 @@
 
 namespace FmTod\LaravelTabulator;
 
+use FmTod\LaravelTabulator\Commands\LaravelTabulatorMakeCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use FmTod\LaravelTabulator\Commands\LaravelTabulatorMakeCommand;
 
 class LaravelTabulatorServiceProvider extends PackageServiceProvider
 {

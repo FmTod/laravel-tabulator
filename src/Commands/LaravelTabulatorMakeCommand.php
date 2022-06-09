@@ -79,7 +79,7 @@ class LaravelTabulatorMakeCommand extends GeneratorCommand
 
         if (class_exists($model = $this->getModel())) {
             /** @var \Illuminate\Database\Eloquent\Model $newInstance */
-            $newModelInstance = new $model;
+            $newModelInstance = new $model();
             $columns = Schema::connection($newModelInstance->getConnectionName())
                 ->getColumnListing($newModelInstance->getTable());
 
@@ -104,7 +104,7 @@ class LaravelTabulatorMakeCommand extends GeneratorCommand
     protected function parseColumns(string|array $definition, int $indentation = 12): string
     {
         $columns = is_array($definition) ? $definition : explode(',', $definition);
-        $stub    = '';
+        $stub = '';
         foreach ($columns as $key => $column) {
             $stub .= "Column::make('{$column}'),";
 
@@ -162,7 +162,7 @@ class LaravelTabulatorMakeCommand extends GeneratorCommand
     {
         $model = explode('\\', $this->getModel());
         $model = array_pop($model);
-        $stub  = str_replace('{{ model }}', $model, $stub);
+        $stub = str_replace('{{ model }}', $model, $stub);
 
         return $this;
     }
@@ -174,9 +174,9 @@ class LaravelTabulatorMakeCommand extends GeneratorCommand
      */
     protected function getModel(): ?string
     {
-        $name           = $this->getNameInput();
-        $rootNamespace  = $this->laravel->getNamespace();
-        $model          = $this->option('model') === '' || $this->option('model-namespace');
+        $name = $this->getNameInput();
+        $rootNamespace = $this->laravel->getNamespace();
+        $model = $this->option('model') === '' || $this->option('model-namespace');
         $modelNamespace = $this->option('model-namespace') ?: trim(app()->getNamespace(), '\\') . '\\' . config('tabulator.namespaces.model');
 
         if ($this->option('model')) {
