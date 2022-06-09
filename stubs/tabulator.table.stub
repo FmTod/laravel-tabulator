@@ -1,0 +1,28 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ namespacedModel }};
+use FmTod\LaravelTabulator\TabulatorTable;
+use FmTod\LaravelTabulator\Helpers\Column;
+use FmTod\LaravelTabulator\Helpers\TabulatorConfig;
+
+class {{ class }} extends TabulatorTable
+{
+    protected function config(): TabulatorConfig
+    {
+        return TabulatorConfig::make();
+    }
+
+    protected function query(): Builder
+    {
+        return {{ model }}::query();
+    }
+
+    protected function columns(): array
+    {
+        return [
+            {{ columns }}
+        ];
+    }
+}
