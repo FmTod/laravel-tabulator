@@ -2,6 +2,9 @@
 
 namespace FmTod\LaravelTabulator\Concerns\Config;
 
+/**
+ * @codeCoverageIgnore
+ */
 trait RowGroupConfig
 {
     /**

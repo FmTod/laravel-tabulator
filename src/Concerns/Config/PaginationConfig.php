@@ -2,15 +2,18 @@
 
 namespace FmTod\LaravelTabulator\Concerns\Config;
 
+/**
+ * @codeCoverageIgnore
+ */
 trait PaginationConfig
 {
     /**
      * Enable pagination.
      *
-     * @param  string  $pagination
+     * @param string|bool $pagination
      * @return \FmTod\LaravelTabulator\Concerns\Config\PaginationConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
-    public function pagination(string $pagination): self
+    public function pagination(string|bool $pagination): self
     {
         $this->attributes['pagination'] = $pagination;
 

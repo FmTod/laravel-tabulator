@@ -15,7 +15,7 @@ it('can create basic table class', function () {
     expect(File::exists($tableClass))->toBeFalse();
 
     // Run the make command
-    artisan('make:tabulator UserTable');
+    artisan('make:tabulator User');
 
     // Assert a new file is created
     expect(File::exists($tableClass))->toBeTrue();
@@ -25,24 +25,25 @@ it('can create basic table class', function () {
     <?php
 
     namespace App\Tabulator;
-    
+
     use App\User;
+    use FmTod\LaravelTabulator\Facades\Tabulator;
     use FmTod\LaravelTabulator\Helpers\Column;
     use FmTod\LaravelTabulator\Helpers\TabulatorConfig;
     use FmTod\LaravelTabulator\TabulatorTable;
-    
+
     class UserTable extends TabulatorTable
     {
         protected function config(): TabulatorConfig
         {
-            return TabulatorConfig::make();
+            return Tabulator::config();
         }
-    
+
         protected function query(): Builder
         {
             return User::query();
         }
-    
+
         protected function columns(): array
         {
             return [
@@ -53,6 +54,7 @@ it('can create basic table class', function () {
             ];
         }
     }
+
     CLASS;
 
     expect(file_get_contents($tableClass))->toEqual($expectedContents);
@@ -70,7 +72,7 @@ it('can create table class with columns', function () {
     expect(File::exists($tableClass))->toBeFalse();
 
     // Run the make command
-    artisan('make:tabulator UserTable --columns=user,first,last,middle,email');
+    artisan('make:tabulator App/Tabulator/UserTable --columns=user,first,last,middle,email');
 
     // Assert a new file is created
     expect(File::exists($tableClass))->toBeTrue();
@@ -80,24 +82,25 @@ it('can create table class with columns', function () {
     <?php
 
     namespace App\Tabulator;
-    
+
     use App\User;
+    use FmTod\LaravelTabulator\Facades\Tabulator;
     use FmTod\LaravelTabulator\Helpers\Column;
     use FmTod\LaravelTabulator\Helpers\TabulatorConfig;
     use FmTod\LaravelTabulator\TabulatorTable;
-    
+
     class UserTable extends TabulatorTable
     {
         protected function config(): TabulatorConfig
         {
-            return TabulatorConfig::make();
+            return Tabulator::config();
         }
-    
+
         protected function query(): Builder
         {
             return User::query();
         }
-    
+
         protected function columns(): array
         {
             return [
@@ -109,6 +112,7 @@ it('can create table class with columns', function () {
             ];
         }
     }
+
     CLASS;
 
     expect(file_get_contents($tableClass))->toEqual($expectedContents);
@@ -116,7 +120,7 @@ it('can create table class with columns', function () {
 
 it('can create table class with model name', function () {
     // destination path of the Foo class
-    $tableClass = app_path('Tabulator/UserTable.php');
+    $tableClass = app_path('Tabulator/Test/UserTable.php');
 
     // make sure we're starting from a clean state
     if (File::exists($tableClass)) {
@@ -126,7 +130,7 @@ it('can create table class with model name', function () {
     expect(File::exists($tableClass))->toBeFalse();
 
     // Run the make command
-    artisan('make:tabulator UserTable --model=OtherUser');
+    artisan('make:tabulator Test/UserTable --model=OtherUser');
 
     // Assert a new file is created
     expect(File::exists($tableClass))->toBeTrue();
@@ -135,25 +139,26 @@ it('can create table class with model name', function () {
     $expectedContents = <<<CLASS
     <?php
 
-    namespace App\Tabulator;
-    
+    namespace App\Tabulator\Test;
+
+    use FmTod\LaravelTabulator\Facades\Tabulator;
     use FmTod\LaravelTabulator\Helpers\Column;
     use FmTod\LaravelTabulator\Helpers\TabulatorConfig;
     use FmTod\LaravelTabulator\TabulatorTable;
     use OtherUser;
-    
+
     class UserTable extends TabulatorTable
     {
         protected function config(): TabulatorConfig
         {
-            return TabulatorConfig::make();
+            return Tabulator::config();
         }
-    
+
         protected function query(): Builder
         {
             return OtherUser::query();
         }
-    
+
         protected function columns(): array
         {
             return [
@@ -164,6 +169,7 @@ it('can create table class with model name', function () {
             ];
         }
     }
+
     CLASS;
 
     expect(file_get_contents($tableClass))->toEqual($expectedContents);

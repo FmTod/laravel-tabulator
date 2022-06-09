@@ -153,6 +153,8 @@ use Illuminate\Support\Fluent;
  * @property array|null $rowClickMenu
  * @property array|null $groupContextMenu
  * @property array|null $groupClickMenu
+ *
+ * @codeCoverageIgnore
  */
 class TabulatorConfig extends Fluent
 {

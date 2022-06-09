@@ -31,6 +31,8 @@ use Illuminate\Support\Fluent;
  * @property string|null $headerFilterFunc
  * @property string|null $headerFilterPlaceholder
  * @property array|null $headerFilterParams
+ *
+ * @codeCoverageIgnore
  */
 class Column extends Fluent
 {

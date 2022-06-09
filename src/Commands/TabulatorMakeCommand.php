@@ -6,7 +6,7 @@ use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
-class LaravelTabulatorMakeCommand extends GeneratorCommand
+class TabulatorMakeCommand extends GeneratorCommand
 {
     /**
      * The name and signature of the console command.
@@ -126,12 +126,12 @@ class LaravelTabulatorMakeCommand extends GeneratorCommand
     {
         $rootNamespace = app()->getNamespace();
 
-        if (Str::startsWith($name, $rootNamespace)) {
-            return $name;
-        }
-
         if (Str::contains($name, '/')) {
             $name = str_replace('/', '\\', $name);
+        }
+
+        if (Str::startsWith($name, $rootNamespace)) {
+            return $name;
         }
 
         if (! Str::contains($name, 'table', true)) {
@@ -156,7 +156,7 @@ class LaravelTabulatorMakeCommand extends GeneratorCommand
      * Replace model name.
      *
      * @param  string  $stub
-     * @return \FmTod\LaravelTabulator\Commands\LaravelTabulatorMakeCommand
+     * @return \FmTod\LaravelTabulator\Commands\TabulatorMakeCommand
      */
     protected function replaceModel(string &$stub): static
     {
@@ -177,7 +177,7 @@ class LaravelTabulatorMakeCommand extends GeneratorCommand
         $name = $this->getNameInput();
         $rootNamespace = $this->laravel->getNamespace();
         $model = $this->option('model') === '' || $this->option('model-namespace');
-        $modelNamespace = $this->option('model-namespace') ?: trim(app()->getNamespace(), '\\') . '\\' . config('tabulator.namespaces.model');
+        $modelNamespace = $this->option('model-namespace') ?: config('tabulator.namespaces.model');
 
         if ($this->option('model')) {
             return $this->option('model');

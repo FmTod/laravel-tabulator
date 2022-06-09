@@ -2,7 +2,9 @@
 
 namespace FmTod\LaravelTabulator\Tests;
 
-use FmTod\LaravelTabulator\LaravelTabulatorServiceProvider;
+use FmTod\LaravelTabulator\TabulatorServiceProvider;
+use FmTod\LaravelTabulator\Tests\stubs\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
@@ -10,7 +12,7 @@ class TestCase extends Orchestra
     protected function getPackageProviders($app): array
     {
         return [
-            LaravelTabulatorServiceProvider::class,
+            TabulatorServiceProvider::class,
         ];
     }
 

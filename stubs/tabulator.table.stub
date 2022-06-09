@@ -3,15 +3,16 @@
 namespace {{ namespace }};
 
 use {{ namespacedModel }};
-use FmTod\LaravelTabulator\TabulatorTable;
+use FmTod\LaravelTabulator\Facades\Tabulator;
 use FmTod\LaravelTabulator\Helpers\Column;
 use FmTod\LaravelTabulator\Helpers\TabulatorConfig;
+use FmTod\LaravelTabulator\TabulatorTable;
 
 class {{ class }} extends TabulatorTable
 {
     protected function config(): TabulatorConfig
     {
-        return TabulatorConfig::make();
+        return Tabulator::config();
     }
 
     protected function query(): Builder

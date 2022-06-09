@@ -14,7 +14,7 @@ abstract class TabulatorTable
     use Macroable;
     use RenderableTable;
 
-    protected Request $request;
+    public Request $request;
 
     public function __construct(Request $request = null)
     {
