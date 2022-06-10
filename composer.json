@@ -60,7 +60,7 @@
     "extra": {
         "laravel": {
             "providers": [
-              "TabulatorServiceProvider"
+              "FmTod\\LaravelTabulator\\TabulatorServiceProvider"
             ],
             "aliases": {
                 "LaravelTabulator": "FmTod\\LaravelTabulator\\Facades\\Tabulator"
