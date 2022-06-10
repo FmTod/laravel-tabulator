@@ -1,17 +1,18 @@
 <?php
 
-use FmTod\LaravelTabulator\Tests\stubs\Controllers\UserController;
 use FmTod\LaravelTabulator\Tests\stubs\Models\User;
 use FmTod\LaravelTabulator\Tests\stubs\UserTable;
 use Illuminate\Support\Facades\Route;
+use function Pest\Laravel\getJson;
+use function Pest\Laravel\postJson;
 
 beforeEach(function () {
     $migration = include dirname(__DIR__) . '/stubs/Migrations/create_users_table.php';
     $migration->up();
 
-    User::factory()->count(10)->create();
+    $this->users = User::factory()->count(10)->create();
 
-    Route::get('users', [UserController::class, 'index'])->name('users.index');
+    Route::match(['GET', 'POST'], 'users', fn () => UserTable::view('welcome', ['extra' => 'extra']))->name('users.index');
 });
 
 it('returns html on browser request')
@@ -61,4 +62,13 @@ it('renders the given view', function () {
     $view = $response->original;
 
     expect($view)->getData()->toHaveKey(config('tabulator.variable'));
+});
+
+it('can apply query filters', function () {
+    $user = User::first();
+    $filters = [
+        ['field' => 'first_name', 'type' => 'like', 'value' => $user->first_name]
+    ];
+
+    postJson('/users', ['filters' => $filters])->assertJsonPath('data', [$user->toArray()]);
 });

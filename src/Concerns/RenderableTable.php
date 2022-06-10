@@ -19,6 +19,10 @@ trait RenderableTable
                 $config->ajaxURL($this->request->fullUrl());
             }
 
+            if (is_null($config->filterMode)) {
+                $config->filterMode('remote');
+            }
+
             if (is_null($config->columns)) {
                 $columns = collect($this->columns())->toArray();
 

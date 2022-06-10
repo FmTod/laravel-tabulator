@@ -2,10 +2,11 @@
 
 namespace FmTod\LaravelTabulator;
 
+use FmTod\LaravelTabulator\Concerns\HasFilters;
 use FmTod\LaravelTabulator\Concerns\RenderableTable;
 use FmTod\LaravelTabulator\Helpers\TabulatorConfig;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Traits\Macroable;
 
@@ -13,6 +14,7 @@ abstract class TabulatorTable
 {
     use Macroable;
     use RenderableTable;
+    use HasFilters;
 
     public Request $request;
 
@@ -29,6 +31,6 @@ abstract class TabulatorTable
 
     public function json(): LengthAwarePaginator
     {
-        return $this->query()->paginate();
+        return $this->queryWithFilters()->paginate();
     }
 }
