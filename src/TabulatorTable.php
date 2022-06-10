@@ -31,6 +31,8 @@ abstract class TabulatorTable
 
     public function json(): LengthAwarePaginator
     {
-        return $this->queryWithFilters()->paginate();
+        $pageSize = $this->request->input('size');
+
+        return $this->queryWithFilters()->paginate($pageSize);
     }
 }
