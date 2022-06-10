@@ -3,7 +3,6 @@
 use FmTod\LaravelTabulator\Tests\stubs\Models\User;
 use FmTod\LaravelTabulator\Tests\stubs\UserTable;
 use Illuminate\Support\Facades\Route;
-use function Pest\Laravel\getJson;
 use function Pest\Laravel\postJson;
 
 beforeEach(function () {
@@ -67,7 +66,7 @@ it('renders the given view', function () {
 it('can apply query filters', function () {
     $user = User::first();
     $filters = [
-        ['field' => 'first_name', 'type' => 'like', 'value' => $user->first_name]
+        ['field' => 'first_name', 'type' => 'like', 'value' => $user->first_name],
     ];
 
     postJson('/users', ['filters' => $filters])->assertJsonPath('data', [$user->toArray()]);
