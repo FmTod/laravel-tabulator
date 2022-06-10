@@ -31,6 +31,7 @@ it('can create basic table class', function () {
     use FmTod\LaravelTabulator\Helpers\Column;
     use FmTod\LaravelTabulator\Helpers\TabulatorConfig;
     use FmTod\LaravelTabulator\TabulatorTable;
+    use Illuminate\Contracts\Database\Eloquent\Builder;
 
     class UserTable extends TabulatorTable
     {
@@ -88,6 +89,7 @@ it('can create table class with columns', function () {
     use FmTod\LaravelTabulator\Helpers\Column;
     use FmTod\LaravelTabulator\Helpers\TabulatorConfig;
     use FmTod\LaravelTabulator\TabulatorTable;
+    use Illuminate\Contracts\Database\Eloquent\Builder;
 
     class UserTable extends TabulatorTable
     {
@@ -145,6 +147,7 @@ it('can create table class with model name', function () {
     use FmTod\LaravelTabulator\Helpers\Column;
     use FmTod\LaravelTabulator\Helpers\TabulatorConfig;
     use FmTod\LaravelTabulator\TabulatorTable;
+    use Illuminate\Contracts\Database\Eloquent\Builder;
     use OtherUser;
 
     class UserTable extends TabulatorTable
