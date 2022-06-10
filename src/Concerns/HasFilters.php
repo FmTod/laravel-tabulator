@@ -36,14 +36,14 @@ trait HasFilters
                 }),
                 'minMax' => $query->where(
                     function (Builder $subQuery) use ($filter) {
-                    if (isset($filter['value']['min'])) {
-                        $subQuery->where($filter['field'], '>=', $filter['value']['min']);
-                    }
+                        if (isset($filter['value']['min'])) {
+                            $subQuery->where($filter['field'], '>=', $filter['value']['min']);
+                        }
 
-                    if (isset($filter['value']['max'])) {
-                        $subQuery->where($filter['field'], '<=', $filter['value']['max']);
+                        if (isset($filter['value']['max'])) {
+                            $subQuery->where($filter['field'], '<=', $filter['value']['max']);
+                        }
                     }
-                }
                 )
             };
         }
