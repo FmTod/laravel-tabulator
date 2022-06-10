@@ -5,7 +5,7 @@ namespace FmTod\LaravelTabulator;
 use FmTod\LaravelTabulator\Concerns\HasFilters;
 use FmTod\LaravelTabulator\Concerns\RenderableTable;
 use FmTod\LaravelTabulator\Helpers\TabulatorConfig;
-use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Traits\Macroable;
