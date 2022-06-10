@@ -47,7 +47,6 @@ it('builds the options object to send to the frontend', function () {
         'placeholder',
         'filterMode',
         'ajaxURL',
-        'columns',
     ]);
 });
 
