@@ -51,10 +51,8 @@ trait HasFilters
         return $query;
     }
 
-    public function queryWithFilters(): Builder
+    public function queryWithFilters(Builder $query): Builder
     {
-        $query = $this->query();
-
         if ($this->hasFilters()) {
             $filters = $this->getFilters();
 

@@ -19,6 +19,10 @@ trait RenderableTable
                 $config->ajaxURL($this->request->fullUrl());
             }
 
+            if (is_null($config->sortMode)) {
+                $config->sortMode('remote');
+            }
+
             if (is_null($config->filterMode)) {
                 $config->filterMode('remote');
             }

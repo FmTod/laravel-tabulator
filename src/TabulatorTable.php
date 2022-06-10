@@ -3,6 +3,7 @@
 namespace FmTod\LaravelTabulator;
 
 use FmTod\LaravelTabulator\Concerns\HasFilters;
+use FmTod\LaravelTabulator\Concerns\HasSorters;
 use FmTod\LaravelTabulator\Concerns\RenderableTable;
 use FmTod\LaravelTabulator\Helpers\TabulatorConfig;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -15,6 +16,7 @@ abstract class TabulatorTable
     use Macroable;
     use RenderableTable;
     use HasFilters;
+    use HasSorters;
 
     public Request $request;
 
@@ -33,6 +35,9 @@ abstract class TabulatorTable
     {
         $pageSize = $this->request->input('size');
 
-        return $this->queryWithFilters()->paginate($pageSize);
+        return tap($this->query(), function (Builder $query) {
+            $this->queryWithFilters($query);
+            $this->queryWithSorters($query);
+        })->paginate($pageSize);
     }
 }
