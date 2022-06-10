@@ -8,19 +8,6 @@ namespace FmTod\LaravelTabulator\Concerns\Config;
 trait ColumnConfig
 {
     /**
-     * Holder for column definition array.
-     *
-     * @param  array  $column
-     * @return \FmTod\LaravelTabulator\Concerns\Config\ColumnConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
-     */
-    public function columns(array $column): self
-    {
-        $this->attributes['columns'] = $column;
-
-        return $this;
-    }
-
-    /**
      * define any default options that should be applied to all columns.
      *
      * @param  array  $columnDefaults

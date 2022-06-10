@@ -26,12 +26,6 @@ trait RenderableTable
             if (is_null($config->paginationMode)) {
                 $config->paginationMode('remote');
             }
-
-            if (is_null($config->columns)) {
-                $columns = collect($this->columns())->toArray();
-
-                $config->columns($columns);
-            }
         })->toArray();
     }
 
@@ -39,7 +33,10 @@ trait RenderableTable
     {
         $options = config('tabulator.variable');
 
-        return array_merge([$options => $this->options()], $data);
+        return array_merge([$options => [
+            'columns' => collect($this->columns())->toArray(),
+            'options' => $this->options(),
+        ]], $data);
     }
 
     public function render(string $view, $data = [], RendersTable|string $renderer = RendersTable::class): Responsable|Response|Arrayable|Jsonable
