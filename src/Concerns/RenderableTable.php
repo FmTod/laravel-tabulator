@@ -23,6 +23,10 @@ trait RenderableTable
                 $config->filterMode('remote');
             }
 
+            if (is_null($config->paginationMode)) {
+                $config->paginationMode('remote');
+            }
+
             if (is_null($config->columns)) {
                 $columns = collect($this->columns())->toArray();
 
