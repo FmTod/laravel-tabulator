@@ -8,7 +8,7 @@ trait HasSorters
 {
     public function getSorters(): ?array
     {
-        $sortersParam = $this->config()->dataSendParams['sorters'] ?? 'sorters';
+        $sortersParam = $this->config()->dataSendParams['sorters'] ?? 'sort';
 
         return $this->request->input($sortersParam);
     }
