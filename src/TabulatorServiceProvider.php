@@ -22,6 +22,5 @@ class TabulatorServiceProvider extends PackageServiceProvider
     public function packageRegistered(): void
     {
         $this->app->bind('tabulator', Tabulator::class);
-        $this->app->bind(RendersTable::class, BladeRenderer::class);
     }
 }

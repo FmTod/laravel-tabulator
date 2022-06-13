@@ -2,25 +2,39 @@
 
 return [
     /**
-     * The default renderer to use.
-     */
-    'renderer' => FmTod\LaravelTabulator\Renderer\BladeRenderer::class,
-
-    /**
      * The name of the variable that will be used to send the tabulator options to the frontend.
      */
     'variable' => 'tabulator',
 
+    /**
+     * Namespace where the new table class will be created (relative to the root namespace).
+     */
+    'namespace' => 'Tabulator',
 
-    'namespaces' => [
+    /**
+     * Namespace where the models are located (relative to the root namespace).
+     */
+    'models' => 'Models',
+
+    /**
+     * The default renderer to use.
+     */
+    'renderer' => FmTod\LaravelTabulator\Renderer\BladeRenderer::class,
+
+
+    'sort' => [
         /**
-         * The namespace where the tabulator tables will be placed.
+         * Default sorter to use.
          */
-        'table' => 'Tabulator',
+        'sorter' => FmTod\LaravelTabulator\Sorters\DefaultSorter::class,
 
         /**
-         * The namespace where the models are located without the root namespace.
+         * Custom sort class to use when sorting by a relation's column/field.
          */
-        'model' => 'Models',
+        'relations' => [
+            Illuminate\Database\Eloquent\Relations\BelongsTo::class => FmTod\LaravelTabulator\Sorters\Relations\SortByBelongsTo::class,
+            Illuminate\Database\Eloquent\Relations\HasMany::class => FmTod\LaravelTabulator\Sorters\Relations\SortByHasMany::class,
+            Illuminate\Database\Eloquent\Relations\BelongsToMany::class => FmTod\LaravelTabulator\Sorters\Relations\SortByBelongsToMany::class,
+        ],
     ],
 ];

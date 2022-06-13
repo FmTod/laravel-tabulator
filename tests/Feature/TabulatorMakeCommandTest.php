@@ -26,7 +26,7 @@ it('can create basic table class', function () {
 
     namespace App\Tabulator;
 
-    use App\User;
+    use App\Models\User;
     use FmTod\LaravelTabulator\Facades\Tabulator;
     use FmTod\LaravelTabulator\Helpers\Column;
     use FmTod\LaravelTabulator\Helpers\TabulatorConfig;
@@ -84,7 +84,7 @@ it('can create table class with columns', function () {
 
     namespace App\Tabulator;
 
-    use App\User;
+    use App\Models\User;
     use FmTod\LaravelTabulator\Facades\Tabulator;
     use FmTod\LaravelTabulator\Helpers\Column;
     use FmTod\LaravelTabulator\Helpers\TabulatorConfig;

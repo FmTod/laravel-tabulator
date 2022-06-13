@@ -43,14 +43,18 @@ trait RenderableTable
         ]], $data);
     }
 
-    public function render(string $view, $data = [], RendersTable|string $renderer = RendersTable::class): Responsable|Response|Arrayable|Jsonable
+    public function render(string $view, $data = [], RendersTable|string|null $renderer = null): Responsable|Response|Arrayable|Jsonable
     {
         if ($this->request->ajax() || $this->request->wantsJson()) {
             return $this->json();
         }
 
+        if (is_null($renderer)) {
+            $renderer = config('tabulator.renderer');
+        }
+
         if (is_string($renderer)) {
-            $renderer = app()->make($renderer);
+            $renderer = app($renderer);
         }
 
         return $renderer->render($view, $this->data($data));

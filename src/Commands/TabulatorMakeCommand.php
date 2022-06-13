@@ -149,7 +149,7 @@ class TabulatorMakeCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace): string
     {
-        return $rootNamespace . '\\' . config('tabulator.namespaces.table', 'Tabulator');
+        return $rootNamespace . '\\' . config('tabulator.namespace', 'Tabulator');
     }
 
     /**
@@ -177,7 +177,7 @@ class TabulatorMakeCommand extends GeneratorCommand
         $name = $this->getNameInput();
         $rootNamespace = $this->laravel->getNamespace();
         $model = $this->option('model') === '' || $this->option('model-namespace');
-        $modelNamespace = $this->option('model-namespace') ?: config('tabulator.namespaces.model');
+        $modelNamespace = $this->option('model-namespace') ?: config('tabulator.models');
 
         if ($this->option('model')) {
             return $this->option('model');
@@ -190,7 +190,7 @@ class TabulatorMakeCommand extends GeneratorCommand
 
         return $model
             ? $rootNamespace . '\\' . ($modelNamespace ? $modelNamespace . '\\' : '') . Str::singular($name)
-            : $rootNamespace . '\\User';
+            : $rootNamespace . '\\' . ($modelNamespace ? $modelNamespace . '\\' : '') . 'User';
     }
 
     /**
