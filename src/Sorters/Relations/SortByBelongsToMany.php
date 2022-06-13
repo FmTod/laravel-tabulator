@@ -4,7 +4,6 @@ namespace FmTod\LaravelTabulator\Sorters\Relations;
 
 use FmTod\LaravelTabulator\Contracts\SortsByRelation;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
 class SortByBelongsToMany implements SortsByRelation

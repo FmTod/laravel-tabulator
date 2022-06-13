@@ -3,8 +3,6 @@
 namespace FmTod\LaravelTabulator;
 
 use FmTod\LaravelTabulator\Commands\TabulatorMakeCommand;
-use FmTod\LaravelTabulator\Contracts\RendersTable;
-use FmTod\LaravelTabulator\Renderer\BladeRenderer;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
