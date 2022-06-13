@@ -2,7 +2,9 @@
 
 namespace FmTod\LaravelTabulator\Sorters;
 
+use FmTod\LaravelTabulator\Contracts\SortsByRelation;
 use FmTod\LaravelTabulator\Contracts\SortsTable;
+use FmTod\LaravelTabulator\Exceptions\InvalidSorterException;
 use FmTod\LaravelTabulator\Exceptions\InvalidSortFieldException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -32,8 +34,15 @@ class DefaultSorter implements SortsTable
         [$relation, $field] = explode('.', $field);
         $instance = $this->getRelationInstance($query, $relation);
 
-        foreach ($sortableRelations as $type => $sortBy) {
+        foreach ($sortableRelations as $type => $sorter) {
             if (is_a($instance, $type)) {
+                /** @var \FmTod\LaravelTabulator\Contracts\SortsByRelation $sortBy */
+                $sortBy = app($sorter);
+
+                if (! $sortBy instanceof SortsByRelation) {
+                    throw new InvalidSorterException("The relation sorter '$sorter' must implement the SortsByRelation interface.");
+                }
+
                 return $sortBy($query, $instance, $field, $direction);
             }
         }
