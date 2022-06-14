@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-tabulator` will be documented in this file.
 
+## v0.1.1 - 2022-06-14
+
+**Full Changelog**: https://github.com/FmTod/laravel-tabulator/compare/v0.1.0...v0.1.1
+
 ## v0.1.0 - 2022-06-14
 
 ### What Changed
