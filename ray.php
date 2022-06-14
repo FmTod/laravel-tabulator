@@ -9,7 +9,7 @@ return [
     /*
      *  The host used to communicate with the Ray app.
      */
-    'host' => '172.25.144.1',
+    'host' => 'host.wsl.internal',
 
     /*
      *  The port number used to communicate with the Ray app.

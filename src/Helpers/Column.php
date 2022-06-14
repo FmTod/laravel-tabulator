@@ -374,6 +374,17 @@ class Column extends Fluent
     }
 
     /**
+     * Helper function to set the header filter and header filter function to the same value.
+     *
+     * @param  string  $filter
+     * @return $this
+     */
+    public function headerFilterSet(string $filter): self
+    {
+        return $this->headerFilter($filter)->headerFilterFunc($filter);
+    }
+
+    /**
      * Placeholder text for the header filter.
      *
      * @param  string  $placeholder
