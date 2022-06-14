@@ -15,8 +15,6 @@ abstract class TabulatorTable
 {
     use Macroable;
     use RenderableTable;
-    use HasFilters;
-    use HasSorts;
 
     public Request $request;
 
@@ -36,8 +34,15 @@ abstract class TabulatorTable
         $pageSize = $this->request->input('size');
 
         return tap($this->query(), function (Builder $query) {
-            $this->queryWithFilters($query);
-            $this->queryWithSorts($query);
+            $uses = array_flip(class_uses_recursive(static::class));
+
+            if (isset($uses[HasFilters::class])) {
+                $this->queryWithFilters($query);
+            }
+
+            if (isset($uses[HasSorts::class])) {
+                $this->queryWithSorts($query);
+            }
         })->paginate($pageSize);
     }
 }

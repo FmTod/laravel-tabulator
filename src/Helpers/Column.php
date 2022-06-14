@@ -305,6 +305,19 @@ class Column extends Fluent
     }
 
     /**
+     * Additional parameters you can pass to the formatter.
+     *
+     * @param  array  $formatterParams
+     * @return $this
+     */
+    public function formatterParams(array $formatterParams): self
+    {
+        $this->attributes['formatterParams'] = $formatterParams;
+
+        return $this;
+    }
+
+    /**
      * Determines how to sort data in this column.
      *
      * @param  \FmTod\LaravelTabulator\Enums\ColumnSorter  $sorter

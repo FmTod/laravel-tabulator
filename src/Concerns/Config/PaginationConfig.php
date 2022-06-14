@@ -47,6 +47,19 @@ trait PaginationConfig
     }
 
     /**
+     * Set the pagination counter to be displayed.
+     *
+     * @param  string  $paginationCounter
+     * @return \FmTod\LaravelTabulator\Concerns\Config\PaginationConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
+     */
+    public function paginationCounter(string $paginationCounter): self
+    {
+        $this->attributes['paginationCounter'] = $paginationCounter;
+
+        return $this;
+    }
+
+    /**
      * Add page size selection select element to the table footer.
      *
      * @param	bool|array	$paginationSizeSelector

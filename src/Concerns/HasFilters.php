@@ -2,13 +2,16 @@
 
 namespace FmTod\LaravelTabulator\Concerns;
 
+use FmTod\LaravelTabulator\Contracts\FiltersTable;
+use FmTod\LaravelTabulator\Exceptions\InvalidFilterException;
+use FmTod\LaravelTabulator\Filterers\DefaultFilterer;
 use Illuminate\Database\Eloquent\Builder;
 
 trait HasFilters
 {
     public function getFilters(): ?array
     {
-        $filtersParam = $this->config()->dataSendParams['filters'] ?? 'filters';
+        $filtersParam = $this->config()->dataSendParams['filters'] ?? 'filter';
 
         return $this->request->input($filtersParam);
     }
@@ -20,35 +23,13 @@ trait HasFilters
 
     public function applyFilters(Builder $query, array $filters): Builder
     {
-        foreach ($filters as $filter) {
-            match ($filter['type']) {
-                '=', '!=', '<', '<=', '>', '>=' => $query->where($filter['field'], $filter['type'], $filter['value']),
-                'like' => $query->where($filter['field'], 'like', "%{$filter['value']}%"),
-                'starts' => $query->where($filter['field'], 'like', "{$filter['value']}%"),
-                'ends' => $query->where($filter['field'], 'like', "%{$filter['value']}"),
-                'in' => $query->where($filter['field'], 'in', '('.implode(',', $filter['value']).')'),
-                'keywords' => $query->where(function (Builder $subQuery) use ($filter) {
-                    $keywords = explode(' ', $filter['value']);
+        $filter = app(config('tabulator.filter.filterer', DefaultFilterer::class));
 
-                    foreach ($keywords as $keyword) {
-                        $subQuery->orWhere($filter['field'], 'like', "%$keyword%");
-                    }
-                }),
-                'minMax' => $query->where(
-                    function (Builder $subQuery) use ($filter) {
-                        if (isset($filter['value']['min'])) {
-                            $subQuery->where($filter['field'], '>=', $filter['value']['min']);
-                        }
-
-                        if (isset($filter['value']['max'])) {
-                            $subQuery->where($filter['field'], '<=', $filter['value']['max']);
-                        }
-                    }
-                )
-            };
+        if (! $filter instanceof FiltersTable) {
+            throw new InvalidFilterException('Sorter must implement SortsTable');
         }
 
-        return $query;
+        return $filter($query, $filters);
     }
 
     public function queryWithFilters(Builder $query): Builder

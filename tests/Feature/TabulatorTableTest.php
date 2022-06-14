@@ -64,9 +64,14 @@ it('renders the given view', function () {
 
 it('can apply query filters', function () {
     $user = User::first();
-    $filters = [
-        ['field' => 'first_name', 'type' => 'like', 'value' => $user->first_name],
-    ];
 
-    postJson('/users', ['filters' => $filters])->assertJsonPath('data', [$user->toArray()]);
+    $filters = [[
+        'field' => 'first_name',
+        'type' => 'like',
+        'value' => $user->first_name
+    ]];
+
+    postJson('/users', ['filter' => $filters])
+        ->assertSuccessful()
+        ->assertJsonPath('data', [$user->toArray()]);
 });

@@ -2,6 +2,7 @@
 
 namespace FmTod\LaravelTabulator\Exceptions;
 
-class InvalidSortFieldException extends \Exception
+class InvalidFilterException extends \Exception
 {
+
 }

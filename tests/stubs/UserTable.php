@@ -2,6 +2,8 @@
 
 namespace FmTod\LaravelTabulator\Tests\stubs;
 
+use FmTod\LaravelTabulator\Concerns\HasFilters;
+use FmTod\LaravelTabulator\Concerns\HasSorts;
 use FmTod\LaravelTabulator\Facades\Tabulator;
 use FmTod\LaravelTabulator\Helpers\Column;
 use FmTod\LaravelTabulator\Helpers\TabulatorConfig;
@@ -11,6 +13,9 @@ use Illuminate\Database\Eloquent\Builder;
 
 class UserTable extends TabulatorTable
 {
+    use HasFilters;
+    use HasSorts;
+
     protected function config(): TabulatorConfig
     {
         return Tabulator::config()

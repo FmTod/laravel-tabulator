@@ -22,6 +22,21 @@ return [
     'renderer' => FmTod\LaravelTabulator\Renderer\BladeRenderer::class,
 
 
+    'filter' => [
+        'filterer' => FmTod\LaravelTabulator\Filterers\DefaultFilterer::class,
+
+        'types' => [
+            FmTod\LaravelTabulator\Filterers\Filters\ComparisonFilter::class => ['=', '!=', '<', '<=', '>', '>='],
+            FmTod\LaravelTabulator\Filterers\Filters\LikeFilter::class => 'like',
+            FmTod\LaravelTabulator\Filterers\Filters\StartsFilter::class => 'starts',
+            FmTod\LaravelTabulator\Filterers\Filters\EndsFilter::class => 'ends',
+            FmTod\LaravelTabulator\Filterers\Filters\InFilter::class => 'in',
+            FmTod\LaravelTabulator\Filterers\Filters\KeywordsFilter::class => 'keywords',
+            FmTod\LaravelTabulator\Filterers\Filters\MinMaxFilter::class => 'minMax',
+            FmTod\LaravelTabulator\Filterers\Filters\TextSearchFilter::class => 'textSearch',
+        ]
+    ],
+
     'sort' => [
         /**
          * Default sorter to use.

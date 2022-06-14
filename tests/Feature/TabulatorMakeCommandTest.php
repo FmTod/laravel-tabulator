@@ -27,6 +27,8 @@ it('can create basic table class', function () {
     namespace App\Tabulator;
 
     use App\Models\User;
+    use FmTod\LaravelTabulator\Concerns\HasFilters;
+    use FmTod\LaravelTabulator\Concerns\HasSorts;
     use FmTod\LaravelTabulator\Facades\Tabulator;
     use FmTod\LaravelTabulator\Helpers\Column;
     use FmTod\LaravelTabulator\Helpers\TabulatorConfig;
@@ -35,6 +37,9 @@ it('can create basic table class', function () {
 
     class UserTable extends TabulatorTable
     {
+        use HasFilters;
+        use HasSorts;
+    
         protected function config(): TabulatorConfig
         {
             return Tabulator::config();
@@ -85,6 +90,8 @@ it('can create table class with columns', function () {
     namespace App\Tabulator;
 
     use App\Models\User;
+    use FmTod\LaravelTabulator\Concerns\HasFilters;
+    use FmTod\LaravelTabulator\Concerns\HasSorts;
     use FmTod\LaravelTabulator\Facades\Tabulator;
     use FmTod\LaravelTabulator\Helpers\Column;
     use FmTod\LaravelTabulator\Helpers\TabulatorConfig;
@@ -93,6 +100,9 @@ it('can create table class with columns', function () {
 
     class UserTable extends TabulatorTable
     {
+        use HasFilters;
+        use HasSorts;
+    
         protected function config(): TabulatorConfig
         {
             return Tabulator::config();
@@ -143,6 +153,8 @@ it('can create table class with model name', function () {
 
     namespace App\Tabulator\Test;
 
+    use FmTod\LaravelTabulator\Concerns\HasFilters;
+    use FmTod\LaravelTabulator\Concerns\HasSorts;
     use FmTod\LaravelTabulator\Facades\Tabulator;
     use FmTod\LaravelTabulator\Helpers\Column;
     use FmTod\LaravelTabulator\Helpers\TabulatorConfig;
@@ -152,6 +164,9 @@ it('can create table class with model name', function () {
 
     class UserTable extends TabulatorTable
     {
+        use HasFilters;
+        use HasSorts;
+    
         protected function config(): TabulatorConfig
         {
             return Tabulator::config();

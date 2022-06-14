@@ -9,7 +9,7 @@ return [
     /*
      *  The host used to communicate with the Ray app.
      */
-    'host' => '172.21.16.1',
+    'host' => '172.25.144.1',
 
     /*
      *  The port number used to communicate with the Ray app.

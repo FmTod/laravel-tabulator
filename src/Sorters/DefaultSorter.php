@@ -5,7 +5,7 @@ namespace FmTod\LaravelTabulator\Sorters;
 use FmTod\LaravelTabulator\Contracts\SortsByRelation;
 use FmTod\LaravelTabulator\Contracts\SortsTable;
 use FmTod\LaravelTabulator\Exceptions\InvalidSorterException;
-use FmTod\LaravelTabulator\Exceptions\InvalidSortFieldException;
+use FmTod\LaravelTabulator\Exceptions\InvalidFieldException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Arr;
@@ -28,7 +28,7 @@ class DefaultSorter implements SortsTable
         return $query;
     }
 
-    public function applyRelationSort(Builder $query, string $field, string $direction): Builder
+    protected function applyRelationSort(Builder $query, string $field, string $direction): Builder
     {
         $sortableRelations = config('tabulator.sort.relations');
         [$relation, $field] = explode('.', $field);
@@ -50,7 +50,7 @@ class DefaultSorter implements SortsTable
         return $query;
     }
 
-    public function getRelationInstance(Builder $query, string $relation): Relation
+    protected function getRelationInstance(Builder $query, string $relation): Relation
     {
         $parentModel = $query->newModelInstance();
 
@@ -62,6 +62,6 @@ class DefaultSorter implements SortsTable
             return $parentModel->{Str::camel($relation)}();
         }
 
-        throw new InvalidSortFieldException("Could not find a relation with the name '$relation'.");
+        throw new InvalidFieldException("Could not find a relation with the name '$relation'.");
     }
 }
