@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Builder;
 
 class MinMaxFilter implements FiltersByType
 {
-
     public function __invoke(Builder $query, array $filter): Builder
     {
         if (isset($filter['value']['min'])) {

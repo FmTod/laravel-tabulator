@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Builder;
 
 class StartsFilter implements FiltersByType
 {
-
     public function __invoke(Builder $query, array $filter): Builder
     {
         return $query->where($filter['field'], 'like', "{$filter['value']}%");

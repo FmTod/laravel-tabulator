@@ -4,8 +4,8 @@ namespace FmTod\LaravelTabulator\Sorters;
 
 use FmTod\LaravelTabulator\Contracts\SortsByRelation;
 use FmTod\LaravelTabulator\Contracts\SortsTable;
-use FmTod\LaravelTabulator\Exceptions\InvalidSorterException;
 use FmTod\LaravelTabulator\Exceptions\InvalidFieldException;
+use FmTod\LaravelTabulator\Exceptions\InvalidSorterException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Arr;

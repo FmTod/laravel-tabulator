@@ -68,7 +68,7 @@ it('can apply query filters', function () {
     $filters = [[
         'field' => 'first_name',
         'type' => 'like',
-        'value' => $user->first_name
+        'value' => $user->first_name,
     ]];
 
     postJson('/users', ['filter' => $filters])

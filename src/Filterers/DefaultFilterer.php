@@ -4,10 +4,9 @@ namespace FmTod\LaravelTabulator\Filterers;
 
 use FmTod\LaravelTabulator\Contracts\FiltersByType;
 use FmTod\LaravelTabulator\Contracts\FiltersTable;
-use FmTod\LaravelTabulator\Exceptions\InvalidFilterException;
 use FmTod\LaravelTabulator\Exceptions\InvalidFieldException;
+use FmTod\LaravelTabulator\Exceptions\InvalidFilterException;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
