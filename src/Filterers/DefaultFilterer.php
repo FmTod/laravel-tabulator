@@ -32,7 +32,8 @@ class DefaultFilterer implements FiltersTable
         $availableFilters = config('tabulator.filter.types');
 
         foreach ($availableFilters as $filtererClass => $types) {
-            if (in_array($type, Arr::wrap($types))) {
+            if (in_array($type, Arr::wrap($types)) && ! empty($value)) {
+
                 /** @var \FmTod\LaravelTabulator\Contracts\FiltersByType $filterer */
                 $filterer = app($filtererClass);
 
