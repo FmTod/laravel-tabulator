@@ -24,14 +24,14 @@ composer require fmtod/laravel-tabulator
 You can publish and run the migrations with:
 
 ```bash
-php artisan vendor:publish --tag="laravel-tabulator-migrations"
+php artisan vendor:publish --tag="tabulator-migrations"
 php artisan migrate
 ```
 
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag="laravel-tabulator-config"
+php artisan vendor:publish --tag="tabulator-config"
 ```
 
 This is the contents of the published config file:
@@ -45,6 +45,12 @@ Optionally, you can publish the views using
 
 ```bash
 php artisan vendor:publish --tag="laravel-tabulator-views"
+```
+
+You can also publish the table stub with:
+
+```bash
+php artisan vendor:publish --tag="tabulator-stubs"
 ```
 
 ## Usage
