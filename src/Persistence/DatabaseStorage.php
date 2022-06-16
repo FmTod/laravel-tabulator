@@ -45,7 +45,7 @@ class DatabaseStorage implements PersistenceStorageDriver
             ->first();
     }
 
-    public function save(string $table, string $type, array $data): bool
+    public function save(string $table, string $type, array $data): Model
     {
         $persistence = $this->model::make([
             'table' => $table,
@@ -57,6 +57,8 @@ class DatabaseStorage implements PersistenceStorageDriver
             $persistence->user_id = auth()->id();
         }
 
-        return $persistence->save();
+        $persistence->save();
+
+        return $persistence;
     }
 }

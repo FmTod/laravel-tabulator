@@ -10,5 +10,5 @@ interface PersistenceStorageDriver
 
     public function get(string $table, string $type): ?Model;
 
-    public function save(string $table, string $type, array $data): bool;
+    public function save(string $table, string $type, array $data): Model;
 }
