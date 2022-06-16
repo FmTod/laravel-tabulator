@@ -26,7 +26,7 @@ class PersistenceController extends Controller
 
     public function store(Request $request, string $table, string $type): JsonResponse
     {
-        $data = $request->validate(['data' => 'required|json']);
+        $data = $request->validate(['data' => 'required|array']);
 
         $model = Tabulator::persistenceSave($table, $type, $data['data']);
 

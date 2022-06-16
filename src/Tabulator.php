@@ -22,7 +22,7 @@ class Tabulator
         return TabulatorConfig::make($options);
     }
 
-    public function persistenceRoute(string $name = 'tabulator.persistence', string $prefix = 'tabulator/persistence'): void
+    public function persistenceRoutes(string $name = 'tabulator.persistence', string $prefix = 'tabulator/persistence'): void
     {
         Route::as("$name.")->prefix($prefix)->group(function () {
             Route::get('/{table}', [PersistenceController::class, 'index'])->name('index');
