@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-tabulator` will be documented in this file.
 
+## v0.2.0 - 2022-06-16
+
+### What Changed
+
+- Added persistence handling
+
+**Full Changelog**: https://github.com/FmTod/laravel-tabulator/compare/v0.1.4...v0.2.0
+
 ## v0.1.4 - 2022-06-16
 
 **Full Changelog**: https://github.com/FmTod/laravel-tabulator/compare/v0.1.3...v0.1.4
