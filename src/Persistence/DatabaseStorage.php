@@ -47,16 +47,16 @@ class DatabaseStorage implements PersistenceStorageDriver
 
     public function save(string $table, string $type, array $data): Model
     {
-        $persistence = $this->model::make([
+        $persistence = $this->query()->firstOrNew([
             'table' => $table,
             'type' => $type,
-            'data' => $data,
         ]);
 
         if ($this->perUser) {
             $persistence->user_id = auth()->id();
         }
 
+        $persistence->data = $data;
         $persistence->save();
 
         return $persistence;
