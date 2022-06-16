@@ -2,6 +2,8 @@
 
 namespace FmTod\LaravelTabulator\Exceptions;
 
-class InvalidFieldException extends \Exception
+use Exception;
+
+class InvalidFieldException extends Exception
 {
 }

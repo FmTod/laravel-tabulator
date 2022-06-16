@@ -2,6 +2,8 @@
 
 namespace FmTod\LaravelTabulator\Exceptions;
 
-class InvalidFilterException extends \Exception
+use Exception;
+
+class InvalidFilterException extends Exception
 {
 }

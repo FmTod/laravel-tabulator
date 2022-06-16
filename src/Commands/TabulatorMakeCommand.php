@@ -106,7 +106,7 @@ class TabulatorMakeCommand extends GeneratorCommand
         $columns = is_array($definition) ? $definition : explode(',', $definition);
         $stub = '';
         foreach ($columns as $key => $column) {
-            $stub .= "Column::make('{$column}'),";
+            $stub .= "Column::make('$column'),";
 
             if ($key < count($columns) - 1) {
                 $stub .= PHP_EOL . str_repeat(' ', $indentation);

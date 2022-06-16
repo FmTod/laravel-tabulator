@@ -2,6 +2,8 @@
 
 namespace FmTod\LaravelTabulator\Exceptions;
 
-class InvalidSorterException extends \Exception
+use Exception;
+
+class InvalidSorterException extends Exception
 {
 }

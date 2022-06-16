@@ -17,11 +17,16 @@ class DefaultFilterer implements FiltersTable
         $filters = Arr::wrap($filters);
 
         foreach ($filters as $filter) {
+            if (empty($filter['value'])) {
+                continue;
+            }
+
             if (Str::contains($filter['field'], '.')) {
                 $this->applyRelationFilter($query, $filter['field'], $filter['type'], $filter['value']);
-            } else {
-                $this->applyFilter($query, $filter['field'], $filter['type'], $filter['value']);
+                continue;
             }
+
+            $this->applyFilter($query, $filter['field'], $filter['type'], $filter['value']);
         }
 
         return $query;
