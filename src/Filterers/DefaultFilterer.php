@@ -23,6 +23,7 @@ class DefaultFilterer implements FiltersTable
 
             if (Str::contains($filter['field'], '.')) {
                 $this->applyRelationFilter($query, $filter['field'], $filter['type'], $filter['value']);
+
                 continue;
             }
 
