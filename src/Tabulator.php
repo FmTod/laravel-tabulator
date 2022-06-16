@@ -6,6 +6,7 @@ use FmTod\LaravelTabulator\Contracts\PersistenceStorageDriver;
 use FmTod\LaravelTabulator\Controllers\PersistenceController;
 use FmTod\LaravelTabulator\Helpers\TabulatorConfig;
 use FmTod\LaravelTabulator\Persistence\DatabaseStorage;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Route;
 
 class Tabulator
@@ -36,12 +37,12 @@ class Tabulator
         return $this->persistenceDriver->all($table);
     }
 
-    public function persistenceGet(string $table, string $type): bool
+    public function persistenceGet(string $table, string $type): ?Model
     {
         return $this->persistenceDriver->get($table, $type);
     }
 
-    public function persistenceSave(string $table, string $type, array $data): bool
+    public function persistenceSave(string $table, string $type, array $data): Model
     {
         return $this->persistenceDriver->save($table, $type, $data);
     }
