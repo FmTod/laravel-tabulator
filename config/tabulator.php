@@ -21,7 +21,28 @@ return [
      */
     'renderer' => FmTod\LaravelTabulator\Renderer\BladeRenderer::class,
 
+    /**
+     * Sort configuration.
+     */
+    'sort' => [
+        /**
+         * Default sorter to use.
+         */
+        'sorter' => FmTod\LaravelTabulator\Sorters\DefaultSorter::class,
 
+        /**
+         * Custom sort class to use when sorting by a relation's column/field.
+         */
+        'relations' => [
+            Illuminate\Database\Eloquent\Relations\BelongsTo::class => FmTod\LaravelTabulator\Sorters\Relations\SortByBelongsTo::class,
+            Illuminate\Database\Eloquent\Relations\HasMany::class => FmTod\LaravelTabulator\Sorters\Relations\SortByHasMany::class,
+            Illuminate\Database\Eloquent\Relations\BelongsToMany::class => FmTod\LaravelTabulator\Sorters\Relations\SortByBelongsToMany::class,
+        ],
+    ],
+
+    /**
+     * Filter configuration.
+     */
     'filter' => [
         'filterer' => FmTod\LaravelTabulator\Filterers\DefaultFilterer::class,
 
@@ -37,19 +58,43 @@ return [
         ]
     ],
 
-    'sort' => [
+    /**
+     * Persistence configuration.
+     */
+    'persistence' => [
         /**
-         * Default sorter to use.
+         * Enable/disable persistence.
          */
-        'sorter' => FmTod\LaravelTabulator\Sorters\DefaultSorter::class,
+        'enabled' => true,
 
         /**
-         * Custom sort class to use when sorting by a relation's column/field.
+         * Persistence storage driver.
          */
-        'relations' => [
-            Illuminate\Database\Eloquent\Relations\BelongsTo::class => FmTod\LaravelTabulator\Sorters\Relations\SortByBelongsTo::class,
-            Illuminate\Database\Eloquent\Relations\HasMany::class => FmTod\LaravelTabulator\Sorters\Relations\SortByHasMany::class,
-            Illuminate\Database\Eloquent\Relations\BelongsToMany::class => FmTod\LaravelTabulator\Sorters\Relations\SortByBelongsToMany::class,
-        ],
+        'driver' => FmTod\LaravelTabulator\Persistence\DatabaseStorage::class,
+
+        /**
+         * Database persistence storage driver options.
+         */
+        'database' => [
+            /**
+             * Model to use for the persistence storage.
+             */
+            'model' => FmTod\LaravelTabulator\Models\TabulatorPersistence::class,
+
+            /**
+             * Table name to use for the persistence storage.
+             */
+            'table' => 'tabulator_persistence',
+
+            /**
+             * Connection name to use for the persistence storage. If null, the default connection will be used.
+             */
+            'connection' => null,
+
+            /**
+             * Save the persistence data per user.
+             */
+            'per_user' => false,
+        ]
     ],
 ];

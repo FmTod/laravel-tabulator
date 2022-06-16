@@ -14,6 +14,7 @@ use FmTod\LaravelTabulator\Concerns\Config\PrintConfig;
 use FmTod\LaravelTabulator\Concerns\Config\RowConfig;
 use FmTod\LaravelTabulator\Concerns\Config\RowGroupConfig;
 use FmTod\LaravelTabulator\Concerns\Config\SortConfig;
+use FmTod\LaravelTabulator\TabulatorTable;
 use Illuminate\Support\Fluent;
 
 /**
@@ -170,6 +171,53 @@ class TabulatorConfig extends Fluent
     use DataTreeConfig;
     use PrintConfig;
     use MenuConfig;
+
+    public function __construct(array $options = [])
+    {
+        parent::__construct(array_merge([
+            'sortMode' => 'remote',
+            'filterMode' => 'remote',
+            'paginationMode' => 'remote',
+        ], $this->getPersistenceConfig(), $options));
+    }
+
+    protected function guessTableClass(): ?string
+    {
+        $backtrace = debug_backtrace(limit: 10);
+
+        foreach ($backtrace as $item) {
+            if (isset($item['object']) && $item['object'] instanceof TabulatorTable) {
+                return $item['class'];
+            }
+        }
+
+        return null;
+    }
+
+    protected function getPersistenceConfig(): array
+    {
+        $persistence = config('tabulator.persistence.enabled', false);
+
+        if (!$persistence) {
+            return [];
+        }
+
+        $persistenceId = $this->guessTableClass();
+
+        return array_merge($persistenceId ? ['persistenceID' => $persistenceId] : [], [
+            'persistence' => $persistence,
+            'persistenceMode' => 'remote',
+        ]);
+    }
+
+    public function build($ajaxUrl): array
+    {
+        if (is_null($this->ajaxURL)) {
+            $this->ajaxURL($ajaxUrl);
+        }
+
+        return $this->toArray();
+    }
 
     /**
      * Make a new column instance.

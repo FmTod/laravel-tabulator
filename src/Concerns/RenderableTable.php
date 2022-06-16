@@ -14,23 +14,7 @@ trait RenderableTable
 {
     public function options(): array
     {
-        return tap($this->config(), function (TabulatorConfig $config) {
-            if (is_null($config->ajaxURL)) {
-                $config->ajaxURL($this->request->fullUrl());
-            }
-
-            if (is_null($config->sortMode)) {
-                $config->sortMode('remote');
-            }
-
-            if (is_null($config->filterMode)) {
-                $config->filterMode('remote');
-            }
-
-            if (is_null($config->paginationMode)) {
-                $config->paginationMode('remote');
-            }
-        })->toArray();
+        return $this->config()->build($this->request->fullUrl());
     }
 
     public function data($data = []): array

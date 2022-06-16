@@ -39,15 +39,19 @@ it('can identify page from the request')
 it('builds the options object to send to the frontend', function () {
     $table = new UserTable();
 
-    expect($table->options())->toHaveKeys([
-        'layout',
-        'pagination',
-        'paginationMode',
-        'paginationSize',
-        'placeholder',
-        'filterMode',
-        'ajaxURL',
-    ]);
+    ray($table->options());
+
+    expect($table->options())
+        ->toHaveKeys([
+            'layout',
+            'pagination',
+            'paginationMode',
+            'paginationSize',
+            'placeholder',
+            'filterMode',
+            'ajaxURL',
+        ])
+        ->toHaveKey('persistenceID', UserTable::class);
 });
 
 it('renders the given view', function () {
