@@ -198,7 +198,7 @@ class TabulatorConfig extends Fluent
     {
         $persistence = config('tabulator.persistence.enabled', false);
 
-        if (!$persistence) {
+        if (! $persistence) {
             return [];
         }
 

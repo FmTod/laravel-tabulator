@@ -3,7 +3,6 @@
 namespace FmTod\LaravelTabulator\Concerns;
 
 use FmTod\LaravelTabulator\Contracts\RendersTable;
-use FmTod\LaravelTabulator\Helpers\TabulatorConfig;
 use FmTod\LaravelTabulator\Renderer\BladeRenderer;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
