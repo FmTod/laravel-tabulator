@@ -38,7 +38,12 @@ class PersistenceController extends Controller
         $model = Tabulator::persistenceGet($table, $type);
 
         if (! $model) {
-            return response()->json(['message' => "Could not find persistence data for '$type' from the '$table' table."], 404);
+            return response()->json([
+                'message' => "Could not find persistence data for '$type' from the '$table' table.",
+                'data' => null,
+                'table' => $table,
+                'type' => $type,
+            ]);
         }
 
         return response()->json($model);
