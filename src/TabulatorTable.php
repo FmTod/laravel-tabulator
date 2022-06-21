@@ -29,10 +29,8 @@ abstract class TabulatorTable
 
     abstract protected function columns(): array;
 
-    public function json(): LengthAwarePaginator
+    public function getScopedQuery(): Builder
     {
-        $pageSize = $this->request->input('size');
-
         return tap($this->query(), function (Builder $query) {
             $uses = array_flip(class_uses_recursive(static::class));
 
@@ -43,6 +41,13 @@ abstract class TabulatorTable
             if (isset($uses[HasSorts::class])) {
                 $this->queryWithSorts($query);
             }
-        })->paginate($pageSize);
+        });
+    }
+
+    public function json(): LengthAwarePaginator
+    {
+        $pageSize = $this->request->input('size');
+
+        return $this->getScopedQuery()->paginate($pageSize);
     }
 }

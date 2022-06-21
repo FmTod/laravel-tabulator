@@ -142,6 +142,19 @@ class Column extends Fluent
     }
 
     /**
+     * Sets the text alignment for cells in the column.
+     *
+     * @param  string  $align
+     * @return $this
+     */
+    public function align(string $align): self
+    {
+        $this->attributes['align'] = $align;
+
+        return $this;
+    }
+
+    /**
      * Set whether column can be resized by user dragging its edges.
      *
      * @param  bool  $resizable

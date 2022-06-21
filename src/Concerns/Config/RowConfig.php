@@ -138,6 +138,19 @@ trait RowConfig
     }
 
     /**
+     * Set the range select behavior.
+     *
+     * @param  string  $selectableRangeMode
+     * @return \FmTod\LaravelTabulator\Concerns\Config\RowConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
+     */
+    public function selectableRangeMode(string $selectableRangeMode): self
+    {
+        $this->attributes['selectableRangeMode'] = $selectableRangeMode;
+
+        return $this;
+    }
+
+    /**
      * Allow users to move and reorder rows.
      *
      * @param	bool	$movableRows
