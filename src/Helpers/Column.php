@@ -356,6 +356,19 @@ class Column extends Fluent
         return $this;
     }
 
+    /**
+     * Sets whether the column can be sorted or not.
+     *
+     * @param  bool  $headerSort
+     * @return $this
+     */
+    public function headerSort(bool $headerSort = true): self
+    {
+        $this->attributes['headerSort'] = $headerSort;
+
+        return $this;
+    }
+
     //</editor-fold>
 
     //<editor-fold desc="Column Headers" defaultstate="collapsed">
