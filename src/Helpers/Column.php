@@ -142,14 +142,14 @@ class Column extends Fluent
     }
 
     /**
-     * Sets the text alignment for cells in the column.
+     * Sets the horizontal alignment for cells in the column.
      *
-     * @param  string  $align
+     * @param  string  $hozAlign
      * @return $this
      */
-    public function align(string $align): self
+    public function hozAlign(string $hozAlign): self
     {
-        $this->attributes['align'] = $align;
+        $this->attributes['hozAlign'] = $hozAlign;
 
         return $this;
     }
