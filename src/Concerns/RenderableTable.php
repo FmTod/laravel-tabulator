@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 trait RenderableTable
 {
-    public function options(string $key = null, mixed $default = null): array
+    public function options(string $key = null, mixed $default = null): mixed
     {
         $options = $this->config()->build($this->request->fullUrl());
 
