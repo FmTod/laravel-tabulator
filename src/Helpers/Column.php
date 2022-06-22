@@ -4,6 +4,7 @@ namespace FmTod\LaravelTabulator\Helpers;
 
 use FmTod\LaravelTabulator\Enums\ColumnSorter;
 use Illuminate\Support\Fluent;
+use Illuminate\Support\Str;
 
 /**
  * Tabulator column representation.
@@ -46,7 +47,7 @@ class Column extends Fluent
     {
         if (is_string($options)) {
             return new static([
-                'title' => ucwords($options),
+                'title' => Str::of($options)->replace('_', ' ')->title()->toString(),
                 'field' => $options,
                 'visible' => true,
             ]);
