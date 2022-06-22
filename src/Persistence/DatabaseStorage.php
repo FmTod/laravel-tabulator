@@ -85,4 +85,3 @@ class DatabaseStorage implements PersistenceStorageDriver
             ->delete();
     }
 }
-
