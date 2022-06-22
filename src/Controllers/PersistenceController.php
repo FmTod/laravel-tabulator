@@ -6,6 +6,7 @@ use FmTod\LaravelTabulator\Facades\Tabulator;
 use FmTod\LaravelTabulator\Models\TabulatorPersistence;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 
 class PersistenceController extends Controller
@@ -47,5 +48,19 @@ class PersistenceController extends Controller
         }
 
         return response()->json($model);
+    }
+
+    public function destroy(string $table, string $type): Response
+    {
+        Tabulator::persistenceDelete($table, $type);
+
+        return response()->noContent();
+    }
+
+    public function clear(string $table): Response
+    {
+        Tabulator::persistenceClear($table);
+
+        return response()->noContent();
     }
 }

@@ -61,4 +61,28 @@ class DatabaseStorage implements PersistenceStorageDriver
 
         return $persistence;
     }
+
+    public function delete(string $table, string $type): void
+    {
+        $keyName = $this->query()->newModelInstance()->getKeyName();
+
+        $this->query()
+            ->where('table', $table)
+            ->where('type', $type)
+            ->get([$keyName])
+            ->each
+            ->delete();
+    }
+
+    public function clear(string $table): void
+    {
+        $keyName = $this->query()->newModelInstance()->getKeyName();
+
+        $this->query()
+            ->where('table', $table)
+            ->get([$keyName])
+            ->each
+            ->delete();
+    }
 }
+

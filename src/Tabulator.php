@@ -27,8 +27,10 @@ class Tabulator
     {
         Route::as("$name.")->prefix($prefix ?? str_replace('.', '/', $name))->group(function () {
             Route::get('/{table}', [PersistenceController::class, 'index'])->name('index');
+            Route::delete('/{table}', [PersistenceController::class, 'clear'])->name('clear');
             Route::get('/{table}/{type}', [PersistenceController::class, 'show'])->name('show');
             Route::post('/{table}/{type}', [PersistenceController::class, 'store'])->name('store');
+            Route::delete('/{table}/{type}', [PersistenceController::class, 'destroy'])->name('destroy');
         });
     }
 
@@ -45,5 +47,15 @@ class Tabulator
     public function persistenceSave(string $table, string $type, array $data): Model
     {
         return $this->persistenceDriver->save($table, $type, $data);
+    }
+
+    public function persistenceDelete(string $table, string $type): void
+    {
+        $this->persistenceDriver->delete($table, $type);
+    }
+
+    public function persistenceClear(string $table): void
+    {
+        $this->persistenceDriver->clear($table);
     }
 }
