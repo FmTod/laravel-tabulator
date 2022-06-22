@@ -370,6 +370,32 @@ class Column extends Fluent
         return $this;
     }
 
+    /**
+     * Set the column editor.
+     *
+     * @param  string|bool  $editor
+     * @return $this
+     */
+    public function editor(string|bool $editor): self
+    {
+        $this->attributes['editor'] = $editor;
+
+        return $this;
+    }
+
+    /**
+     * Column editor options.
+     *
+     * @param  array  $editorParams
+     * @return $this
+     */
+    public function editorParams(array $editorParams): self
+    {
+        $this->attributes['editorParams'] = $editorParams;
+
+        return $this;
+    }
+
     //</editor-fold>
 
     //<editor-fold desc="Column Headers" defaultstate="collapsed">
