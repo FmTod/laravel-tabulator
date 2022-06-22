@@ -175,6 +175,7 @@ class TabulatorConfig extends Fluent
     public function __construct(array $options = [])
     {
         parent::__construct(array_merge([
+            'pagination' => true,
             'sortMode' => 'remote',
             'filterMode' => 'remote',
             'paginationMode' => 'remote',

@@ -8,6 +8,8 @@ use FmTod\LaravelTabulator\Concerns\RenderableTable;
 use FmTod\LaravelTabulator\Contracts\TabulatorModel;
 use FmTod\LaravelTabulator\Helpers\TabulatorConfig;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -60,10 +62,16 @@ abstract class TabulatorTable
         return Collection::wrap($columns)->toArray();
     }
 
-    public function json(): LengthAwarePaginator
+    public function json(): LengthAwarePaginator|Arrayable|Jsonable|array
     {
-        $pageSize = $this->request->input('size');
+        $query = $this->getScopedQuery();
 
-        return $this->getScopedQuery()->paginate($pageSize);
+        if ($this->options('pagination', false)) {
+            $pageSize = $this->request->input('size');
+
+            return $query->paginate($pageSize);
+        }
+
+        return $query->get();
     }
 }
