@@ -258,12 +258,12 @@ class Column extends Fluent
      *
      * Note: if not set the system will determine the best.
      *
-     * @param  string|int|float  $title
+     * @param  string|int|float  $width
      * @return $this
      */
-    public function width(string|int|float $title): self
+    public function width(string|int|float $width): self
     {
-        $this->attributes['title'] = $title;
+        $this->attributes['width'] = $width;
 
         return $this;
     }
@@ -391,6 +391,21 @@ class Column extends Fluent
     }
 
     /**
+     *  Sets whether the cell is editable or not
+     *
+     *  Accepts boolean or a callback function that will be called to determine if the cell is editable.
+     *
+     * @param  string|bool  $editable
+     * @return $this
+     */
+    public function editable(string|bool $editable): self
+    {
+        $this->attributes['editable'] = $editable;
+
+        return $this;
+    }
+
+    /**
      * Column editor options.
      *
      * @param  array  $editorParams
@@ -471,4 +486,16 @@ class Column extends Fluent
     }
 
     //</editor-fold>
+
+    /**
+     * Call any of the methods on the Column object statically as a new instance.
+     *
+     * @param  string  $name
+     * @param  array  $arguments
+     * @return mixed
+     */
+    public static function __callStatic(string $name, array $arguments)
+    {
+        return (new static)->$name(...$arguments);
+    }
 }
