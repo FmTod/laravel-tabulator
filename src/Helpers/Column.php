@@ -496,6 +496,6 @@ class Column extends Fluent
      */
     public static function __callStatic(string $name, array $arguments)
     {
-        return (new static)->$name(...$arguments);
+        return (new static())->$name(...$arguments);
     }
 }
