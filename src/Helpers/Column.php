@@ -155,6 +155,13 @@ class Column extends Fluent
         return $this;
     }
 
+    public function vertAlign(string $vertAlign): self
+    {
+        $this->attributes['vertAlign'] = $vertAlign;
+
+        return $this;
+    }
+
     /**
      * Set whether column can be resized by user dragging its edges.
      *
