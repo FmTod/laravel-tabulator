@@ -308,6 +308,19 @@ class Column extends Fluent
         return $this;
     }
 
+    /**
+     * Sets group of columns to be inserted into a multiline header.
+     *
+     * @param  array  $columns
+     * @return $this
+     */
+    public function columns(array $columns): self
+    {
+        $this->attributes['columns'] = $columns;
+
+        return $this;
+    }
+
     //</editor-fold>
 
     //<editor-fold desc="Data Manipulation" defaultstate="collapsed">
