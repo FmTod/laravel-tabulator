@@ -3,6 +3,7 @@
 namespace FmTod\LaravelTabulator\Helpers;
 
 use FmTod\LaravelTabulator\Enums\ColumnSorter;
+use FmTod\LaravelTabulator\Factories\ColumnFactory;
 use Illuminate\Support\Fluent;
 use Illuminate\Support\Str;
 
@@ -54,6 +55,17 @@ class Column extends Fluent
         }
 
         return new static($options);
+    }
+
+    /**
+     * Get a new instance of the column factory.
+     *
+     * @param  array|string  $options
+     * @return \FmTod\LaravelTabulator\Factories\ColumnFactory
+     */
+    public static function factory(array|string $options = []): ColumnFactory
+    {
+        return new ColumnFactory($options);
     }
 
     /**
