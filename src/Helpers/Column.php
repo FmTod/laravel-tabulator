@@ -90,7 +90,7 @@ class Column extends Fluent
      */
     public function toFactory(): ColumnFactory
     {
-        return ColumnFactory::factory($this->toArray());
+        return Column::factory($this->toArray());
     }
 
     /**

@@ -29,6 +29,10 @@ class ColumnFactory
         return $this->column->$method(...$parameters);
     }
 
+    public function __clone() {
+        return new static($this->column->toArray());
+    }
+
     public function make(string|array $options = []): Column
     {
         if (is_string($options)) {
@@ -40,5 +44,10 @@ class ColumnFactory
         }
 
         return Column::make(array_merge($this->column->toArray(), $options));
+    }
+
+    public function clone(): ColumnFactory
+    {
+        return clone $this;
     }
 }
