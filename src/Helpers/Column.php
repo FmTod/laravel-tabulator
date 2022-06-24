@@ -58,6 +58,21 @@ class Column extends Fluent
     }
 
     /**
+     * Create a column group.
+     *
+     * @param  string  $title
+     * @param  array  $columns
+     * @return static
+     */
+    public static function group(string $title, array $columns): self
+    {
+        return new static([
+            'title' => $title,
+            'columns' => $columns,
+        ]);
+    }
+
+    /**
      * Get a new instance of the column factory.
      *
      * @param  array|string  $options
