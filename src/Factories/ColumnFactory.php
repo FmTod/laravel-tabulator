@@ -29,7 +29,8 @@ class ColumnFactory
         return $this->column->$method(...$parameters);
     }
 
-    public function __clone() {
+    public function __clone()
+    {
         return new static($this->column->toArray());
     }
 
