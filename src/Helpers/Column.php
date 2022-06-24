@@ -69,6 +69,16 @@ class Column extends Fluent
     }
 
     /**
+     * Get a factory instance for the column.
+     *
+     * @return \FmTod\LaravelTabulator\Factories\ColumnFactory
+     */
+    public function toFactory(): ColumnFactory
+    {
+        return ColumnFactory::factory($this->toArray());
+    }
+
+    /**
      * Convert the fluent instance to an array.
      *
      * @return array
