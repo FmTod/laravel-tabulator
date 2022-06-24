@@ -3,6 +3,7 @@
 namespace FmTod\LaravelTabulator\Factories;
 
 use FmTod\LaravelTabulator\Helpers\Column;
+use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 
 /**
@@ -30,6 +31,14 @@ class ColumnFactory
 
     public function make(string|array $options = []): Column
     {
+        if (is_string($options)) {
+            $options = [
+                'title' => Str::of($options)->replace('_', ' ')->title()->toString(),
+                'field' => $options,
+                'visible' => true,
+            ];
+        }
+
         return Column::make(array_merge($this->column->toArray(), $options));
     }
 }
