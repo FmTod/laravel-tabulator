@@ -26,7 +26,9 @@ class ColumnFactory
             return $this->__macroCall($method, $parameters);
         }
 
-        return $this->column->$method(...$parameters);
+        $this->column->$method(...$parameters);
+
+        return $this;
     }
 
     public function __clone()
