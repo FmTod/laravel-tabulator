@@ -155,6 +155,12 @@ class Column extends Fluent
         return $this;
     }
 
+    /**
+     * Sets the vertical alignment for cells in the column.
+     *
+     * @param  string  $vertAlign
+     * @return $this
+     */
     public function vertAlign(string $vertAlign): self
     {
         $this->attributes['vertAlign'] = $vertAlign;
@@ -500,15 +506,33 @@ class Column extends Fluent
 
     //</editor-fold>
 
+    //<editor-fold desc="Callbacks" defaultstate="collapsed">
+
     /**
-     * Call any of the methods on the Column object statically as a new instance.
+     * Callback function to be called when the column is edited.
      *
-     * @param  string  $name
-     * @param  array  $arguments
-     * @return mixed
+     * @param  string  $cellEdited
+     * @return $this
      */
-    public static function __callStatic(string $name, array $arguments)
+    public function cellEdited(string $cellEdited): self
     {
-        return (new static())->$name(...$arguments);
+        $this->attributes['cellEdited'] = $cellEdited;
+
+        return $this;
     }
+
+    /**
+     * Callback function to be called when the column is clicked.
+     *
+     * @param  string  $cellClick
+     * @return $this
+     */
+    public function cellClick(string $cellClick): self
+    {
+        $this->attributes['cellClick'] = $cellClick;
+
+        return $this;
+    }
+
+    //</editor-fold>
 }
