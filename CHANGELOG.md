@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-tabulator` will be documented in this file.
 
+## v0.5.0 - 2022-06-24
+
+### What Changed
+
+- Added column factory for easier re-usability of column definitions.
+
+**Full Changelog**: https://github.com/FmTod/laravel-tabulator/compare/v0.4.5...v0.5.0
+
 ## v0.4.5 - 2022-06-23
 
 **Full Changelog**: https://github.com/FmTod/laravel-tabulator/compare/v0.4.4...v0.4.5
@@ -33,7 +41,9 @@ All notable changes to `laravel-tabulator` will be documented in this file.
 - 
 - 
 - 
+- 
 - - The clear method will delete all persistence data related to a table regardless of the type
+- 
 - 
 - 
 - 
