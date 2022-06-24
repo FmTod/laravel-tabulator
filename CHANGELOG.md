@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-tabulator` will be documented in this file.
 
+## v0.5.2 - 2022-06-24
+
+**Full Changelog**: https://github.com/FmTod/laravel-tabulator/compare/v0.5.1...v0.5.2
+
 ## v0.5.1 - 2022-06-24
 
 **Full Changelog**: https://github.com/FmTod/laravel-tabulator/compare/v0.5.0...v0.5.1
@@ -47,7 +51,9 @@ All notable changes to `laravel-tabulator` will be documented in this file.
 - 
 - 
 - 
+- 
 - - The clear method will delete all persistence data related to a table regardless of the type
+- 
 - 
 - 
 - 
