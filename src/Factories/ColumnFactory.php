@@ -11,7 +11,7 @@ use Illuminate\Support\Traits\Macroable;
  */
 class ColumnFactory
 {
-    use Macroable { __call as __macroCall; }
+    use Macroable { __call as macroCall; }
 
     protected Column $column;
 
@@ -23,7 +23,7 @@ class ColumnFactory
     public function __call($method, $parameters)
     {
         if (! method_exists($this->column, $method)) {
-            return $this->__macroCall($method, $parameters);
+            return $this->macroCall($method, $parameters);
         }
 
         $this->column->$method(...$parameters);
@@ -33,7 +33,7 @@ class ColumnFactory
 
     public function __clone()
     {
-        return new static($this->column->toArray());
+        $this->column = clone $this->column;
     }
 
     public function make(string|array $options = []): Column

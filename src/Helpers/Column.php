@@ -6,6 +6,7 @@ use FmTod\LaravelTabulator\Enums\ColumnSorter;
 use FmTod\LaravelTabulator\Factories\ColumnFactory;
 use Illuminate\Support\Fluent;
 use Illuminate\Support\Str;
+use Illuminate\Support\Traits\Macroable;
 
 /**
  * Tabulator column representation.
@@ -38,6 +39,8 @@ use Illuminate\Support\Str;
  */
 class Column extends Fluent
 {
+    use Macroable { __call as macroCall; }
+
     /**
      * Make a new column instance.
      *
@@ -104,6 +107,16 @@ class Column extends Fluent
             $this->attributes,
             $this->sorter ? ['sorter' => $this->sorter?->value] : []
         );
+    }
+
+    /**
+     * Deep clones the current instance of the column.
+     *
+     * @return $this
+     */
+    public function clone(): static
+    {
+        return clone $this;
     }
 
     //<editor-fold desc="General" defaultstate="collapsed">
@@ -572,4 +585,32 @@ class Column extends Fluent
     }
 
     //</editor-fold>
+
+    /**
+     * Handle dynamic method calls into the method.
+     *
+     * @param  string  $method
+     * @param  array  $parameters
+     * @return mixed
+     *
+     * @throws \BadMethodCallException
+     */
+    public function __call($method, $parameters)
+    {
+        if (static::hasMacro($method)) {
+            return $this->macroCall($method, $parameters);
+        }
+
+        return parent::__call($method, $parameters);
+    }
+
+    /**
+     * Deep clones the current instance of the column.
+     *
+     * @return void
+     */
+    public function __clone(): void
+    {
+        $this->attributes = clone $this->attributes;
+    }
 }
