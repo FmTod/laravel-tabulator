@@ -33,7 +33,6 @@ class DefaultFilterer implements FiltersTable
                 $table->options('dataTreeFilter', true) &&
                 ! Schema::connection($query->getModel()->getConnectionName())
                     ->hasColumn($query->getModel()->getTable(), $filter['field'])) {
-
                 $childrenRelation = $table->options('dataTreeChildField', '_children');
                 $this->applyTreeChildFilter($childrenRelation, $query, $filter['field'], $filter['type'], $filter['value']);
 

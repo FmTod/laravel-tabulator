@@ -34,7 +34,6 @@ class DefaultSorter implements SortsTable
                 $table->options('dataTreeSort', true) &&
                 ! Schema::connection($query->getModel()->getConnectionName())
                     ->hasColumn($query->getModel()->getTable(), $sort['field'])) {
-
                 $sorters = array_merge(config('tabulator.sort.tree', []), config('tabulator.sort.tree', []));
                 $relation = $table->options('dataTreeChildField', '_children');
 
