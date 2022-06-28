@@ -16,7 +16,7 @@ class UserTable extends TabulatorTable
     use HasFilters;
     use HasSorts;
 
-    protected function config(): TabulatorConfig
+    public function config(): TabulatorConfig
     {
         return Tabulator::config()
             ->layout('fitColumns')
@@ -27,12 +27,12 @@ class UserTable extends TabulatorTable
             ->filterMode('remote');
     }
 
-    protected function query(): Builder
+    public function query(): Builder
     {
         return User::query();
     }
 
-    protected function columns(): array
+    public function columns(): array
     {
         return [
             Column::make('id')->title('ID'),

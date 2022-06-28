@@ -39,18 +39,18 @@ it('can create basic table class', function () {
     {
         use HasFilters;
         use HasSorts;
-    
-        protected function config(): TabulatorConfig
+
+        public function config(): TabulatorConfig
         {
             return Tabulator::config();
         }
 
-        protected function query(): Builder
+        public function query(): Builder
         {
             return User::query();
         }
 
-        protected function columns(): array
+        public function columns(): array
         {
             return [
                 Column::make('id'),
@@ -102,18 +102,18 @@ it('can create table class with columns', function () {
     {
         use HasFilters;
         use HasSorts;
-    
-        protected function config(): TabulatorConfig
+
+        public function config(): TabulatorConfig
         {
             return Tabulator::config();
         }
 
-        protected function query(): Builder
+        public function query(): Builder
         {
             return User::query();
         }
 
-        protected function columns(): array
+        public function columns(): array
         {
             return [
                 Column::make('user'),
@@ -166,18 +166,18 @@ it('can create table class with model name', function () {
     {
         use HasFilters;
         use HasSorts;
-    
-        protected function config(): TabulatorConfig
+
+        public function config(): TabulatorConfig
         {
             return Tabulator::config();
         }
 
-        protected function query(): Builder
+        public function query(): Builder
         {
             return OtherUser::query();
         }
 
-        protected function columns(): array
+        public function columns(): array
         {
             return [
                 Column::make('id'),
