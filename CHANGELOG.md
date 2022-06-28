@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-tabulator` will be documented in this file.
 
+## v0.6.0 - 2022-06-28
+
+### What Changed
+
+** Added support for sorting and filtering tree children
+
+**Full Changelog**: https://github.com/FmTod/laravel-tabulator/compare/v0.5.6...v0.6.0
+
 ## v0.5.6 - 2022-06-28
 
 **Full Changelog**: https://github.com/FmTod/laravel-tabulator/compare/v0.5.5...v0.5.6
@@ -72,7 +80,9 @@ All notable changes to `laravel-tabulator` will be documented in this file.
 - 
 - 
 - 
+- 
 - - The clear method will delete all persistence data related to a table regardless of the type
+- 
 - 
 - 
 - 
