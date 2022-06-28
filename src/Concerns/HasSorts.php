@@ -5,6 +5,7 @@ namespace FmTod\LaravelTabulator\Concerns;
 use FmTod\LaravelTabulator\Contracts\SortsTable;
 use FmTod\LaravelTabulator\Exceptions\InvalidSorterException;
 use FmTod\LaravelTabulator\Sorters\DefaultSorter;
+use FmTod\LaravelTabulator\TabulatorTable;
 use Illuminate\Database\Eloquent\Builder;
 
 trait HasSorts
@@ -21,7 +22,7 @@ trait HasSorts
         return ! empty($this->getSorts());
     }
 
-    public function applySorts(Builder $query, array $sorters): Builder
+    public function applySorts(TabulatorTable $table, Builder $query, array $sorters): Builder
     {
         $sorter = app(config('tabulator.sort.sorter', DefaultSorter::class));
 
@@ -29,15 +30,15 @@ trait HasSorts
             throw new InvalidSorterException('Sorter must implement SortsTable');
         }
 
-        return $sorter($query, $sorters);
+        return $sorter($table, $query, $sorters);
     }
 
-    public function queryWithSorts(Builder $query): Builder
+    public function queryWithSorts(TabulatorTable $table, Builder $query): Builder
     {
         if ($this->hasSorts()) {
-            $filters = $this->getSorts();
+            $sorts = $this->getSorts();
 
-            $this->applySorts($query, $filters);
+            $this->applySorts($table, $query, $sorts);
         }
 
         return $query;

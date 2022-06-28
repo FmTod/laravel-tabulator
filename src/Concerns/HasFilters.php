@@ -5,6 +5,7 @@ namespace FmTod\LaravelTabulator\Concerns;
 use FmTod\LaravelTabulator\Contracts\FiltersTable;
 use FmTod\LaravelTabulator\Exceptions\InvalidFilterException;
 use FmTod\LaravelTabulator\Filterers\DefaultFilterer;
+use FmTod\LaravelTabulator\TabulatorTable;
 use Illuminate\Database\Eloquent\Builder;
 
 trait HasFilters
@@ -21,7 +22,7 @@ trait HasFilters
         return ! empty($this->getFilters());
     }
 
-    public function applyFilters(Builder $query, array $filters): Builder
+    public function applyFilters(TabulatorTable $table, Builder $query, array $filters): Builder
     {
         $filter = app(config('tabulator.filter.filterer', DefaultFilterer::class));
 
@@ -29,15 +30,15 @@ trait HasFilters
             throw new InvalidFilterException('Sorter must implement SortsTable');
         }
 
-        return $filter($query, $filters);
+        return $filter($table, $query, $filters);
     }
 
-    public function queryWithFilters(Builder $query): Builder
+    public function queryWithFilters(TabulatorTable $table, Builder $query): Builder
     {
         if ($this->hasFilters()) {
             $filters = $this->getFilters();
 
-            $this->applyFilters($query, $filters);
+            $this->applyFilters($table, $query, $filters);
         }
 
         return $query;

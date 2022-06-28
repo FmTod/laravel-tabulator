@@ -29,11 +29,11 @@ abstract class TabulatorTable
         $this->request = $request ?? request();
     }
 
-    abstract protected function config(): TabulatorConfig;
+    abstract public function config(): TabulatorConfig;
 
-    abstract protected function query(): Builder;
+    abstract public function query(): Builder;
 
-    abstract protected function columns(): Collection|Model|array|string;
+    abstract public function columns(): Collection|Model|array|string;
 
     public function getScopedQuery(): Builder
     {
@@ -41,11 +41,11 @@ abstract class TabulatorTable
             $uses = array_flip(class_uses_recursive(static::class));
 
             if (isset($uses[HasFilters::class])) {
-                $this->queryWithFilters($query);
+                $this->queryWithFilters($this, $query);
             }
 
             if (isset($uses[HasSorts::class])) {
-                $this->queryWithSorts($query);
+                $this->queryWithSorts($this, $query);
             }
         });
     }

@@ -6,13 +6,15 @@ use FmTod\LaravelTabulator\Contracts\FiltersByType;
 use FmTod\LaravelTabulator\Contracts\FiltersTable;
 use FmTod\LaravelTabulator\Exceptions\InvalidFieldException;
 use FmTod\LaravelTabulator\Exceptions\InvalidFilterException;
+use FmTod\LaravelTabulator\TabulatorTable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
 class DefaultFilterer implements FiltersTable
 {
-    public function __invoke(Builder $query, ?array $filters): Builder
+    public function __invoke(TabulatorTable $table, Builder $query, ?array $filters): Builder
     {
         $filters = Arr::wrap($filters);
 
@@ -27,6 +29,18 @@ class DefaultFilterer implements FiltersTable
                 continue;
             }
 
+            if ($table->options('dataTree', false) &&
+                $table->options('dataTreeFilter', true) &&
+                ! Schema::connection($query->getModel()->getConnectionName())
+                    ->hasColumn($query->getModel()->getTable(), $filter['field'])) {
+
+                $childrenRelation = $table->options('dataTreeChildField', '_children');
+                $this->applyTreeChildFilter($childrenRelation, $query, $filter['field'], $filter['type'], $filter['value']);
+
+                continue;
+            }
+
+
             $this->applyFilter($query, $filter['field'], $filter['type'], $filter['value']);
         }
 
@@ -39,7 +53,6 @@ class DefaultFilterer implements FiltersTable
 
         foreach ($availableFilters as $filtererClass => $types) {
             if (in_array($type, Arr::wrap($types)) && ! empty($value)) {
-
                 /** @var \FmTod\LaravelTabulator\Contracts\FiltersByType $filterer */
                 $filterer = app($filtererClass);
 
@@ -68,6 +81,19 @@ class DefaultFilterer implements FiltersTable
                 type: $type,
                 value: $value
             )
+        );
+    }
+
+    protected function applyTreeChildFilter(string $relation, Builder $query, string $field, string $type, mixed $value): Builder
+    {
+        return $query->withWhereHas(
+            relation: $relation,
+            callback: fn (Builder $query) => $this->applyFilter(
+                query: $query,
+                field: $field,
+                type: $type,
+                value: $value
+            ),
         );
     }
 

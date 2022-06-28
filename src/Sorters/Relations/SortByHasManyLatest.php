@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
-class SortByHasMany implements SortsByRelation
+class SortByHasManyLatest implements SortsByRelation
 {
     /**
      * Sorts query by HasMany relation.
