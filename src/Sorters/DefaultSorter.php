@@ -37,7 +37,7 @@ class DefaultSorter implements SortsTable
                 $sorters = array_merge(config('tabulator.sort.tree', []), config('tabulator.sort.tree', []));
                 $relation = $table->options('dataTreeChildField', '_children');
 
-                $this->applyRelationSort($relation, $query, $sort['field'], $sort['dir'], $sorters);
+                $this->applyTreeChildSort($relation, $query, $sort['field'], $sort['dir'], $sorters);
 
                 continue;
             }
@@ -46,6 +46,13 @@ class DefaultSorter implements SortsTable
         }
 
         return $query;
+    }
+
+    protected function applyTreeChildSort(string $relation, Builder $query, string $field, string $direction, array $sorters): Builder
+    {
+        return $this
+            ->applyRelationSort($relation, $query, $field, $direction, $sorters)
+            ->with($relation, fn (Builder $relQuery) => $relQuery->orderBy($field, $direction));
     }
 
     protected function applyRelationSort(string $relation, Builder $query, string $field, string $direction, array $sorters): Builder
