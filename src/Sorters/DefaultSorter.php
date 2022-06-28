@@ -52,7 +52,7 @@ class DefaultSorter implements SortsTable
     {
         return $this
             ->applyRelationSort($relation, $query, $field, $direction, $sorters)
-            ->with($relation, fn (Builder $relQuery) => $relQuery->orderBy($field, $direction));
+            ->with($relation, fn (Relation $relQuery) => $relQuery->orderBy($field, $direction));
     }
 
     protected function applyRelationSort(string $relation, Builder $query, string $field, string $direction, array $sorters): Builder
