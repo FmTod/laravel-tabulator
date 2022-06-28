@@ -603,14 +603,4 @@ class Column extends Fluent
 
         return parent::__call($method, $parameters);
     }
-
-    /**
-     * Deep clones the current instance of the column.
-     *
-     * @return void
-     */
-    public function __clone(): void
-    {
-        $this->attributes = clone $this->attributes;
-    }
 }
