@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Builder;
 
 class KeywordsFilter implements FiltersByType
 {
-    public function __invoke(Builder $query, array $filter): Builder
+    public function __invoke(Builder $query, string|array $filter): Builder
     {
-        $keywords = explode(' ', $filter['value']);
+        $keywords = is_string($filter['value'])
+            ? explode(' ', $filter['value'])
+            : $filter['value'];
 
         return $query->where(function (Builder $subQuery) use ($filter, $keywords) {
             foreach ($keywords as $keyword) {
