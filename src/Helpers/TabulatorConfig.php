@@ -16,6 +16,7 @@ use FmTod\LaravelTabulator\Concerns\Config\RowGroupConfig;
 use FmTod\LaravelTabulator\Concerns\Config\SortConfig;
 use FmTod\LaravelTabulator\TabulatorTable;
 use Illuminate\Support\Fluent;
+use Illuminate\Support\Traits\Macroable;
 
 /**
  * Tabulator configuration instance.
@@ -171,6 +172,7 @@ class TabulatorConfig extends Fluent
     use DataTreeConfig;
     use PrintConfig;
     use MenuConfig;
+    use Macroable { __call as macroCall; }
 
     public function __construct(array $options = [])
     {
@@ -503,5 +505,23 @@ class TabulatorConfig extends Fluent
         $this->attributes['popupContainer'] = $popupContainer;
 
         return $this;
+    }
+
+    /**
+     * Handle dynamic method calls into the method.
+     *
+     * @param  string  $method
+     * @param  array  $parameters
+     * @return mixed
+     *
+     * @throws \BadMethodCallException
+     */
+    public function __call($method, $parameters)
+    {
+        if (static::hasMacro($method)) {
+            return $this->macroCall($method, $parameters);
+        }
+
+        return parent::__call($method, $parameters);
     }
 }
