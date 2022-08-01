@@ -508,6 +508,63 @@ class TabulatorConfig extends Fluent
     }
 
     /**
+     * Provide a console warning if you are trying to call a function on a component that does not exist.
+     *
+     * Enabled by default. With the new optional modular structure this is particularly valuable as it will prompt
+     * you if you are trying to use a function on a component for a module that has not been installed.
+     *
+     * @param  bool  $debugInvalidComponentFuncs
+     * @return $this
+     */
+    public function debugInvalidComponentFuncs(bool $debugInvalidComponentFuncs = true): self
+    {
+        $this->attributes['debugInvalidComponentFuncs'] = $debugInvalidComponentFuncs;
+
+        return $this;
+    }
+
+    /**
+     * Provide a console warning if you attempt to use a setup option that has been deprecated.
+     *
+     * Enabled by default.
+     *
+     * @param  bool  $debugDeprecation
+     * @return $this
+     */
+    public function debugDeprecation(bool $debugDeprecation = true): self
+    {
+        $this->attributes['debugDeprecation'] = $debugDeprecation;
+
+        return $this;
+    }
+
+    /**
+     * Freeze rows to the top of the table.
+     *
+     * @param  int|string|array  $frozenRows
+     * @return $this
+     */
+    public function frozenRows(int|string|array $frozenRows): self
+    {
+        $this->attributes['frozenRows'] = $frozenRows;
+
+        return $this;
+    }
+
+    /**
+     * Freeze rows based on the value of a field.
+     *
+     * @param  string  $frozenRowsField
+     * @return $this
+     */
+    public function frozenRowsField(string $frozenRowsField): self
+    {
+        $this->attributes['frozenRowsField'] = $frozenRowsField;
+
+        return $this;
+    }
+
+    /**
      * Handle dynamic method calls into the method.
      *
      * @param  string  $method
