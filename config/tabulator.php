@@ -104,4 +104,19 @@ return [
             'per_user' => false,
         ]
     ],
+
+    /**
+     * Defaults
+     */
+    'defaults' => [
+        /**
+         * Default properties to use when creating a new column.
+         */
+        'column' => [],
+
+        /**
+         * Default config to use when creating a new table.
+         */
+        'config' => [],
+    ]
 ];

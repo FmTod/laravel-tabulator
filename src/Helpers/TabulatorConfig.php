@@ -230,7 +230,7 @@ class TabulatorConfig extends Fluent
      */
     public static function make(array $options = []): static
     {
-        return new static($options);
+        return new static(array_merge(config('tabulator.defaults.column', []), $options));
     }
 
     /**

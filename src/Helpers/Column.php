@@ -49,15 +49,14 @@ class Column extends Fluent
      */
     public static function make(array|string $options = []): static
     {
-        if (is_string($options)) {
-            return new static([
+        return new static(array_merge(
+            config('tabulator.defaults.column', []),
+            is_string($options) ? [
                 'title' => Str::of($options)->replace('_', ' ')->title()->toString(),
                 'field' => $options,
                 'visible' => true,
-            ]);
-        }
-
-        return new static($options);
+            ] : $options
+        ));
     }
 
     /**
