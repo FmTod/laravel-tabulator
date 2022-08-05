@@ -41,6 +41,14 @@ class Column extends Fluent
 {
     use Macroable { __call as macroCall; }
 
+    public function __construct($attributes = [])
+    {
+        parent::__construct(array_merge(
+            config('tabulator.defaults.column', []),
+            $attributes,
+        ));
+    }
+
     /**
      * Make a new column instance.
      *
@@ -49,14 +57,11 @@ class Column extends Fluent
      */
     public static function make(array|string $options = []): static
     {
-        return new static(array_merge(
-            config('tabulator.defaults.column', []),
-            is_string($options) ? [
-                'title' => Str::of($options)->replace('_', ' ')->title()->toString(),
-                'field' => $options,
-                'visible' => true,
-            ] : $options
-        ));
+        return new static(is_string($options) ? [
+            'title' => Str::of($options)->replace('_', ' ')->title()->toString(),
+            'field' => $options,
+            'visible' => true,
+        ] : $options);
     }
 
     /**

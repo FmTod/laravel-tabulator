@@ -176,12 +176,17 @@ class TabulatorConfig extends Fluent
 
     public function __construct(array $options = [])
     {
-        parent::__construct(array_merge([
-            'pagination' => true,
-            'sortMode' => 'remote',
-            'filterMode' => 'remote',
-            'paginationMode' => 'remote',
-        ], $this->getPersistenceConfig(), $options));
+        parent::__construct(array_merge(
+            [
+                'pagination' => true,
+                'sortMode' => 'remote',
+                'filterMode' => 'remote',
+                'paginationMode' => 'remote',
+            ],
+            config('tabulator.defaults.config', []),
+            $this->getPersistenceConfig(),
+            $options
+        ));
     }
 
     protected function guessTableClass(): ?string
@@ -230,7 +235,7 @@ class TabulatorConfig extends Fluent
      */
     public static function make(array $options = []): static
     {
-        return new static(array_merge(config('tabulator.defaults.column', []), $options));
+        return new static($options);
     }
 
     /**
