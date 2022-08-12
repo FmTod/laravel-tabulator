@@ -417,7 +417,7 @@ class Column extends Fluent
      * @param  \FmTod\LaravelTabulator\Enums\ColumnSorter  $sorter
      * @return $this
      */
-    public function sorter(ColumnSorter $sorter): self
+    public function sorter(ColumnSorter|string $sorter): self
     {
         $this->attributes['sorter'] = $sorter;
 
