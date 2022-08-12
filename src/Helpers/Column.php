@@ -107,10 +107,13 @@ class Column extends Fluent
      */
     public function toArray(): array
     {
-        return array_merge(
-            $this->attributes,
-            $this->sorter ? ['sorter' => $this->sorter?->value] : []
-        );
+        $attributes = parent::toArray();
+
+        if ($this->sorter instanceof ColumnSorter) {
+            $attributes['sorter'] = $this->sorter->value;
+        }
+
+        return $attributes;
     }
 
     /**
