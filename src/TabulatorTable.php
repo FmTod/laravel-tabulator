@@ -68,6 +68,9 @@ abstract class TabulatorTable
 
         if ($this->options('pagination', false) && $this->options('paginationMode') === 'remote') {
             $pageSize = $this->request->input('size');
+            if ($pageSize === 'true') {
+                $pageSize = $query->count();
+            }
 
             return $query->paginate($pageSize);
         }
