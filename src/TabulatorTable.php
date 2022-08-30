@@ -31,7 +31,7 @@ abstract class TabulatorTable
 
     abstract public function config(): TabulatorConfig;
 
-    abstract public function query(): Builder;
+    abstract public function query(): Builder|Model;
 
     abstract public function columns(): Collection|Model|array|string;
 
