@@ -21,7 +21,7 @@ class DefaultSorter implements SortsTable
 
         foreach ($sorts as $sort) {
             if (Str::contains($sort['field'], '.')) {
-                $sorters = config('tabulator.sort.relations', []);
+                $sorters = (array) config('tabulator.sort.relations', []);
                 $relation = Str::before($sort['field'], '.');
                 $field = Str::after($sort['field'], '.');
 
@@ -34,7 +34,7 @@ class DefaultSorter implements SortsTable
                 $table->options('dataTreeSort', true) &&
                 ! Schema::connection($query->getModel()->getConnectionName())
                     ->hasColumn($query->getModel()->getTable(), $sort['field'])) {
-                $sorters = array_merge(config('tabulator.sort.tree', []), config('tabulator.sort.tree', []));
+                $sorters = array_merge((array) config('tabulator.sort.tree', []), (array) config('tabulator.sort.tree', []));
                 $relation = $table->options('dataTreeChildField', '_children');
 
                 $this->applyTreeChildSort($relation, $query, $sort['field'], $sort['dir'], $sorters);
@@ -42,10 +42,18 @@ class DefaultSorter implements SortsTable
                 continue;
             }
 
-            $query->orderBy($sort['field'], $sort['dir']);
+            $this->applySort($query, $sort);
         }
 
         return $query;
+    }
+
+    protected function applySort(Builder $query, mixed $sort): void
+    {
+        $tableName = $query->getModel()?->getTable();
+        $field = $tableName ? "$tableName.{$sort['field']}" : $sort['field'];
+
+        $query->orderBy($field, $sort['dir']);
     }
 
     protected function applyTreeChildSort(string $relation, Builder $query, string $field, string $direction, array $sorters): Builder
