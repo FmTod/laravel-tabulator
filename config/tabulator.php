@@ -31,6 +31,11 @@ return [
         'sorter' => FmTod\LaravelTabulator\Sorters\DefaultSorter::class,
 
         /**
+         * Whether to include the table name in the sort field for the main table columns.
+         */
+        'include_table_name' => false,
+
+        /**
          * Custom sort classes to use when sorting by a relation's column/field.
          */
         'relations' => [

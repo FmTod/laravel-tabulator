@@ -42,16 +42,17 @@ class DefaultSorter implements SortsTable
                 continue;
             }
 
-            $this->applySort($query, $sort);
+            $includeTableName = $table->options('includeTableName', config('tabulator.sort.include_table_name', false));
+            $this->applySort($query, $sort, $includeTableName);
         }
 
         return $query;
     }
 
-    protected function applySort(Builder $query, mixed $sort): void
+    protected function applySort(Builder $query, mixed $sort, bool $includeTable = false): void
     {
         $tableName = $query->getModel()?->getTable();
-        $field = $tableName ? "$tableName.{$sort['field']}" : $sort['field'];
+        $field = $includeTable && $tableName ? "$tableName.{$sort['field']}" : $sort['field'];
 
         $query->orderBy($field, $sort['dir']);
     }
