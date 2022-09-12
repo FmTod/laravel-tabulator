@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-tabulator` will be documented in this file.
 
+## v0.7.0 - 2022-09-12
+
+### What Changed
+
+- `Breaking Change` Moved ajax request handling to the renderer
+
+**Full Changelog**: https://github.com/FmTod/laravel-tabulator/compare/v0.6.13...v0.7.0
+
 ## v0.6.13 - 2022-09-08
 
 **Full Changelog**: https://github.com/FmTod/laravel-tabulator/compare/v0.6.12...v0.6.13
@@ -154,7 +162,9 @@ All notable changes to `laravel-tabulator` will be documented in this file.
 - 
 - 
 - 
+- 
 - - The clear method will delete all persistence data related to a table regardless of the type
+- 
 - 
 - 
 - 
