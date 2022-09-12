@@ -4,9 +4,7 @@ namespace FmTod\LaravelTabulator\Concerns;
 
 use FmTod\LaravelTabulator\Contracts\RendersTable;
 use FmTod\LaravelTabulator\Renderer\BladeRenderer;
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Contracts\Support\Jsonable;
-use Illuminate\Contracts\Support\Responsable;
+use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 trait RenderableTable
@@ -28,24 +26,22 @@ trait RenderableTable
         ]], $data);
     }
 
-    public function render(string $view, $data = [], RendersTable|string|null $renderer = null): Responsable|Response|Arrayable|Jsonable
+    public function render(string $view, $data = [], RendersTable|string|null $renderer = null): mixed
     {
-        if ($this->request->ajax() || $this->request->wantsJson()) {
-            return $this->json();
-        }
-
         if (is_null($renderer)) {
+            /** @noinspection CallableParameterUseCaseInTypeContextInspection */
             $renderer = config('tabulator.renderer');
         }
 
         if (is_string($renderer)) {
+            /** @noinspection CallableParameterUseCaseInTypeContextInspection */
             $renderer = app($renderer);
         }
 
-        return $renderer->render($view, $this->data($data));
+        return $renderer->render($this, $view, $data);
     }
 
-    public static function view(string $view, $data = []): Responsable|Response|Arrayable|Jsonable
+    public static function view(string $view, $data = []): Response|JsonResponse
     {
         return app(static::class)->render($view, $data, BladeRenderer::class);
     }

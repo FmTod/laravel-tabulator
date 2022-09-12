@@ -3,13 +3,19 @@
 namespace FmTod\LaravelTabulator\Renderer;
 
 use FmTod\LaravelTabulator\Contracts\RendersTable;
-use Illuminate\Contracts\Support\Responsable;
-use Symfony\Component\HttpFoundation\Response;
+use FmTod\LaravelTabulator\TabulatorTable;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 
 class BladeRenderer implements RendersTable
 {
-    public function render(string $view, array $data = []): Response|Responsable
+    public function render(TabulatorTable $table, string $view, Arrayable|array $data = []): Response|JsonResponse
     {
-        return response()->view($view, $data);
+        if ($table->request->ajax() || $table->request->wantsJson()) {
+            return response()->json($table->json());
+        }
+
+        return response()->view($view, $table->data($data));
     }
 }

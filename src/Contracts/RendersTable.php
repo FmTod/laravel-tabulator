@@ -2,10 +2,10 @@
 
 namespace FmTod\LaravelTabulator\Contracts;
 
-use Illuminate\Contracts\Support\Responsable;
-use Symfony\Component\HttpFoundation\Response;
+use FmTod\LaravelTabulator\TabulatorTable;
+use Illuminate\Contracts\Support\Arrayable;
 
 interface RendersTable
 {
-    public function render(string $view, array $data = []): Response|Responsable;
+    public function render(TabulatorTable $table, string $view, Arrayable|array $data = []);
 }
