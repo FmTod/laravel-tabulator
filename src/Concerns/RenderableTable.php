@@ -18,7 +18,7 @@ trait RenderableTable
 
     public function data($data = []): array
     {
-        $options = config('tabulator.variable');
+        $options = $this->optionsKey ?? config('tabulator.variable');
 
         return array_merge([$options => [
             'columns' => $this->getColumnArray(),

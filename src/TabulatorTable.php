@@ -24,6 +24,8 @@ abstract class TabulatorTable
 
     public Request $request;
 
+    public ?string $optionsKey;
+
     public function __construct(Request $request = null)
     {
         $this->request = $request ?? request();
