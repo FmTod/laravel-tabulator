@@ -37,6 +37,15 @@ class DatabaseStorage implements PersistenceStorageDriver
             }, []);
     }
 
+    public function store(string $table, array $data): array
+    {
+        foreach ($data as $type => $value) {
+            $this->save($table, $type, $value);
+        }
+
+        return $this->all($table);
+    }
+
     public function get(string $table, string $type): ?Model
     {
         return $this->query()
