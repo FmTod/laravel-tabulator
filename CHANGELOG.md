@@ -2,6 +2,15 @@
 
 All notable changes to `laravel-tabulator` will be documented in this file.
 
+## v0.8.0 - 2022-09-14
+
+### What Changed
+
+- Changed persistence route names
+- Added new route to store all of the persistence data for a table all at once
+
+**Full Changelog**: https://github.com/FmTod/laravel-tabulator/compare/v0.7.1...v0.8.0
+
 ## v0.7.1 - 2022-09-13
 
 **Full Changelog**: https://github.com/FmTod/laravel-tabulator/compare/v0.7.0...v0.7.1
@@ -168,7 +177,9 @@ All notable changes to `laravel-tabulator` will be documented in this file.
 - 
 - 
 - 
+- 
 - - The clear method will delete all persistence data related to a table regardless of the type
+- 
 - 
 - 
 - 
