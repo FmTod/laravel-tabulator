@@ -3,7 +3,6 @@
 namespace FmTod\LaravelTabulator\Controllers;
 
 use FmTod\LaravelTabulator\Facades\Tabulator;
-use FmTod\LaravelTabulator\Models\TabulatorPersistence;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
