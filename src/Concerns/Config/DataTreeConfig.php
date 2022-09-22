@@ -65,7 +65,7 @@ trait DataTreeConfig
      * @param	bool	$dataTreeBranchElement
      * @return \FmTod\LaravelTabulator\Concerns\Config\DataTreeConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
-    public function dataTreeBranchElement(bool $dataTreeBranchElement): self
+    public function dataTreeBranchElement(bool|string $dataTreeBranchElement): self
     {
         $this->attributes['dataTreeBranchElement'] = $dataTreeBranchElement;
 
