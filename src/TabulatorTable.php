@@ -6,6 +6,7 @@ use FmTod\LaravelTabulator\Concerns\HasFilters;
 use FmTod\LaravelTabulator\Concerns\HasSorts;
 use FmTod\LaravelTabulator\Concerns\RenderableTable;
 use FmTod\LaravelTabulator\Contracts\TabulatorModel;
+use FmTod\LaravelTabulator\Helpers\Column;
 use FmTod\LaravelTabulator\Helpers\TabulatorConfig;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\Support\Arrayable;
@@ -52,7 +53,7 @@ abstract class TabulatorTable
         });
     }
 
-    public function getColumnArray(): array
+    public function getColumnCollection(): Collection
     {
         if (is_string($columns = $this->columns()) || $columns instanceof Model) {
             throw_if(! class_exists($columns), RuntimeException::class, 'Class used to get the array of columns not found: '.$columns);
@@ -61,7 +62,12 @@ abstract class TabulatorTable
             $columns = $columns::tabulatorColumns();
         }
 
-        return Collection::wrap($columns)->toArray();
+        return Collection::wrap($columns);
+    }
+
+    public function getFieldColumn(string $field): ?Column
+    {
+        return $this->getColumnCollection()->where('field', $field)->first();
     }
 
     public function json(): LengthAwarePaginator|Arrayable|Jsonable|array

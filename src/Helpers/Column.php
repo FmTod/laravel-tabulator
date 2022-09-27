@@ -34,6 +34,8 @@ use Illuminate\Support\Traits\Macroable;
  * @property string|null $headerFilterFunc
  * @property string|null $headerFilterPlaceholder
  * @property array|null $headerFilterParams
+ * @property string $fieldFilter
+ * @property string $fieldSort
  *
  * @codeCoverageIgnore
  */
@@ -592,6 +594,32 @@ class Column extends Fluent
     }
 
     //</editor-fold>
+
+    /**
+     * Set the filed to be used for sorting instead of the default one.
+     *
+     * @param  string  $sortField
+     * @return $this
+     */
+    public function sortField(string $sortField): self
+    {
+        $this->attributes['sortField'] = $sortField;
+
+        return $this;
+    }
+
+    /**
+     * Set the filed to be used for filtering instead of the default one.
+     *
+     * @param  string  $filterField
+     * @return $this
+     */
+    public function filterField(string $filterField): self
+    {
+        $this->attributes['filterField'] = $filterField;
+
+        return $this;
+    }
 
     /**
      * Handle dynamic method calls into the method.

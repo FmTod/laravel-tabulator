@@ -19,12 +19,15 @@ class DefaultFilterer implements FiltersTable
         $filters = Arr::wrap($filters);
 
         foreach ($filters as $filter) {
+            $column = $table->getFieldColumn($filter['field']);
+            $field = $column['filterField'] ?? $filter['field'];
+
             if (empty($filter['value'])) {
                 continue;
             }
 
             if (Str::contains($filter['field'], '.')) {
-                $this->applyRelationFilter($query, $filter['field'], $filter['type'], $filter['value']);
+                $this->applyRelationFilter($query, $field, $filter['type'], $filter['value']);
 
                 continue;
             }
@@ -32,15 +35,15 @@ class DefaultFilterer implements FiltersTable
             if ($table->options('dataTree', false) &&
                 $table->options('dataTreeFilter', true) &&
                 ! Schema::connection($query->getModel()->getConnectionName())
-                    ->hasColumn($query->getModel()->getTable(), $filter['field'])) {
+                    ->hasColumn($query->getModel()->getTable(), $field)) {
                 $childrenRelation = $table->options('dataTreeChildField', '_children');
-                $this->applyTreeChildFilter($childrenRelation, $query, $filter['field'], $filter['type'], $filter['value']);
+                $this->applyTreeChildFilter($childrenRelation, $query, $field, $filter['type'], $filter['value']);
 
                 continue;
             }
 
 
-            $this->applyFilter($query, $filter['field'], $filter['type'], $filter['value']);
+            $this->applyFilter($query, $field, $filter['type'], $filter['value']);
         }
 
         return $query;
