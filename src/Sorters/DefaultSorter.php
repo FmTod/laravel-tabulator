@@ -23,6 +23,12 @@ class DefaultSorter implements SortsTable
             $column = $table->getFieldColumn($sort['field']);
             $field = $column['sortField'] ?? $sort['field'];
 
+            if (isset($column['sortFunc']) && (is_callable($column['sortFunc']) || $column['sortFunc'] instanceof Closure)) {
+                $column['sortFunc']($query, $field, $sort['dir']);
+
+                continue;
+            }
+
             if (Str::contains($field, '.')) {
                 $sorters = (array) config('tabulator.sort.relations', []);
                 $relationName = Str::before($field, '.');

@@ -2,6 +2,7 @@
 
 namespace FmTod\LaravelTabulator\Filterers;
 
+use Closure;
 use FmTod\LaravelTabulator\Contracts\FiltersByType;
 use FmTod\LaravelTabulator\Contracts\FiltersTable;
 use FmTod\LaravelTabulator\Exceptions\InvalidFieldException;
@@ -23,6 +24,12 @@ class DefaultFilterer implements FiltersTable
             $field = $column['filterField'] ?? $filter['field'];
 
             if (empty($filter['value'])) {
+                continue;
+            }
+
+            if (isset($column['filterFunc']) && (is_callable($column['filterFunc']) || $column['filterFunc'] instanceof Closure)) {
+                $column['filterFunc']($query, $field , $filter['type'], $filter['value']);
+
                 continue;
             }
 

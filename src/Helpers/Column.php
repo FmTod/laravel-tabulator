@@ -2,8 +2,10 @@
 
 namespace FmTod\LaravelTabulator\Helpers;
 
+use Closure;
 use FmTod\LaravelTabulator\Enums\ColumnSorter;
 use FmTod\LaravelTabulator\Factories\ColumnFactory;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Fluent;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
@@ -34,8 +36,10 @@ use Illuminate\Support\Traits\Macroable;
  * @property string|null $headerFilterFunc
  * @property string|null $headerFilterPlaceholder
  * @property array|null $headerFilterParams
- * @property string $fieldFilter
- * @property string $fieldSort
+ * @property string|null $sortField
+ * @property string|null $filterField
+ * @property Closure|callable|null $sortFunc
+ * @property Closure|callable|null $filterFunc
  *
  * @codeCoverageIgnore
  */
@@ -115,7 +119,7 @@ class Column extends Fluent
             $attributes['sorter'] = $this->sorter->value;
         }
 
-        return $attributes;
+        return Arr::except($attributes, ['sortField', 'sortFunc', 'filterField', 'filterFunc']);
     }
 
     /**
@@ -609,6 +613,19 @@ class Column extends Fluent
     }
 
     /**
+     * Set a custom sorting function for the column.
+     *
+     * @param  \Closure|callable  $sortFunc
+     * @return $this
+     */
+    public function sortFunc(Closure|callable $sortFunc): self
+    {
+        $this->attributes['sortFunc'] = $sortFunc;
+
+        return $this;
+    }
+
+    /**
      * Set the filed to be used for filtering instead of the default one.
      *
      * @param  string  $filterField
@@ -617,6 +634,19 @@ class Column extends Fluent
     public function filterField(string $filterField): self
     {
         $this->attributes['filterField'] = $filterField;
+
+        return $this;
+    }
+
+    /**
+     * Set a custom filtering function for the column.
+     *
+     * @param  \Closure|callable  $filterFunc
+     * @return $this
+     */
+    public function filterFunc(Closure|callable $filterFunc): self
+    {
+        $this->attributes['filterFunc'] = $filterFunc;
 
         return $this;
     }
