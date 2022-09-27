@@ -28,7 +28,7 @@ class DefaultFilterer implements FiltersTable
             }
 
             if (isset($column['filterFunc']) && (is_callable($column['filterFunc']) || $column['filterFunc'] instanceof Closure)) {
-                $column['filterFunc']($query, $field , $filter['type'], $filter['value']);
+                $column['filterFunc']($query, $field, $filter['type'], $filter['value']);
 
                 continue;
             }
