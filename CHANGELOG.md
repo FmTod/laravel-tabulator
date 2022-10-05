@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-tabulator` will be documented in this file.
 
+## v0.9.2 - 2022-10-05
+
+### What's Changed
+
+- Bump dependabot/fetch-metadata from 1.3.3 to 1.3.4 by @dependabot in https://github.com/FmTod/laravel-tabulator/pull/2
+
+**Full Changelog**: https://github.com/FmTod/laravel-tabulator/compare/v0.9.1...v0.9.2
+
 ## v0.9.1 - 2022-09-27
 
 **Full Changelog**: https://github.com/FmTod/laravel-tabulator/compare/v0.9.0...v0.9.1
@@ -193,7 +201,9 @@ All notable changes to `laravel-tabulator` will be documented in this file.
 - 
 - 
 - 
+- 
 - - The clear method will delete all persistence data related to a table regardless of the type
+- 
 - 
 - 
 - 
