@@ -183,8 +183,8 @@ class TabulatorConfig extends Fluent
                 'filterMode' => 'remote',
                 'paginationMode' => 'remote',
             ],
-            config('tabulator.defaults.config', []),
             $this->getPersistenceConfig(),
+            config('tabulator.defaults.config', []),
             $options
         ));
     }
