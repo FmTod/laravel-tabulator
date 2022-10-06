@@ -10,15 +10,6 @@ use Illuminate\Routing\Controller;
 
 class PersistenceTypeController extends Controller
 {
-    public function store(Request $request, string $table, string $type): JsonResponse
-    {
-        $data = $request->validate(['data' => 'sometimes|nullable|array']);
-
-        $model = Tabulator::persistenceSave($table, $type, $data['data']);
-
-        return response()->json($model);
-    }
-
     public function show(string $table, string $type): JsonResponse
     {
         $model = Tabulator::persistenceGet($table, $type);
@@ -31,6 +22,15 @@ class PersistenceTypeController extends Controller
                 'type' => $type,
             ]);
         }
+
+        return response()->json($model);
+    }
+
+    public function store(Request $request, string $table, string $type): JsonResponse
+    {
+        $data = $request->validate(['data' => 'sometimes|nullable|array']);
+
+        $model = Tabulator::persistenceSave($table, $type, $data['data']);
 
         return response()->json($model);
     }

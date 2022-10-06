@@ -4,6 +4,7 @@ namespace FmTod\LaravelTabulator;
 
 use FmTod\LaravelTabulator\Contracts\PersistenceStorageDriver;
 use FmTod\LaravelTabulator\Controllers\PersistenceController;
+use FmTod\LaravelTabulator\Controllers\PersistenceTypeController;
 use FmTod\LaravelTabulator\Helpers\TabulatorConfig;
 use FmTod\LaravelTabulator\Persistence\DatabaseStorage;
 use Illuminate\Database\Eloquent\Model;
@@ -27,10 +28,11 @@ class Tabulator
     {
         Route::as("$name.")->prefix($prefix ?? str_replace('.', '/', $name))->group(function () {
             Route::get('/{table}', [PersistenceController::class, 'show'])->name('show');
+            Route::post('/{table}', [PersistenceController::class, 'store'])->name('show');
             Route::delete('/{table}', [PersistenceController::class, 'destroy'])->name('destroy');
-            Route::get('/{table}/{type}', [PersistenceController::class, 'show'])->name('types.show');
-            Route::post('/{table}/{type}', [PersistenceController::class, 'store'])->name('types.store');
-            Route::delete('/{table}/{type}', [PersistenceController::class, 'destroy'])->name('types.destroy');
+            Route::get('/{table}/{type}', [PersistenceTypeController::class, 'show'])->name('types.show');
+            Route::post('/{table}/{type}', [PersistenceTypeController::class, 'store'])->name('types.store');
+            Route::delete('/{table}/{type}', [PersistenceTypeController::class, 'destroy'])->name('types.destroy');
         });
     }
 
