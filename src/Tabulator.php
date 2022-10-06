@@ -28,7 +28,7 @@ class Tabulator
     {
         Route::as("$name.")->prefix($prefix ?? str_replace('.', '/', $name))->group(function () {
             Route::get('/{table}', [PersistenceController::class, 'show'])->name('show');
-            Route::post('/{table}', [PersistenceController::class, 'store'])->name('show');
+            Route::post('/{table}', [PersistenceController::class, 'store'])->name('store');
             Route::delete('/{table}', [PersistenceController::class, 'destroy'])->name('destroy');
             Route::get('/{table}/{type}', [PersistenceTypeController::class, 'show'])->name('types.show');
             Route::post('/{table}/{type}', [PersistenceTypeController::class, 'store'])->name('types.store');
