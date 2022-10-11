@@ -4,6 +4,7 @@ namespace FmTod\LaravelTabulator\Factories;
 
 use FmTod\LaravelTabulator\Helpers\Column;
 use Illuminate\Support\Str;
+use Illuminate\Support\Traits\ForwardsCalls;
 use Illuminate\Support\Traits\Macroable;
 
 /**
@@ -12,6 +13,7 @@ use Illuminate\Support\Traits\Macroable;
 class ColumnFactory
 {
     use Macroable { __call as macroCall; }
+    use ForwardsCalls;
 
     protected Column $column;
 
@@ -22,13 +24,11 @@ class ColumnFactory
 
     public function __call($method, $parameters)
     {
-        if (! method_exists($this->column, $method)) {
+        if (static::hasMacro($method)) {
             return $this->macroCall($method, $parameters);
         }
 
-        $this->column->$method(...$parameters);
-
-        return $this;
+        return $this->forwardDecoratedCallTo($this->column, $method, $parameters);
     }
 
     public function __clone()
