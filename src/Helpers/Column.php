@@ -47,7 +47,12 @@ class Column extends Fluent
 {
     use Macroable { __call as macroCall; }
 
-    public function __construct($attributes = [])
+    /**
+     * Create a new column instance.
+     *
+     * @param  array  $attributes
+     */
+    public function __construct(array $attributes = [])
     {
         parent::__construct(array_merge(
             config('tabulator.defaults.column', []),
@@ -97,13 +102,31 @@ class Column extends Fluent
     }
 
     /**
-     * Get a factory instance for the column.
+     * Handle dynamic method calls into the class.
      *
-     * @return \FmTod\LaravelTabulator\Factories\ColumnFactory
+     * @param  string  $method
+     * @param  array  $parameters
+     * @return mixed
+     *
+     * @throws \BadMethodCallException
      */
-    public function toFactory(): ColumnFactory
+    public function __call($method, $parameters)
     {
-        return Column::factory($this->toArray());
+        if (static::hasMacro($method)) {
+            return $this->macroCall($method, $parameters);
+        }
+
+        return parent::__call($method, $parameters);
+    }
+
+    /**
+     * Deep clones the current instance of the column.
+     *
+     * @return $this
+     */
+    public function clone(): static
+    {
+        return clone $this;
     }
 
     /**
@@ -123,13 +146,13 @@ class Column extends Fluent
     }
 
     /**
-     * Deep clones the current instance of the column.
+     * Get a factory instance for the column.
      *
-     * @return $this
+     * @return \FmTod\LaravelTabulator\Factories\ColumnFactory
      */
-    public function clone(): static
+    public function toFactory(): ColumnFactory
     {
-        return clone $this;
+        return Column::factory($this->toArray());
     }
 
     //<editor-fold desc="General" defaultstate="collapsed">
@@ -338,6 +361,45 @@ class Column extends Fluent
     }
 
     /**
+     * The widthGrow function works by dividing the available space by the sum total of widthGrow values
+     * and then allocating it out to the columns based on their value.
+     *
+     * The widthGrow property should be used on columns without a width property set. The value is
+     * used to work out what fraction of the available will be allocated to the column. The value
+     * should be set to a number greater than 0, by default any columns with no width set have a
+     * widthGrow value of 1.
+     *
+     * @param  int  $widthGrow
+     * @return $this
+     */
+    public function widthGrow(int $widthGrow): self
+    {
+        $this->attributes['widthGrow'] = $widthGrow;
+
+        return $this;
+    }
+
+    /**
+     * The widthShrink function works by dividing the excess horizontal space by the sum total of widthShrink
+     * values and then allocating it out to the columns based on their value.
+     *
+     * The widthShrink property should be used on columns with a width property set. The value is used
+     * to work out how to shrink columns with a fixed width when the table is too narrow to fit in all
+     * the columns. The value should be set to a number greater than 0, by default columns with a width
+     * set have a widthShrink value of 0, meaning they will not be shrunk if the table gets too narrow,
+     * and may cause the horizontal scrollbar to appear.
+     *
+     * @param  int  $widthShrink
+     * @return $this
+     */
+    public function widthShrink(int $widthShrink): self
+    {
+        $this->attributes['widthShrink'] = $widthShrink;
+
+        return $this;
+    }
+
+    /**
      * Sets the minimum width of this column, this should be set in pixels.
      *
      * @param  string|int|float  $minWidth
@@ -393,6 +455,19 @@ class Column extends Fluent
     //</editor-fold>
 
     //<editor-fold desc="Data Manipulation" defaultstate="collapsed">
+
+    /**
+     * Set how you would like the data to be formatted in the header.
+     *
+     * @param  string  $titleFormatter
+     * @return $this
+     */
+    public function titleFormatter(string $titleFormatter): self
+    {
+        $this->attributes['titleFormatter'] = $titleFormatter;
+
+        return $this;
+    }
 
     /**
      * Set how you would like the data to be formatted.
@@ -455,6 +530,32 @@ class Column extends Fluent
     public function headerSort(bool $headerSort = true): self
     {
         $this->attributes['headerSort'] = $headerSort;
+
+        return $this;
+    }
+
+    /**
+     * Set the filed to be used for sorting instead of the default one.
+     *
+     * @param  string  $sortField
+     * @return $this
+     */
+    public function sortField(string $sortField): self
+    {
+        $this->attributes['sortField'] = $sortField;
+
+        return $this;
+    }
+
+    /**
+     * Set a custom sorting function for the column.
+     *
+     * @param  \Closure|callable  $sortFunc
+     * @return $this
+     */
+    public function sortFunc(Closure|callable $sortFunc): self
+    {
+        $this->attributes['sortFunc'] = $sortFunc;
 
         return $this;
     }
@@ -567,6 +668,32 @@ class Column extends Fluent
         return $this;
     }
 
+    /**
+     * Set the filed to be used for filtering instead of the default one.
+     *
+     * @param  string  $filterField
+     * @return $this
+     */
+    public function filterField(string $filterField): self
+    {
+        $this->attributes['filterField'] = $filterField;
+
+        return $this;
+    }
+
+    /**
+     * Set a custom filtering function for the column.
+     *
+     * @param  \Closure|callable  $filterFunc
+     * @return $this
+     */
+    public function filterFunc(Closure|callable $filterFunc): self
+    {
+        $this->attributes['filterFunc'] = $filterFunc;
+
+        return $this;
+    }
+
     //</editor-fold>
 
     //<editor-fold desc="Callbacks" defaultstate="collapsed">
@@ -598,74 +725,4 @@ class Column extends Fluent
     }
 
     //</editor-fold>
-
-    /**
-     * Set the filed to be used for sorting instead of the default one.
-     *
-     * @param  string  $sortField
-     * @return $this
-     */
-    public function sortField(string $sortField): self
-    {
-        $this->attributes['sortField'] = $sortField;
-
-        return $this;
-    }
-
-    /**
-     * Set a custom sorting function for the column.
-     *
-     * @param  \Closure|callable  $sortFunc
-     * @return $this
-     */
-    public function sortFunc(Closure|callable $sortFunc): self
-    {
-        $this->attributes['sortFunc'] = $sortFunc;
-
-        return $this;
-    }
-
-    /**
-     * Set the filed to be used for filtering instead of the default one.
-     *
-     * @param  string  $filterField
-     * @return $this
-     */
-    public function filterField(string $filterField): self
-    {
-        $this->attributes['filterField'] = $filterField;
-
-        return $this;
-    }
-
-    /**
-     * Set a custom filtering function for the column.
-     *
-     * @param  \Closure|callable  $filterFunc
-     * @return $this
-     */
-    public function filterFunc(Closure|callable $filterFunc): self
-    {
-        $this->attributes['filterFunc'] = $filterFunc;
-
-        return $this;
-    }
-
-    /**
-     * Handle dynamic method calls into the method.
-     *
-     * @param  string  $method
-     * @param  array  $parameters
-     * @return mixed
-     *
-     * @throws \BadMethodCallException
-     */
-    public function __call($method, $parameters)
-    {
-        if (static::hasMacro($method)) {
-            return $this->macroCall($method, $parameters);
-        }
-
-        return parent::__call($method, $parameters);
-    }
 }
