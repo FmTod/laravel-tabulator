@@ -8,15 +8,15 @@ use Illuminate\Support\Traits\Macroable;
 /**
  * Class Button
  *
- * @method static tag(string $tag)
- * @method static hidden(string $hidden)
- * @method static class(string $class)
- * @method static style(string $style)
- * @method static href(string $href)
- * @method static role(string $role)
- * @method static innerHTML(string $innerHTML)
- * @method static innerText(string $innerText)
- * @method static onclick(string $onclick)
+ * @method \FmTod\LaravelTabulator\Helpers\Action tag(string $tag)
+ * @method \FmTod\LaravelTabulator\Helpers\Action hidden(string $hidden)
+ * @method \FmTod\LaravelTabulator\Helpers\Action class(string $class)
+ * @method \FmTod\LaravelTabulator\Helpers\Action style(string $style)
+ * @method \FmTod\LaravelTabulator\Helpers\Action href(string $href)
+ * @method \FmTod\LaravelTabulator\Helpers\Action role(string $role)
+ * @method \FmTod\LaravelTabulator\Helpers\Action innerHTML(string $innerHTML)
+ * @method \FmTod\LaravelTabulator\Helpers\Action innerText(string $innerText)
+ * @method \FmTod\LaravelTabulator\Helpers\Action onclick(string $onclick)
  */
 class Action extends Fluent
 {

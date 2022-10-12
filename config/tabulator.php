@@ -70,6 +70,9 @@ return [
         ]
     ],
 
+    /**
+     * Actions column configuration.
+     */
     'action' => [
         'field' => 'actions',
         'title' => 'Actions',
