@@ -63,4 +63,17 @@ class Action extends Fluent
     {
         return new static(is_string($options) ? ['innerHTML' => $options] : $options);
     }
+
+    /**
+     * Add class to existing class list.
+     *
+     * @param  string  $class
+     * @return $this
+     */
+    public function addClass(string $class): static
+    {
+        $this->attributes['class'] .= ' ' . $class;
+
+        return $this;
+    }
 }
