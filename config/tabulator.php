@@ -120,6 +120,11 @@ return [
         'column' => [],
 
         /**
+         * Default config to use when creating a new action.
+         */
+        'action' => [],
+
+        /**
          * Default config to use when creating a new table.
          */
         'config' => [],
