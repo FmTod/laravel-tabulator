@@ -38,6 +38,11 @@ abstract class TabulatorTable
 
     abstract public function columns(): Collection|Model|array|string;
 
+    public function actions(): array
+    {
+        return [];
+    }
+
     public function getScopedQuery(): Builder
     {
         return tap($this->query(), function (Builder $query) {
@@ -62,7 +67,17 @@ abstract class TabulatorTable
             $columns = $columns::tabulatorColumns();
         }
 
-        return Collection::wrap($columns);
+        $columns = Collection::wrap($columns);
+
+        return $columns->when(
+            value: count($this->actions()) > 0 && $columns->doesntContain('field', 'actions'),
+            callback: function (Collection $columns) {
+                $actions = Column::make(config('tabulator.action', 'actions'))
+                    ->formatterParams(['actions' => $this->actions()]);
+
+                return $columns->push($actions);
+            }
+        );
     }
 
     public function getFieldColumn(string $field): ?Column

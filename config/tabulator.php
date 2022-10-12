@@ -70,6 +70,13 @@ return [
         ]
     ],
 
+    'action' => [
+        'field' => 'actions',
+        'title' => 'Actions',
+        'hozAlign' => 'left',
+        'headerSort' => false,
+    ],
+
     /**
      * Persistence configuration.
      */
