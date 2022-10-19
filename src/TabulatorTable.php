@@ -70,10 +70,12 @@ abstract class TabulatorTable
         $columns = Collection::wrap($columns);
 
         return $columns->when(
-            value: count($this->actions()) > 0 && $columns->doesntContain('field', 'actions'),
+            value: count($this->actions()) > 0
+            && ($columns->doesntContain('field', 'actions')
+                || $columns->doesntContain('formatter', 'actions')),
             callback: function (Collection $columns) {
                 $actions = Column::make(config('tabulator.action', 'actions'))
-                    ->formatterParams(['actions' => $this->actions()]);
+                    ->formatterParams(['actions' => array_filter($this->actions())]);
 
                 return $columns->push($actions);
             }
