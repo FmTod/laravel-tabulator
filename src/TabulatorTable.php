@@ -102,4 +102,16 @@ abstract class TabulatorTable
 
         return $query->get();
     }
+
+    public function setRequest(Request $request): self
+    {
+        $this->request = $request;
+
+        return $this;
+    }
+
+    public function getRequest(): Request
+    {
+        return $this->request;
+    }
 }
