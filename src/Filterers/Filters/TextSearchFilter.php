@@ -27,6 +27,10 @@ class TextSearchFilter implements FiltersByType
             'ends' => $query->where($filter['field'], 'like', "%{$filter['value']['query']}"),
             'exact' => $query->where($filter['field'], '=', $filter['value']['query']),
             'not' => $query->where($filter['field'], '!=', $filter['value']['query']),
+            'empty' => $query->where(function (Builder $query) use ($filter) {
+                $query->where($filter['field'], '=', '')
+                    ->orWhereNull($filter['field']);
+            }),
         };
     }
 }
