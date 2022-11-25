@@ -21,10 +21,12 @@ class TextSearchFilter implements FiltersByType
         }
 
         return match ($type) {
+            'except' => $query->where($filter['field'], 'not like', "%{$filter['value']['query']}%"),
             'contains' => $query->where($filter['field'], 'like', "%{$filter['value']['query']}%"),
             'starts' => $query->where($filter['field'], 'like', "{$filter['value']['query']}%"),
             'ends' => $query->where($filter['field'], 'like', "%{$filter['value']['query']}"),
             'exact' => $query->where($filter['field'], '=', $filter['value']['query']),
+            'not' => $query->where($filter['field'], '!=', $filter['value']['query']),
         };
     }
 }
