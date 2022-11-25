@@ -16,10 +16,6 @@ class TextSearchFilter implements FiltersByType
 
         $type = $filter['value']['type'] ?? 'contains';
 
-        if (! in_array($type, ['contains', 'starts', 'ends', 'exact'])) {
-            throw new InvalidArgumentException("Invalid comparison type: $type");
-        }
-
         return match ($type) {
             'except' => $query->where($filter['field'], 'not like', "%{$filter['value']['query']}%"),
             'contains' => $query->where($filter['field'], 'like', "%{$filter['value']['query']}%"),
@@ -31,6 +27,7 @@ class TextSearchFilter implements FiltersByType
                 $query->where($filter['field'], '=', '')
                     ->orWhereNull($filter['field']);
             }),
+            default => throw new InvalidArgumentException("Invalid comparison type: $type"),
         };
     }
 }
