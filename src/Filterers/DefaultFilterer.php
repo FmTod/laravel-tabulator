@@ -84,20 +84,22 @@ class DefaultFilterer implements FiltersTable
     {
         $relation = $this->getRelation($query, $field);
 
-        return $query
-            ->whereHas(
-                relation: $relation,
-                callback: fn (Builder $query) => $this->applyFilter(
-                    query: $query,
-                    field: Str::after($field, '.'),
-                    type: $type,
-                    value: $value
+        return $query->where(
+            fn (Builder $subQuery) => $subQuery
+                ->whereHas(
+                    relation: $relation,
+                    callback: fn (Builder $query) => $this->applyFilter(
+                        query: $query,
+                        field: Str::after($field, '.'),
+                        type: $type,
+                        value: $value
+                    )
                 )
-            )
-            ->when(
-                value: $type === 'textSearch' && isset($value['type']) && in_array($value['type'], ['not', 'empty', 'expect']),
-                callback: fn (Builder $query) => $query->orDoesntHave($relation),
-            );
+                ->when(
+                    value: $type === 'textSearch' && isset($value['type']) && in_array($value['type'], ['not', 'empty', 'expect']),
+                    callback: fn (Builder $query) => $query->orDoesntHave($relation),
+                )
+        );
     }
 
     protected function applyTreeChildFilter(string $relation, Builder $query, string $field, string $type, mixed $value): Builder

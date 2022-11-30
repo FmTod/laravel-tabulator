@@ -22,7 +22,7 @@ class TabulatorServiceProvider extends PackageServiceProvider
         $this->app->bind('tabulator', Tabulator::class);
     }
 
-    public function packageBooted()
+    public function packageBooted(): void
     {
         $this->publishes([
             $this->package->basePath('/../stubs/tabulator.table.stub') => base_path("stubs/tabulator.table.stub"),
