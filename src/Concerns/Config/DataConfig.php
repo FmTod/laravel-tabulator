@@ -36,10 +36,10 @@ trait DataConfig
     /**
      * Parameters to be passed to remote Ajax data loading request.
      *
-     * @param  array  $ajaxParams
+     * @param  array|string  $ajaxParams
      * @return \FmTod\LaravelTabulator\Concerns\Config\DataConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
-    public function ajaxParams(array $ajaxParams): self
+    public function ajaxParams(array|string $ajaxParams): self
     {
         $this->attributes['ajaxParams'] = $ajaxParams;
 
