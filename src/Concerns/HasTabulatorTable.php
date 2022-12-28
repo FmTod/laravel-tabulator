@@ -61,7 +61,7 @@ trait HasTabulatorTable
             $arrayKey = Str::singular($model->getTable()).'_'.Str::plural($keyName);
         }
 
-        $validated = $request->validate(self::tabulatorRules($keyName, $arrayKey));
+        $validated = $request->validate(self::tabulatorRules($arrayKey, $keyName));
 
         /** @var \Illuminate\Database\Eloquent\Builder $query */
         $query = $validated['type'] === 'array'

@@ -61,8 +61,12 @@ abstract class TabulatorTable
     public function getColumnCollection(): Collection
     {
         if (is_string($columns = $this->columns()) || $columns instanceof Model) {
-            throw_if(! class_exists($columns), RuntimeException::class, 'Class used to get the array of columns not found: '.$columns);
-            throw_if(! class_implements($columns, TabulatorModel::class), RuntimeException::class, 'Class used to get the array of columns does not implement TabulatorModel: '.$columns);
+            throw_unless(class_exists($columns), "Class used to get the array of columns not found: $columns");
+
+            throw_unless(
+                condition: in_array(TabulatorModel::class, class_implements($columns), true),
+                exception: "Class used to get the array of columns does not implement TabulatorModel: $columns",
+            );
 
             $columns = $columns::tabulatorColumns();
         }
