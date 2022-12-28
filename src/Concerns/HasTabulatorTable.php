@@ -14,7 +14,14 @@ trait HasTabulatorTable
 
     public static function tabulatorTable(?Request $request = null): TabulatorTable
     {
-        return app(self::tabulatorClass(), $request ? [$request] : []);
+        /** @var TabulatorTable $table */
+        $table =  app(self::tabulatorClass());
+
+        if ($request) {
+            $table->setRequest($request);
+        }
+
+        return $table;
     }
 
     public static function tabulatorRender(string $view, array $data = [], RendersTable|string|null $renderer = null): mixed
