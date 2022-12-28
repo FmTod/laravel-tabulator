@@ -15,7 +15,7 @@ trait HasTabulatorTable
     public static function tabulatorTable(?Request $request = null): TabulatorTable
     {
         /** @var TabulatorTable $table */
-        $table =  app(self::tabulatorClass());
+        $table = app(self::tabulatorClass());
 
         if ($request) {
             $table->setRequest($request);
