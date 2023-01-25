@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\File;
+
 use function Pest\Laravel\artisan;
 
 it('can create basic table class', function () {

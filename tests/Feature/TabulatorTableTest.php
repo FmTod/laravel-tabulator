@@ -3,6 +3,7 @@
 use FmTod\LaravelTabulator\Tests\stubs\Models\User;
 use FmTod\LaravelTabulator\Tests\stubs\UserTable;
 use Illuminate\Support\Facades\Route;
+
 use function Pest\Laravel\postJson;
 
 beforeEach(function () {
