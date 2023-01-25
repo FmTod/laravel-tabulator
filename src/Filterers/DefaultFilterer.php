@@ -49,7 +49,6 @@ class DefaultFilterer implements FiltersTable
                 continue;
             }
 
-
             $this->applyFilter($query, $field, $filter['type'], $filter['value']);
         }
 

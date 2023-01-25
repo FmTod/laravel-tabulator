@@ -23,7 +23,7 @@ trait ClipboardConfig
     /**
      * Set which rows are visible in clipboard output.
      *
-     * @param	string	$clipboardCopyRowRange
+     * @param  string  $clipboardCopyRowRange
      * @return \FmTod\LaravelTabulator\Concerns\Config\ClipboardConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function clipboardCopyRowRange(string $clipboardCopyRowRange): self
@@ -36,7 +36,7 @@ trait ClipboardConfig
     /**
      * Format clipboard output before it is inserted in the clipboard.
      *
-     * @param	string	$clipboardCopyFormatter
+     * @param  string  $clipboardCopyFormatter
      * @return \FmTod\LaravelTabulator\Concerns\Config\ClipboardConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function clipboardCopyFormatter(string $clipboardCopyFormatter): self
@@ -49,7 +49,7 @@ trait ClipboardConfig
     /**
      * Clipboard paste parser function.
      *
-     * @param	string	$clipboardPasteParser
+     * @param  string  $clipboardPasteParser
      * @return \FmTod\LaravelTabulator\Concerns\Config\ClipboardConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function clipboardPasteParser(string $clipboardPasteParser): self
@@ -62,7 +62,7 @@ trait ClipboardConfig
     /**
      * Clipboard paste action function.
      *
-     * @param	string	$clipboardPasteAction
+     * @param  string  $clipboardPasteAction
      * @return \FmTod\LaravelTabulator\Concerns\Config\ClipboardConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function clipboardPasteAction(string $clipboardPasteAction): self

@@ -23,7 +23,7 @@ trait DataTreeConfig
     /**
      * Enable filtering of child rows.
      *
-     * @param	bool	$dataTreeFilter
+     * @param  bool  $dataTreeFilter
      * @return \FmTod\LaravelTabulator\Concerns\Config\DataTreeConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function dataTreeFilter(bool $dataTreeFilter): self
@@ -36,7 +36,7 @@ trait DataTreeConfig
     /**
      * Enable sorting of child rows.
      *
-     * @param	bool	$dataTreeSort
+     * @param  bool  $dataTreeSort
      * @return \FmTod\LaravelTabulator\Concerns\Config\DataTreeConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function dataTreeSort(bool $dataTreeSort): self
@@ -49,7 +49,7 @@ trait DataTreeConfig
     /**
      * Choose which column to display the toggle element in.
      *
-     * @param	string|bool	$dataTreeElementColumn
+     * @param  string|bool  $dataTreeElementColumn
      * @return \FmTod\LaravelTabulator\Concerns\Config\DataTreeConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function dataTreeElementColumn(string|bool $dataTreeElementColumn): self
@@ -62,7 +62,7 @@ trait DataTreeConfig
     /**
      * Show tree branch icon.
      *
-     * @param	bool	$dataTreeBranchElement
+     * @param  bool  $dataTreeBranchElement
      * @return \FmTod\LaravelTabulator\Concerns\Config\DataTreeConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function dataTreeBranchElement(bool|string $dataTreeBranchElement): self
@@ -75,7 +75,7 @@ trait DataTreeConfig
     /**
      * Tree level indent in pixels.
      *
-     * @param	int	$dataTreeChildIndent
+     * @param  int  $dataTreeChildIndent
      * @return \FmTod\LaravelTabulator\Concerns\Config\DataTreeConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function dataTreeChildIndent(int $dataTreeChildIndent): self
@@ -88,7 +88,7 @@ trait DataTreeConfig
     /**
      * The data field to look for child rows.
      *
-     * @param	string	$dataTreeChildField
+     * @param  string  $dataTreeChildField
      * @return \FmTod\LaravelTabulator\Concerns\Config\DataTreeConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function dataTreeChildField(string $dataTreeChildField): self
@@ -101,7 +101,7 @@ trait DataTreeConfig
     /**
      * The element to be used for the collapse toggle button.
      *
-     * @param	bool|string	$dataTreeCollapseElement
+     * @param  bool|string  $dataTreeCollapseElement
      * @return \FmTod\LaravelTabulator\Concerns\Config\DataTreeConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function dataTreeCollapseElement(bool|string $dataTreeCollapseElement): self
@@ -114,7 +114,7 @@ trait DataTreeConfig
     /**
      * The element to be used for the expand toggle button.
      *
-     * @param	bool|string	$dataTreeExpandElement
+     * @param  bool|string  $dataTreeExpandElement
      * @return \FmTod\LaravelTabulator\Concerns\Config\DataTreeConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function dataTreeExpandElement(bool|string $dataTreeExpandElement): self
@@ -127,7 +127,7 @@ trait DataTreeConfig
     /**
      * The default expansion state for tree nodes.
      *
-     * @param	bool|array|string	$dataTreeStartExpanded
+     * @param  bool|array|string  $dataTreeStartExpanded
      * @return \FmTod\LaravelTabulator\Concerns\Config\DataTreeConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function dataTreeStartExpanded(bool|array|string $dataTreeStartExpanded): self
@@ -140,7 +140,7 @@ trait DataTreeConfig
     /**
      * Allow selection of a row to propagate to its children.
      *
-     * @param	bool	$dataTreeSelectPropagate
+     * @param  bool  $dataTreeSelectPropagate
      * @return \FmTod\LaravelTabulator\Concerns\Config\DataTreeConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function dataTreeSelectPropagate(bool $dataTreeSelectPropagate): self
@@ -153,7 +153,7 @@ trait DataTreeConfig
     /**
      * Include visible child rows in column calculations.
      *
-     * @param	bool	$dataTreeChildColumnCalcs
+     * @param  bool  $dataTreeChildColumnCalcs
      * @return \FmTod\LaravelTabulator\Concerns\Config\DataTreeConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function dataTreeChildColumnCalcs(bool $dataTreeChildColumnCalcs): self

@@ -9,7 +9,7 @@ interface PersistenceStorageDriver
     /**
      * Get all persistence data for a table.
      *
-     * @param string $table
+     * @param  string  $table
      * @return array
      */
     public function all(string $table): array;

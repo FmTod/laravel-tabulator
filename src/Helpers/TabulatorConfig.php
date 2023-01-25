@@ -242,7 +242,7 @@ class TabulatorConfig extends Fluent
      * Sets the height of the containing element, can be set to any valid height css value.
      * If set to false (the default), the height of the table will resize to fit the table data.
      *
-     * @param	string|int	$height
+     * @param  string|int  $height
      * @return	$this
      */
     public function height(string|int $height): self
@@ -255,7 +255,7 @@ class TabulatorConfig extends Fluent
     /**
      * Sets the minimum height for the table, can be set to any valid height css value.
      *
-     * @param	string|int	$minHeight
+     * @param  string|int  $minHeight
      * @return	$this
      */
     public function minHeight(string|int $minHeight): self
@@ -268,7 +268,7 @@ class TabulatorConfig extends Fluent
     /**
      * Sets the maximum height for the table, can be set to any valid height css value.
      *
-     * @param	string|int	$maxHeight
+     * @param  string|int  $maxHeight
      * @return	$this
      */
     public function maxHeight(string|int $maxHeight): self
@@ -281,7 +281,7 @@ class TabulatorConfig extends Fluent
     /**
      * Set the tables vertical renderer.
      *
-     * @param	string	$renderVertical
+     * @param  string  $renderVertical
      * @return	$this
      */
     public function renderVertical(string $renderVertical): self
@@ -294,7 +294,7 @@ class TabulatorConfig extends Fluent
     /**
      * Manually set the size of the vertical renderer buffer.
      *
-     * @param	int	$renderVerticalBuffer
+     * @param  int  $renderVerticalBuffer
      * @return	$this
      */
     public function renderVerticalBuffer(int $renderVerticalBuffer): self
@@ -307,7 +307,7 @@ class TabulatorConfig extends Fluent
     /**
      * Set the tables horizontal renderer.
      *
-     * @param	string	$renderHorizontal
+     * @param  string  $renderHorizontal
      * @return	$this
      */
     public function renderHorizontal(string $renderHorizontal): self
@@ -320,7 +320,7 @@ class TabulatorConfig extends Fluent
     /**
      * placeholder element to display on empty table.
      *
-     * @param	string	$placeholder
+     * @param  string  $placeholder
      * @return	$this
      */
     public function placeholder(string $placeholder): self
@@ -333,7 +333,7 @@ class TabulatorConfig extends Fluent
     /**
      * Footer element for the table.
      *
-     * @param	string	$footerElement
+     * @param  string  $footerElement
      * @return	$this
      */
     public function footerElement(string $footerElement): self
@@ -346,7 +346,7 @@ class TabulatorConfig extends Fluent
     /**
      * Enable user interaction history functionality.
      *
-     * @param	bool|string	$history
+     * @param  bool|string  $history
      * @return	$this
      */
     public function history(bool|string $history): self
@@ -359,7 +359,7 @@ class TabulatorConfig extends Fluent
     /**
      * Keybinding configuration object.
      *
-     * @param	bool|string	$keybindings
+     * @param  bool|string  $keybindings
      * @return	$this
      */
     public function keybindings(bool|string $keybindings): self
@@ -372,7 +372,7 @@ class TabulatorConfig extends Fluent
     /**
      * set the current localization language.
      *
-     * @param	string|bool	$locale
+     * @param  string|bool  $locale
      * @return	$this
      */
     public function locale(string|bool $locale): self
@@ -385,7 +385,7 @@ class TabulatorConfig extends Fluent
     /**
      * hold localization templates.
      *
-     * @param	array	$langs
+     * @param  array  $langs
      * @return	$this
      */
     public function langs(array $langs): self
@@ -398,7 +398,7 @@ class TabulatorConfig extends Fluent
     /**
      * choose which parts of the table are included in downloaded files.
      *
-     * @param	object	$downloadConfig
+     * @param  object  $downloadConfig
      * @return	$this
      */
     public function downloadConfig(object $downloadConfig): self
@@ -411,7 +411,7 @@ class TabulatorConfig extends Fluent
     /**
      * set the range of rows to be included in the downloaded table output.
      *
-     * @param	string	$downloadRowRange
+     * @param  string  $downloadRowRange
      * @return	$this
      */
     public function downloadRowRange(string $downloadRowRange): self
@@ -424,7 +424,7 @@ class TabulatorConfig extends Fluent
     /**
      * choose which parts of the table are included in getHtml function output.
      *
-     * @param	object	$htmlOutputConfig
+     * @param  object  $htmlOutputConfig
      * @return	$this
      */
     public function htmlOutputConfig(object $htmlOutputConfig): self
@@ -437,7 +437,7 @@ class TabulatorConfig extends Fluent
     /**
      * enable data reactivity.
      *
-     * @param	bool	$reactiveData
+     * @param  bool  $reactiveData
      * @return	$this
      */
     public function reactiveData(bool $reactiveData): self
@@ -450,7 +450,7 @@ class TabulatorConfig extends Fluent
     /**
      * add new row when user tabs of the end of the table.
      *
-     * @param	bool|array|string	$tabEndNewRow
+     * @param  bool|array|string  $tabEndNewRow
      * @return	$this
      */
     public function tabEndNewRow(bool|array|string $tabEndNewRow): self
@@ -463,7 +463,7 @@ class TabulatorConfig extends Fluent
     /**
      * set validation mode of the table.
      *
-     * @param	string	$validationMode
+     * @param  string  $validationMode
      * @return	$this
      */
     public function validationMode(string $validationMode): self
@@ -476,7 +476,7 @@ class TabulatorConfig extends Fluent
     /**
      * set text direction for the table.
      *
-     * @param	string	$textDirection
+     * @param  string  $textDirection
      * @return	$this
      */
     public function textDirection(string $textDirection): self
@@ -489,7 +489,7 @@ class TabulatorConfig extends Fluent
     /**
      * show console warnings if invalid options are used.
      *
-     * @param	bool	$debugInvalidOptions
+     * @param  bool  $debugInvalidOptions
      * @return	$this
      */
     public function debugInvalidOptions(bool $debugInvalidOptions): self
@@ -502,7 +502,7 @@ class TabulatorConfig extends Fluent
     /**
      * containing element for popups.
      *
-     * @param	bool|string	$popupContainer
+     * @param  bool|string  $popupContainer
      * @return	$this
      */
     public function popupContainer(bool|string $popupContainer): self

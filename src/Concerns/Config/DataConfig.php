@@ -114,7 +114,7 @@ trait DataConfig
     /**
      * Send filter config to server instead of processing locally.
      *
-     * @param	string	$filterMode
+     * @param  string  $filterMode
      * @return \FmTod\LaravelTabulator\Concerns\Config\DataConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function filterMode(string $filterMode): self
@@ -127,7 +127,7 @@ trait DataConfig
     /**
      * Send sorter config to server instead of processing locally.
      *
-     * @param	string	$sortMode
+     * @param  string  $sortMode
      * @return \FmTod\LaravelTabulator\Concerns\Config\DataConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function sortMode(string $sortMode): self
@@ -140,7 +140,7 @@ trait DataConfig
     /**
      * Progressively load data into the table in chunks.
      *
-     * @param	string|bool	$progressiveLoad
+     * @param  string|bool  $progressiveLoad
      * @return \FmTod\LaravelTabulator\Concerns\Config\DataConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function progressiveLoad(string|bool $progressiveLoad): self
@@ -153,7 +153,7 @@ trait DataConfig
     /**
      * Delay in milliseconds between each progressive load request.
      *
-     * @param	int	$progressiveLoadDelay
+     * @param  int  $progressiveLoadDelay
      * @return \FmTod\LaravelTabulator\Concerns\Config\DataConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function progressiveLoadDelay(int $progressiveLoadDelay): self
@@ -166,7 +166,7 @@ trait DataConfig
     /**
      * The remaining distance in pixels between the scroll bar and the bottom of the table before an ajax is triggered.
      *
-     * @param	int	$progressiveLoadScrollMargin
+     * @param  int  $progressiveLoadScrollMargin
      * @return \FmTod\LaravelTabulator\Concerns\Config\DataConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function progressiveLoadScrollMargin(int $progressiveLoadScrollMargin): self
@@ -179,7 +179,7 @@ trait DataConfig
     /**
      * Show loader while data is loading, can also take a function that must return a bool.
      *
-     * @param	bool|string	$dataLoader
+     * @param  bool|string  $dataLoader
      * @return \FmTod\LaravelTabulator\Concerns\Config\DataConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function dataLoader(bool|string $dataLoader): self
@@ -192,7 +192,7 @@ trait DataConfig
     /**
      * HTML for loader element.
      *
-     * @param	string	$dataLoaderLoading
+     * @param  string  $dataLoaderLoading
      * @return \FmTod\LaravelTabulator\Concerns\Config\DataConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function dataLoaderLoading(string $dataLoaderLoading): self
@@ -205,7 +205,7 @@ trait DataConfig
     /**
      * HTML for the loader element in the event of an error.
      *
-     * @param	string	$dataLoaderError
+     * @param  string  $dataLoaderError
      * @return \FmTod\LaravelTabulator\Concerns\Config\DataConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function dataLoaderError(string $dataLoaderError): self
@@ -218,7 +218,7 @@ trait DataConfig
     /**
      * The number of milliseconds to display the loader error message in the event of an error.
      *
-     * @param	int	$dataLoaderErrorTimeout
+     * @param  int  $dataLoaderErrorTimeout
      * @return \FmTod\LaravelTabulator\Concerns\Config\DataConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function dataLoaderErrorTimeout(int $dataLoaderErrorTimeout): self

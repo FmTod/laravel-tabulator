@@ -72,7 +72,7 @@ class Action extends Fluent
      */
     public function addClass(string $class): static
     {
-        $this->attributes['class'] .= ' ' . $class;
+        $this->attributes['class'] .= ' '.$class;
 
         return $this;
     }

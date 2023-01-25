@@ -40,6 +40,7 @@ class TabulatorMakeCommand extends GeneratorCommand
      *
      * @param  string  $name
      * @return string
+     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     protected function buildClass($name): string
@@ -109,7 +110,7 @@ class TabulatorMakeCommand extends GeneratorCommand
             $stub .= "Column::make('$column'),";
 
             if ($key < count($columns) - 1) {
-                $stub .= PHP_EOL . str_repeat(' ', $indentation);
+                $stub .= PHP_EOL.str_repeat(' ', $indentation);
             }
         }
 
@@ -138,7 +139,7 @@ class TabulatorMakeCommand extends GeneratorCommand
             $name .= 'Table';
         }
 
-        return $this->getDefaultNamespace(trim($rootNamespace, '\\')) . '\\' . $name;
+        return $this->getDefaultNamespace(trim($rootNamespace, '\\')).'\\'.$name;
     }
 
     /**
@@ -149,7 +150,7 @@ class TabulatorMakeCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace): string
     {
-        return $rootNamespace . '\\' . config('tabulator.namespace', 'Tabulator');
+        return $rootNamespace.'\\'.config('tabulator.namespace', 'Tabulator');
     }
 
     /**
@@ -189,8 +190,8 @@ class TabulatorMakeCommand extends GeneratorCommand
         }
 
         return $model
-            ? $rootNamespace . '\\' . ($modelNamespace ? $modelNamespace . '\\' : '') . Str::singular($name)
-            : $rootNamespace . '\\' . ($modelNamespace ? $modelNamespace . '\\' : '') . 'User';
+            ? $rootNamespace.'\\'.($modelNamespace ? $modelNamespace.'\\' : '').Str::singular($name)
+            : $rootNamespace.'\\'.($modelNamespace ? $modelNamespace.'\\' : '').'User';
     }
 
     /**

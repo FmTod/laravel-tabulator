@@ -23,7 +23,7 @@ trait PersistenceConfig
     /**
      * ID tag used to identify persistent storage information.
      *
-     * @param	string	$persistenceID
+     * @param  string  $persistenceID
      * @return \FmTod\LaravelTabulator\Concerns\Config\PersistenceConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function persistenceID(string $persistenceID): self
@@ -36,7 +36,7 @@ trait PersistenceConfig
     /**
      * Store persistence information in a cookie or localStorage.
      *
-     * @param	bool|string	$persistenceMode
+     * @param  bool|string  $persistenceMode
      * @return \FmTod\LaravelTabulator\Concerns\Config\PersistenceConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function persistenceMode(bool|string $persistenceMode): self
@@ -49,7 +49,7 @@ trait PersistenceConfig
     /**
      * Override persistence reader functionality to read from custom package.
      *
-     * @param	string	$persistenceReaderFunc
+     * @param  string  $persistenceReaderFunc
      * @return \FmTod\LaravelTabulator\Concerns\Config\PersistenceConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function persistenceReaderFunc(string $persistenceReaderFunc): self
@@ -62,7 +62,7 @@ trait PersistenceConfig
     /**
      * Override persistence writer functionality to write to custom package.
      *
-     * @param	string	$persistenceWriterFunc
+     * @param  string  $persistenceWriterFunc
      * @return \FmTod\LaravelTabulator\Concerns\Config\PersistenceConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function persistenceWriterFunc(string $persistenceWriterFunc): self

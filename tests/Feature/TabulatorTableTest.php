@@ -3,11 +3,10 @@
 use FmTod\LaravelTabulator\Tests\stubs\Models\User;
 use FmTod\LaravelTabulator\Tests\stubs\UserTable;
 use Illuminate\Support\Facades\Route;
-
 use function Pest\Laravel\postJson;
 
 beforeEach(function () {
-    $migration = include dirname(__DIR__) . '/stubs/Migrations/create_users_table.php';
+    $migration = include dirname(__DIR__).'/stubs/Migrations/create_users_table.php';
     $migration->up();
 
     $this->users = User::factory()->count(10)->create();
