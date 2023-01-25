@@ -10,11 +10,11 @@ class TextSearchFilter implements FiltersByType
 {
     public function __invoke(Builder $query, array $filter): Builder
     {
-        if (! isset($filter['value']['query'])) {
+        $type = $filter['value']['type'] ?? 'contains';
+
+        if (! isset($filter['value']['query']) && $type !== 'empty') {
             throw new InvalidArgumentException('The filter value must contain a "query" key.');
         }
-
-        $type = $filter['value']['type'] ?? 'contains';
 
         return match ($type) {
             'except' => $query->where($filter['field'], 'not like', "%{$filter['value']['query']}%"),
