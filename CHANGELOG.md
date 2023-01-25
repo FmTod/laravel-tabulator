@@ -2,6 +2,15 @@
 
 All notable changes to `laravel-tabulator` will be documented in this file.
 
+## v0.10.14 - 2023-01-25
+
+### What's Changed
+
+- Configure Renovate by @renovate in https://github.com/FmTod/laravel-tabulator/pull/5
+- Bump ramsey/composer-install from 1 to 2 by @dependabot in https://github.com/FmTod/laravel-tabulator/pull/4
+
+**Full Changelog**: https://github.com/FmTod/laravel-tabulator/compare/v0.10.13...v0.10.14
+
 ## v0.10.13 - 2022-12-28
 
 **Full Changelog**: https://github.com/FmTod/laravel-tabulator/compare/v0.10.12...v0.10.13
@@ -291,7 +300,9 @@ All notable changes to `laravel-tabulator` will be documented in this file.
 - 
 - 
 - 
+- 
 - - The clear method will delete all persistence data related to a table regardless of the type
+- 
 - 
 - 
 - 
