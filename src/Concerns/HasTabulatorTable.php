@@ -6,19 +6,24 @@ use FmTod\LaravelTabulator\Contracts\RendersTable;
 use FmTod\LaravelTabulator\TabulatorTable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 trait HasTabulatorTable
 {
     abstract public static function tabulatorClass(): string;
 
-    public static function tabulatorTable(?Request $request = null): TabulatorTable
+    public static function tabulatorTable(?Request $request = null, Collection|array|null $parameters = null): TabulatorTable
     {
         /** @var TabulatorTable $table */
         $table = app(self::tabulatorClass());
 
         if ($request) {
             $table->setRequest($request);
+        }
+
+        if ($parameters) {
+            $table->setAllParameters($parameters);
         }
 
         return $table;

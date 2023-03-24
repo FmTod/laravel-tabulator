@@ -3,7 +3,10 @@
 namespace FmTod\LaravelTabulator;
 
 use FmTod\LaravelTabulator\Concerns\HasFilters;
+use FmTod\LaravelTabulator\Concerns\HasParameters;
+use FmTod\LaravelTabulator\Concerns\HasRequest;
 use FmTod\LaravelTabulator\Concerns\HasSorts;
+use FmTod\LaravelTabulator\Concerns\InitializeTraits;
 use FmTod\LaravelTabulator\Concerns\RenderableTable;
 use FmTod\LaravelTabulator\Contracts\TabulatorModel;
 use FmTod\LaravelTabulator\Helpers\Column;
@@ -19,16 +22,25 @@ use Illuminate\Support\Traits\Macroable;
 
 abstract class TabulatorTable
 {
-    use Macroable;
+    use InitializeTraits;
     use RenderableTable;
-
-    public Request $request;
+    use HasParameters;
+    use HasRequest;
+    use Macroable;
 
     public ?string $optionsKey;
 
-    public function __construct(Request $request = null)
+    public function __construct(Request $request = null, Collection|array|null $parameters = null)
     {
-        $this->request = $request ?? request();
+        $this->initializeTraits();
+
+        if ($request) {
+            $this->setRequest($request);
+        }
+
+        if ($parameters) {
+            $this->setAllParameters($parameters);
+        }
     }
 
     abstract public function config(): TabulatorConfig;
@@ -104,17 +116,5 @@ abstract class TabulatorTable
         }
 
         return $query->get();
-    }
-
-    public function setRequest(Request $request): self
-    {
-        $this->request = $request;
-
-        return $this;
-    }
-
-    public function getRequest(): Request
-    {
-        return $this->request;
     }
 }
