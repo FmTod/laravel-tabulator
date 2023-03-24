@@ -29,9 +29,9 @@ trait HasTabulatorTable
         return $table;
     }
 
-    public static function tabulatorRender(string $view, array $data = [], RendersTable|string|null $renderer = null): mixed
+    public static function tabulatorRender(string $view, array $data = [], RendersTable|string|null $renderer = null, Collection|array|null $parameters = null, ?Request $request = null): mixed
     {
-        return self::tabulatorTable()->render($view, $data, $renderer);
+        return self::tabulatorTable($request, $parameters)->render($view, $data, $renderer);
     }
 
     public static function tabulatorRules(string $arrayKey = null, string $keyName = null): array
