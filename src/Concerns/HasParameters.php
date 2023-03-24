@@ -2,7 +2,6 @@
 
 namespace FmTod\LaravelTabulator\Concerns;
 
-
 use Illuminate\Support\Collection;
 
 trait HasParameters

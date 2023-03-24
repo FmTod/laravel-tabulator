@@ -2,7 +2,6 @@
 
 namespace FmTod\LaravelTabulator\Concerns;
 
-
 use Illuminate\Http\Request;
 
 trait HasRequest
