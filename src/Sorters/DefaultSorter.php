@@ -2,6 +2,7 @@
 
 namespace FmTod\LaravelTabulator\Sorters;
 
+use Closure;
 use FmTod\LaravelTabulator\Contracts\SortsByRelation;
 use FmTod\LaravelTabulator\Contracts\SortsTable;
 use FmTod\LaravelTabulator\Exceptions\InvalidFieldException;
@@ -29,12 +30,19 @@ class DefaultSorter implements SortsTable
                 continue;
             }
 
+            $includeTableName = $column['sortIncludeTableName']
+                ?? $column['includeTableName']
+                ?? $table->options('sortsIncludeTableName')
+                ?? $table->options('includeTableName')
+                ?? config('tabulator.sort.include_table_name')
+                ?? false;
+
             if (Str::contains($field, '.')) {
                 $sorters = (array) config('tabulator.sort.relations', []);
                 $relationName = Str::before($field, '.');
                 $relationField = Str::after($field, '.');
 
-                $this->applyRelationSort($relationName, $query, $relationField, $sort['dir'], $sorters);
+                $this->applyRelationSort($relationName, $query, $relationField, $sort['dir'], $sorters, $includeTableName);
 
                 continue;
             }
@@ -46,12 +54,11 @@ class DefaultSorter implements SortsTable
                 $sorters = array_merge((array) config('tabulator.sort.tree', []), (array) config('tabulator.sort.tree', []));
                 $relationName = $table->options('dataTreeChildField', '_children');
 
-                $this->applyTreeChildSort($relationName, $query, $field, $sort['dir'], $sorters);
+                $this->applyTreeChildSort($relationName, $query, $field, $sort['dir'], $sorters, $includeTableName);
 
                 continue;
             }
 
-            $includeTableName = $table->options('includeTableName', config('tabulator.sort.include_table_name', false));
             $this->applySort($query, $field, $sort['dir'], $includeTableName);
         }
 
@@ -61,21 +68,24 @@ class DefaultSorter implements SortsTable
     protected function applySort(Builder $query, string $field, string $direction, bool $includeTable = false): void
     {
         $tableName = $query->getModel()?->getTable();
-        $field = $includeTable && $tableName ? "$tableName.{$field}" : $field;
+        $field = $includeTable && $tableName ? "$tableName.$field" : $field;
 
         $query->orderBy($field, $direction);
     }
 
-    protected function applyTreeChildSort(string $relation, Builder $query, string $field, string $direction, array $sorters): Builder
+    protected function applyTreeChildSort(string $relation, Builder $query, string $field, string $direction, array $sorters, bool $includeTable = false): Builder
     {
         return $this
-            ->applyRelationSort($relation, $query, $field, $direction, $sorters)
+            ->applyRelationSort($relation, $query, $field, $direction, $sorters, $includeTable)
             ->with($relation, fn (Relation $relQuery) => $relQuery->orderBy($field, $direction));
     }
 
-    protected function applyRelationSort(string $relation, Builder $query, string $field, string $direction, array $sorters): Builder
+    protected function applyRelationSort(string $relation, Builder $query, string $field, string $direction, array $sorters, bool $includeTable = false): Builder
     {
         $instance = $this->getRelationInstance($query, $relation);
+
+        $tableName = $instance->getModel()?->getTable();
+        $field = $includeTable && $tableName ? "$tableName.$field" : $field;
 
         foreach ($sorters as $type => $sorter) {
             if (is_a($instance, $type)) {

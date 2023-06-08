@@ -58,6 +58,11 @@ return [
     'filter' => [
         'filterer' => FmTod\LaravelTabulator\Filterers\DefaultFilterer::class,
 
+        /**
+         * Whether to include the table name in the filter field for table columns.
+         */
+        'include_table_name' => false,
+
         'types' => [
             FmTod\LaravelTabulator\Filterers\Filters\ComparisonFilter::class => ['=', '!=', '<', '<=', '>', '>='],
             FmTod\LaravelTabulator\Filterers\Filters\LikeFilter::class => 'like',

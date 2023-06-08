@@ -23,6 +23,13 @@ class DefaultFilterer implements FiltersTable
             $column = $table->getFieldColumn($filter['field']);
             $field = $column['filterField'] ?? $filter['field'];
 
+            $includeTableName = $column['filterIncludeTableName']
+                ?? $column['includeTableName']
+                ?? $table->options('filtersIncludeTableName')
+                ?? $table->options('includeTableName')
+                ?? config('tabulator.filter.include_table_name')
+                ?? false;
+
             if (empty($filter['value'])) {
                 continue;
             }
@@ -34,7 +41,7 @@ class DefaultFilterer implements FiltersTable
             }
 
             if (Str::contains($filter['field'], '.')) {
-                $this->applyRelationFilter($query, $field, $filter['type'], $filter['value']);
+                $this->applyRelationFilter($query, $field, $filter['type'], $filter['value'], $includeTableName);
 
                 continue;
             }
@@ -44,20 +51,23 @@ class DefaultFilterer implements FiltersTable
                 ! Schema::connection($query->getModel()->getConnectionName())
                     ->hasColumn($query->getModel()->getTable(), $field)) {
                 $childrenRelation = $table->options('dataTreeChildField', '_children');
-                $this->applyTreeChildFilter($childrenRelation, $query, $field, $filter['type'], $filter['value']);
+                $this->applyTreeChildFilter($childrenRelation, $query, $field, $filter['type'], $filter['value'], $includeTableName);
 
                 continue;
             }
 
-            $this->applyFilter($query, $field, $filter['type'], $filter['value']);
+            $this->applyFilter($query, $field, $filter['type'], $filter['value'], $includeTableName);
         }
 
         return $query;
     }
 
-    protected function applyFilter(Builder $query, string $field, string $type, mixed $value): Builder
+    protected function applyFilter(Builder $query, string $field, string $type, mixed $value, bool $includeTable = false): Builder
     {
         $availableFilters = config('tabulator.filter.types');
+
+        $tableName = $query->getModel()?->getTable();
+        $field = $includeTable && $tableName ? "$tableName.$field" : $field;
 
         foreach ($availableFilters as $filtererClass => $types) {
             if (in_array($type, Arr::wrap($types)) && ! empty($value)) {
@@ -79,7 +89,7 @@ class DefaultFilterer implements FiltersTable
         return $query;
     }
 
-    protected function applyRelationFilter(Builder $query, string $field, string $type, mixed $value): Builder
+    protected function applyRelationFilter(Builder $query, string $field, string $type, mixed $value, bool $includeTable = false): Builder
     {
         $relation = $this->getRelation($query, $field);
 
@@ -91,7 +101,8 @@ class DefaultFilterer implements FiltersTable
                         query: $query,
                         field: Str::after($field, '.'),
                         type: $type,
-                        value: $value
+                        value: $value,
+                        includeTable: $includeTable
                     )
                 )
                 ->when(
@@ -101,7 +112,7 @@ class DefaultFilterer implements FiltersTable
         );
     }
 
-    protected function applyTreeChildFilter(string $relation, Builder $query, string $field, string $type, mixed $value): Builder
+    protected function applyTreeChildFilter(string $relation, Builder $query, string $field, string $type, mixed $value, bool $includeTable = false): Builder
     {
         return $query->withWhereHas(
             relation: $relation,
@@ -109,7 +120,8 @@ class DefaultFilterer implements FiltersTable
                 query: $query,
                 field: $field,
                 type: $type,
-                value: $value
+                value: $value,
+                includeTable: $includeTable
             ),
         );
     }

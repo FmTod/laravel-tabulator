@@ -45,4 +45,17 @@ trait FilterConfig
 
         return $this;
     }
+
+    /**
+     * Whether to include the table name in the field filters.
+     *
+     * @param  bool  $includeTableName
+     * @return \FmTod\LaravelTabulator\Concerns\Config\SortConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
+     */
+    public function filtersIncludeTableName(bool $includeTableName = true): self
+    {
+        $this->attributes['filtersIncludeTableName'] = $includeTableName;
+
+        return $this;
+    }
 }

@@ -155,6 +155,9 @@ use Illuminate\Support\Traits\Macroable;
  * @property array|null $rowClickMenu
  * @property array|null $groupContextMenu
  * @property array|null $groupClickMenu
+ * @property bool|null $includeTableName
+ * @property bool|null $sortsIncludeTableName
+ * @property bool|null $filtersIncludeTableName
  *
  * @codeCoverageIgnore
  */
@@ -565,6 +568,19 @@ class TabulatorConfig extends Fluent
     public function frozenRowsField(string $frozenRowsField): self
     {
         $this->attributes['frozenRowsField'] = $frozenRowsField;
+
+        return $this;
+    }
+
+    /**
+     * Whether to include the table name in the field sorts and filters.
+     *
+     * @param  bool  $includeTableName
+     * @return $this
+     */
+    public function includeTableName(bool $includeTableName = true): self
+    {
+        $this->attributes['includeTableName'] = $includeTableName;
 
         return $this;
     }

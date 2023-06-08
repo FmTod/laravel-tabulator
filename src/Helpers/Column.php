@@ -40,6 +40,8 @@ use Illuminate\Support\Traits\Macroable;
  * @property string|null $filterField
  * @property Closure|callable|null $sortFunc
  * @property Closure|callable|null $filterFunc
+ * @property bool|null sortIncludeTableName
+ * @property bool|null filterIncludeTableName
  *
  * @codeCoverageIgnore
  */
@@ -561,6 +563,19 @@ class Column extends Fluent
     }
 
     /**
+     * Sets whether to include the table name when sorting.
+     *
+     * @param  bool  $sortIncludeTableName
+     * @return $this
+     */
+    public function sortIncludeTableName(bool $sortIncludeTableName = true): self
+    {
+        $this->attributes['sortIncludeTableName'] = $sortIncludeTableName;
+
+        return $this;
+    }
+
+    /**
      * Set the column editor.
      *
      * @param  string|bool  $editor
@@ -690,6 +705,19 @@ class Column extends Fluent
     public function filterFunc(Closure|callable $filterFunc): self
     {
         $this->attributes['filterFunc'] = $filterFunc;
+
+        return $this;
+    }
+
+    /**
+     * Sets whether to include the table name when filtering.
+     *
+     * @param  bool  $filterIncludeTableName
+     * @return $this
+     */
+    public function filterIncludeTableName(bool $filterIncludeTableName = true): self
+    {
+        $this->attributes['filterIncludeTableName'] = $filterIncludeTableName;
 
         return $this;
     }

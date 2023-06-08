@@ -45,4 +45,17 @@ trait SortConfig
 
         return $this;
     }
+
+    /**
+     * Whether to include the table name in the field sorts.
+     *
+     * @param  bool  $includeTableName
+     * @return \FmTod\LaravelTabulator\Concerns\Config\SortConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
+     */
+    public function sortsIncludeTableName(bool $includeTableName = true): self
+    {
+        $this->attributes['sortsIncludeTableName'] = $includeTableName;
+
+        return $this;
+    }
 }
