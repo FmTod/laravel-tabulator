@@ -27,6 +27,7 @@ class TextSearchFilter implements FiltersByType
                 $query->where($filter['field'], '=', '')
                     ->orWhereNull($filter['field']);
             }),
+            'filled' => $query->whereNotNull($filter['field']),
             default => throw new InvalidArgumentException("Invalid comparison type: $type"),
         };
     }
