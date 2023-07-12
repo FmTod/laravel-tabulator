@@ -1,9 +1,9 @@
-name: Release Branch Push
+name: Release
 
 on:
   push:
     branches:
-      - master
+      - main
 
   workflow_dispatch:
 
