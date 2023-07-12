@@ -64,7 +64,10 @@ it('can create basic table class', function () {
 
     CLASS;
 
-    expect(file_get_contents($tableClass))->toEqual($expectedContents);
+    // Normalize the contents by removing line endings
+    $actualContents = str_replace('\r\n', '\n', file_get_contents($tableClass));
+
+    expect($actualContents)->toEqual($expectedContents);
 });
 
 it('can create table class with columns', function () {
@@ -128,7 +131,10 @@ it('can create table class with columns', function () {
 
     CLASS;
 
-    expect(file_get_contents($tableClass))->toEqual($expectedContents);
+    // Normalize the contents by removing line endings
+    $actualContents = str_replace('\r\n', '\n', file_get_contents($tableClass));
+
+    expect($actualContents)->toEqual($expectedContents);
 });
 
 it('can create table class with model name', function () {
@@ -191,5 +197,8 @@ it('can create table class with model name', function () {
 
     CLASS;
 
-    expect(file_get_contents($tableClass))->toEqual($expectedContents);
+    // Normalize the contents by removing line endings
+    $actualContents = str_replace('\r\n', '\n', file_get_contents($tableClass));
+
+    expect($actualContents)->toEqual($expectedContents);
 });
