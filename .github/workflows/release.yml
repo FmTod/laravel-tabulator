@@ -22,6 +22,6 @@ jobs:
     uses: fmtod/laravel-tabulator/.github/workflows/_test.yml@main
 
   release:
-    name: '🧪 Test'
+    name: '🚀 Release'
     needs: [test, lint]
     uses: fmtod/laravel-tabulator/.github/workflows/_release.yml@main
