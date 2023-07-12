@@ -1,8 +1,8 @@
-name: Check & fix styling
+name: '🧹 Lint'
 
 on:
-  pull_request:
-    branches: [main]
+  - workflow_call
+  - workflow_dispatch
 
 jobs:
   php-cs-fixer:
