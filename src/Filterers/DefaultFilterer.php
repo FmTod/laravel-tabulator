@@ -40,7 +40,7 @@ class DefaultFilterer implements FiltersTable
                 continue;
             }
 
-            if (Str::contains($filter['field'], '.')) {
+            if (Str::contains($field, '.')) {
                 $this->applyRelationFilter($query, $field, $filter['type'], $filter['value'], $includeTableName);
 
                 continue;
