@@ -48,7 +48,7 @@ trait HasTabulatorTable
             $arrayKey = Str::singular($table).'_'.Str::plural($keyName);
         }
 
-        return [
+        $rules = [
             'type' => ['required', 'string', 'in:array,query'],
 
             $arrayKey => ['prohibited_if:type,query', 'array'],
@@ -57,6 +57,15 @@ trait HasTabulatorTable
             'filters' => ['prohibited_if:type,array', 'array'],
             'sort' => ['prohibited_if:type,array', 'array'],
         ];
+
+        if (method_exists(self::class, 'tabulatorCustomRules')) {
+            return [
+                ...$rules,
+                ...self::tabulatorCustomRules($arrayKey, $keyName),
+            ];
+        }
+
+        return $rules;
     }
 
     public static function tabulatorQuery(Request $request, string $arrayKey = null, string $keyName = null): Builder
