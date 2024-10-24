@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-tabulator` will be documented in this file.
 
+## v1.2.0 - 2024-10-24
+
+**Full Changelog**: https://github.com/FmTod/laravel-tabulator/compare/v1.1.0...v1.2.0
+
 ## v1.0.0 - 2023-07-31
 
 **Full Changelog**: https://github.com/FmTod/laravel-tabulator/compare/v0.13.1...v1.0.0
@@ -266,6 +270,7 @@ All notable changes to `laravel-tabulator` will be documented in this file.
 
 - Added routes to clear and destroy table persistence data.
 - - The destroy route will delete only the specified persistence data type.
+  
 - 
 - 
 - 
@@ -322,6 +327,7 @@ All notable changes to `laravel-tabulator` will be documented in this file.
 - 
 - 
 - - The clear method will delete all persistence data related to a table regardless of the type
+  
 - 
 - 
 - 
