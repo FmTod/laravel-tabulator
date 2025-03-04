@@ -66,10 +66,11 @@ use Illuminate\Support\Traits\Macroable;
  * @property string|bool|null $rowFormatterClipboard
  * @property string|bool|null $rowFormatterHtmlOutput
  * @property string|null $addRowPos
- * @property bool|int|string|null $selectable
- * @property bool|null $selectableRollingSelection
- * @property bool|null $selectablePersistence
- * @property string|null $selectableCheck
+ * @property bool|int|string|null $selectableRows
+ * @property bool|null $selectableRowsRollingSelection
+ * @property string|null $selectableRowsRangeMode
+ * @property bool|null $selectableRowsPersistence
+ * @property string|null $selectableRowsCheck
  * @property bool|null $movableRows
  * @property string|null $movableRowsConnectedTables
  * @property string|bool|null $movableRowsSender
@@ -175,7 +176,7 @@ class TabulatorConfig extends Fluent
     use DataTreeConfig;
     use PrintConfig;
     use MenuConfig;
-    use Macroable { __call as macroCall; }
+    use Macroable { Macroable::__call as macroCall; }
 
     public function __construct(array $options = [])
     {
