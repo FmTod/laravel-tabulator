@@ -20,7 +20,7 @@ use Illuminate\Support\Traits\Macroable;
  */
 class Action extends Fluent
 {
-    use Macroable { __call as macroCall; }
+    use Macroable { Macroable::__call as macroCall; }
 
     /**
      * Handle dynamic method calls into the class.
@@ -72,7 +72,9 @@ class Action extends Fluent
      */
     public function addClass(string $class): static
     {
-        $this->attributes['class'] .= ' '.$class;
+        $this->attributes['className'] = isset($this->attributes['className'])
+            ? "{$this->attributes['className']} {$class}"
+            : $class;
 
         return $this;
     }
