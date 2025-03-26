@@ -34,7 +34,7 @@ trait HasTabulatorTable
         return self::tabulatorTable($request, $parameters)->render($view, $data, $renderer);
     }
 
-    public static function tabulatorRules(string $arrayKey = null, string $keyName = null): array
+    public static function tabulatorRules(?string $arrayKey = null, ?string $keyName = null): array
     {
         /** @var \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder $model */
         $model = self::newModelInstance();
@@ -68,7 +68,7 @@ trait HasTabulatorTable
         return $rules;
     }
 
-    public static function tabulatorQuery(Request $request, string $arrayKey = null, string $keyName = null): Builder
+    public static function tabulatorQuery(Request $request, ?string $arrayKey = null, ?string $keyName = null): Builder
     {
         /** @var \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder $model */
         $model = self::newModelInstance();

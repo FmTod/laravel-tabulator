@@ -39,7 +39,6 @@ class TabulatorMakeCommand extends GeneratorCommand
      * Build the class with the given name.
      *
      * @param  string  $name
-     * @return string
      *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
@@ -57,7 +56,6 @@ class TabulatorMakeCommand extends GeneratorCommand
     /**
      * Replace columns.
      *
-     * @param  string  $stub
      * @return $this
      */
     protected function replaceColumns(string &$stub): static
@@ -69,8 +67,6 @@ class TabulatorMakeCommand extends GeneratorCommand
 
     /**
      * Get the columns to be used.
-     *
-     * @return string
      */
     protected function getColumns(): string
     {
@@ -80,7 +76,7 @@ class TabulatorMakeCommand extends GeneratorCommand
 
         if (class_exists($model = $this->getModel())) {
             /** @var \Illuminate\Database\Eloquent\Model $newInstance */
-            $newModelInstance = new $model();
+            $newModelInstance = new $model;
             $columns = Schema::connection($newModelInstance->getConnectionName())
                 ->getColumnListing($newModelInstance->getTable());
 
@@ -97,10 +93,6 @@ class TabulatorMakeCommand extends GeneratorCommand
 
     /**
      * Parse array from definition.
-     *
-     * @param  string|array  $definition
-     * @param  int  $indentation
-     * @return string
      */
     protected function parseColumns(string|array $definition, int $indentation = 12): string
     {
@@ -121,7 +113,6 @@ class TabulatorMakeCommand extends GeneratorCommand
      * Parse the name and format according to the root namespace.
      *
      * @param  string  $name
-     * @return string
      */
     protected function qualifyClass($name): string
     {
@@ -146,7 +137,6 @@ class TabulatorMakeCommand extends GeneratorCommand
      * Get the default namespace for the class.
      *
      * @param  string  $rootNamespace
-     * @return string
      */
     protected function getDefaultNamespace($rootNamespace): string
     {
@@ -156,7 +146,6 @@ class TabulatorMakeCommand extends GeneratorCommand
     /**
      * Replace model name.
      *
-     * @param  string  $stub
      * @return \FmTod\LaravelTabulator\Commands\TabulatorMakeCommand
      */
     protected function replaceModel(string &$stub): static
@@ -170,8 +159,6 @@ class TabulatorMakeCommand extends GeneratorCommand
 
     /**
      * Get model name to use.
-     *
-     * @return string|null
      */
     protected function getModel(): ?string
     {
@@ -197,7 +184,6 @@ class TabulatorMakeCommand extends GeneratorCommand
     /**
      * Replace model import.
      *
-     * @param  string  $stub
      * @return $this
      */
     protected function replaceModelImport(string &$stub): static
@@ -209,8 +195,6 @@ class TabulatorMakeCommand extends GeneratorCommand
 
     /**
      * Get the stub file for the generator.
-     *
-     * @return string
      */
     protected function getStub(): string
     {
@@ -219,9 +203,6 @@ class TabulatorMakeCommand extends GeneratorCommand
 
     /**
      * Resolve the fully-qualified path to the stub.
-     *
-     * @param  string  $stub
-     * @return string
      */
     protected function resolveStubPath(string $stub): string
     {

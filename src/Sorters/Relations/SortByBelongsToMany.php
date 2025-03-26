@@ -11,11 +11,7 @@ class SortByBelongsToMany implements SortsByRelation
     /**
      * Sorts query by BelongsToMany relation.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $parent
      * @param  \Illuminate\Database\Eloquent\Relations\BelongsToMany  $relation
-     * @param  string  $field
-     * @param  string  $direction
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function __invoke(Builder $parent, Relation $relation, string $field, string $direction): Builder
     {

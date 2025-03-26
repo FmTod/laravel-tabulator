@@ -42,8 +42,6 @@ class Action extends Fluent
 
     /**
      * Create a new action instance.
-     *
-     * @param  array  $attributes
      */
     public function __construct(array $attributes = [])
     {
@@ -55,9 +53,6 @@ class Action extends Fluent
 
     /**
      * Make a new action instance.
-     *
-     * @param  array|string  $options
-     * @return static
      */
     public static function make(array|string $options = []): static
     {
@@ -67,7 +62,6 @@ class Action extends Fluent
     /**
      * Add class to existing class list.
      *
-     * @param  string  $class
      * @return $this
      */
     public function addClass(string $class): static

@@ -22,15 +22,15 @@ use Illuminate\Support\Traits\Macroable;
 
 abstract class TabulatorTable
 {
-    use InitializeTraits;
-    use RenderableTable;
     use HasParameters;
     use HasRequest;
+    use InitializeTraits;
     use Macroable;
+    use RenderableTable;
 
     public ?string $optionsKey;
 
-    public function __construct(Request $request = null, Collection|array|null $parameters = null)
+    public function __construct(?Request $request = null, Collection|array|null $parameters = null)
     {
         $this->initializeTraits();
 

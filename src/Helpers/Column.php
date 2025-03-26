@@ -51,8 +51,6 @@ class Column extends Fluent
 
     /**
      * Create a new column instance.
-     *
-     * @param  array  $attributes
      */
     public function __construct(array $attributes = [])
     {
@@ -64,9 +62,6 @@ class Column extends Fluent
 
     /**
      * Make a new column instance.
-     *
-     * @param  array|string  $options
-     * @return static
      */
     public static function make(array|string $options = []): static
     {
@@ -80,8 +75,6 @@ class Column extends Fluent
     /**
      * Create a column group.
      *
-     * @param  string  $title
-     * @param  array  $columns
      * @return static
      */
     public static function group(string $title, array $columns): self
@@ -94,9 +87,6 @@ class Column extends Fluent
 
     /**
      * Get a new instance of the column factory.
-     *
-     * @param  array|string  $options
-     * @return \FmTod\LaravelTabulator\Factories\ColumnFactory
      */
     public static function factory(array|string $options = []): ColumnFactory
     {
@@ -133,8 +123,6 @@ class Column extends Fluent
 
     /**
      * Convert the fluent instance to an array.
-     *
-     * @return array
      */
     public function toArray(): array
     {
@@ -149,20 +137,17 @@ class Column extends Fluent
 
     /**
      * Get a factory instance for the column.
-     *
-     * @return \FmTod\LaravelTabulator\Factories\ColumnFactory
      */
     public function toFactory(): ColumnFactory
     {
         return Column::factory($this->toArray());
     }
 
-    //<editor-fold desc="General" defaultstate="collapsed">
+    // <editor-fold desc="General" defaultstate="collapsed">
 
     /**
      * This is the title that will be displayed in the header for this column.
      *
-     * @param  string  $title
      * @return $this
      */
     public function title(string $title): self
@@ -175,7 +160,6 @@ class Column extends Fluent
     /**
      *  This is the key for this column in the data array.
      *
-     * @param  string  $field
      * @return $this
      */
     public function field(string $field): self
@@ -188,7 +172,6 @@ class Column extends Fluent
     /**
      * Determines if the column is visible.
      *
-     * @param  bool  $visible
      * @return $this
      */
     public function visible(bool $visible = true): self
@@ -198,14 +181,13 @@ class Column extends Fluent
         return $this;
     }
 
-    //</editor-fold>
+    // </editor-fold>
 
-    //<editor-fold desc="Layout" defaultstate="collapsed">
+    // <editor-fold desc="Layout" defaultstate="collapsed">
 
     /**
      * Sets the on hover tooltip for each cell in this column.
      *
-     * @param  string  $tooltip
      * @return $this
      */
     public function tooltip(string $tooltip): self
@@ -220,7 +202,6 @@ class Column extends Fluent
      *
      * Note: Value should be a string containing space separated class names
      *
-     * @param  string  $class
      * @return $this
      */
     public function cssClass(string $class): self
@@ -233,7 +214,6 @@ class Column extends Fluent
     /**
      * Sets the horizontal alignment for cells in the column.
      *
-     * @param  string  $hozAlign
      * @return $this
      */
     public function hozAlign(string $hozAlign): self
@@ -246,7 +226,6 @@ class Column extends Fluent
     /**
      * Sets the vertical alignment for cells in the column.
      *
-     * @param  string  $vertAlign
      * @return $this
      */
     public function vertAlign(string $vertAlign): self
@@ -259,7 +238,6 @@ class Column extends Fluent
     /**
      * Set whether column can be resized by user dragging its edges.
      *
-     * @param  bool  $resizable
      * @return $this
      */
     public function resizable(bool $resizable = true): self
@@ -272,7 +250,6 @@ class Column extends Fluent
     /**
      * Sets the column as a row handle, allowing it to be used to drag movable rows.
      *
-     * @param  bool  $rowHandle
      * @return $this
      */
     public function rowHandle(bool $rowHandle = true): self
@@ -285,7 +262,6 @@ class Column extends Fluent
     /**
      * Freezes the column in place when scrolling.
      *
-     * @param  bool  $frozen
      * @return $this
      */
     public function frozen(bool $frozen = true): self
@@ -298,7 +274,6 @@ class Column extends Fluent
     /**
      * Show or hide column in the print output.
      *
-     * @param  bool  $print
      * @return $this
      */
     public function print(bool $print = true): self
@@ -311,7 +286,6 @@ class Column extends Fluent
     /**
      * Show or hide column in the clipboard output.
      *
-     * @param  bool  $clipboard
      * @return $this
      */
     public function clipboard(bool $clipboard = true): self
@@ -324,7 +298,6 @@ class Column extends Fluent
     /**
      * Show or hide column in the getHtml function output.
      *
-     * @param  bool  $htmlOutput
      * @return $this
      */
     public function htmlOutput(bool $htmlOutput = true): self
@@ -337,7 +310,6 @@ class Column extends Fluent
     /**
      * An integer to determine when the column should be hidden in responsive mode.
      *
-     * @param  int  $responsive
      * @return $this
      */
     public function responsive(int $responsive): self
@@ -352,7 +324,6 @@ class Column extends Fluent
      *
      * Note: if not set the system will determine the best.
      *
-     * @param  string|int|float  $width
      * @return $this
      */
     public function width(string|int|float $width): self
@@ -371,7 +342,6 @@ class Column extends Fluent
      * should be set to a number greater than 0, by default any columns with no width set have a
      * widthGrow value of 1.
      *
-     * @param  int  $widthGrow
      * @return $this
      */
     public function widthGrow(int $widthGrow): self
@@ -391,7 +361,6 @@ class Column extends Fluent
      * set have a widthShrink value of 0, meaning they will not be shrunk if the table gets too narrow,
      * and may cause the horizontal scrollbar to appear.
      *
-     * @param  int  $widthShrink
      * @return $this
      */
     public function widthShrink(int $widthShrink): self
@@ -404,7 +373,6 @@ class Column extends Fluent
     /**
      * Sets the minimum width of this column, this should be set in pixels.
      *
-     * @param  string|int|float  $minWidth
      * @return $this
      */
     public function minWidth(string|int|float $minWidth): self
@@ -417,7 +385,6 @@ class Column extends Fluent
     /**
      * Sets the maximum width of this column, this should be set in pixels.
      *
-     * @param  string|int|float  $maxWidth
      * @return $this
      */
     public function maxWidth(string|int|float $maxWidth): self
@@ -431,7 +398,6 @@ class Column extends Fluent
      * Sets the maximum width of this column when it is first rendered, the user can
      * then resize to above this (up to the maxWidth, if set) this should be set in pixels.
      *
-     * @param  string|int|float  $maxInitialWidth
      * @return $this
      */
     public function maxInitialWidth(string|int|float $maxInitialWidth): self
@@ -444,7 +410,6 @@ class Column extends Fluent
     /**
      * Sets group of columns to be inserted into a multiline header.
      *
-     * @param  array  $columns
      * @return $this
      */
     public function columns(array $columns): self
@@ -454,14 +419,13 @@ class Column extends Fluent
         return $this;
     }
 
-    //</editor-fold>
+    // </editor-fold>
 
-    //<editor-fold desc="Data Manipulation" defaultstate="collapsed">
+    // <editor-fold desc="Data Manipulation" defaultstate="collapsed">
 
     /**
      * Set how you would like the data to be formatted in the header.
      *
-     * @param  string  $titleFormatter
      * @return $this
      */
     public function titleFormatter(string $titleFormatter): self
@@ -474,7 +438,6 @@ class Column extends Fluent
     /**
      * Set how you would like the data to be formatted.
      *
-     * @param  string  $formatter
      * @return $this
      */
     public function formatter(string $formatter): self
@@ -487,7 +450,6 @@ class Column extends Fluent
     /**
      * Additional parameters you can pass to the formatter.
      *
-     * @param  array  $formatterParams
      * @return $this
      */
     public function formatterParams(array $formatterParams): self
@@ -513,7 +475,6 @@ class Column extends Fluent
     /**
      * Additional parameters you can pass to the sorter.
      *
-     * @param  array  $params
      * @return $this
      */
     public function sorterParams(array $params): self
@@ -526,7 +487,6 @@ class Column extends Fluent
     /**
      * Sets whether the column can be sorted or not.
      *
-     * @param  bool  $headerSort
      * @return $this
      */
     public function headerSort(bool $headerSort = true): self
@@ -539,7 +499,6 @@ class Column extends Fluent
     /**
      * Set the filed to be used for sorting instead of the default one.
      *
-     * @param  string  $sortField
      * @return $this
      */
     public function sortField(string $sortField): self
@@ -552,7 +511,6 @@ class Column extends Fluent
     /**
      * Set a custom sorting function for the column.
      *
-     * @param  \Closure|callable  $sortFunc
      * @return $this
      */
     public function sortFunc(Closure|callable $sortFunc): self
@@ -565,7 +523,6 @@ class Column extends Fluent
     /**
      * Sets whether to include the table name when sorting.
      *
-     * @param  bool  $sortIncludeTableName
      * @return $this
      */
     public function sortIncludeTableName(bool $sortIncludeTableName = true): self
@@ -578,7 +535,6 @@ class Column extends Fluent
     /**
      * Set the column editor.
      *
-     * @param  string|bool  $editor
      * @return $this
      */
     public function editor(string|bool $editor): self
@@ -593,7 +549,6 @@ class Column extends Fluent
      *
      *  Accepts boolean or a callback function that will be called to determine if the cell is editable.
      *
-     * @param  string|bool  $editable
      * @return $this
      */
     public function editable(string|bool $editable): self
@@ -606,7 +561,6 @@ class Column extends Fluent
     /**
      * Column editor options.
      *
-     * @param  array  $editorParams
      * @return $this
      */
     public function editorParams(array $editorParams): self
@@ -616,14 +570,13 @@ class Column extends Fluent
         return $this;
     }
 
-    //</editor-fold>
+    // </editor-fold>
 
-    //<editor-fold desc="Column Headers" defaultstate="collapsed">
+    // <editor-fold desc="Column Headers" defaultstate="collapsed">
 
     /**
      * Filtering of columns from elements in the header.
      *
-     * @param  bool|string  $filter
      * @return $this
      */
     public function headerFilter(bool|string $filter = true): self
@@ -636,7 +589,6 @@ class Column extends Fluent
     /**
      * The filter function that should be used by the header filter.
      *
-     * @param  string  $function
      * @return $this
      */
     public function headerFilterFunc(string $function): self
@@ -649,7 +601,6 @@ class Column extends Fluent
     /**
      * Helper function to set the header filter and header filter function to the same value.
      *
-     * @param  string  $filter
      * @return $this
      */
     public function headerFilterSet(string $filter): self
@@ -660,7 +611,6 @@ class Column extends Fluent
     /**
      * Placeholder text for the header filter.
      *
-     * @param  string  $placeholder
      * @return $this
      */
     public function headerFilterPlaceholder(string $placeholder): self
@@ -673,7 +623,6 @@ class Column extends Fluent
     /**
      * Additional parameters you can pass to the header filter.
      *
-     * @param  array  $params
      * @return $this
      */
     public function headerFilterParams(array $params): self
@@ -686,7 +635,6 @@ class Column extends Fluent
     /**
      * Set the filed to be used for filtering instead of the default one.
      *
-     * @param  string  $filterField
      * @return $this
      */
     public function filterField(string $filterField): self
@@ -699,7 +647,6 @@ class Column extends Fluent
     /**
      * Set a custom filtering function for the column.
      *
-     * @param  \Closure|callable  $filterFunc
      * @return $this
      */
     public function filterFunc(Closure|callable $filterFunc): self
@@ -712,7 +659,6 @@ class Column extends Fluent
     /**
      * Sets whether to include the table name when filtering.
      *
-     * @param  bool  $filterIncludeTableName
      * @return $this
      */
     public function filterIncludeTableName(bool $filterIncludeTableName = true): self
@@ -722,14 +668,13 @@ class Column extends Fluent
         return $this;
     }
 
-    //</editor-fold>
+    // </editor-fold>
 
-    //<editor-fold desc="Callbacks" defaultstate="collapsed">
+    // <editor-fold desc="Callbacks" defaultstate="collapsed">
 
     /**
      * Callback function to be called when the column is edited.
      *
-     * @param  string  $cellEdited
      * @return $this
      */
     public function cellEdited(string $cellEdited): self
@@ -742,7 +687,6 @@ class Column extends Fluent
     /**
      * Callback function to be called when the column is clicked.
      *
-     * @param  string  $cellClick
      * @return $this
      */
     public function cellClick(string $cellClick): self
@@ -752,5 +696,5 @@ class Column extends Fluent
         return $this;
     }
 
-    //</editor-fold>
+    // </editor-fold>
 }

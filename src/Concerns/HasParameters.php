@@ -10,7 +10,7 @@ trait HasParameters
 
     protected function initializeHasParameters(): void
     {
-        $this->parameters = new Collection();
+        $this->parameters = new Collection;
     }
 
     public function setAllParameters(Collection|array $params): self

@@ -12,8 +12,8 @@ use Illuminate\Support\Traits\Macroable;
  */
 class ColumnFactory
 {
-    use Macroable { __call as macroCall; }
     use ForwardsCalls;
+    use Macroable { __call as macroCall; }
 
     protected Column $column;
 

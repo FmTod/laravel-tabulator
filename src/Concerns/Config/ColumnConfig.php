@@ -10,7 +10,6 @@ trait ColumnConfig
     /**
      * define any default options that should be applied to all columns.
      *
-     * @param  array  $columnDefaults
      * @return \FmTod\LaravelTabulator\Concerns\Config\ColumnConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function columnDefaults(array $columnDefaults): self
@@ -23,7 +22,6 @@ trait ColumnConfig
     /**
      * Automatically generate column definitions for the table based on the structure of the first row of data.
      *
-     * @param  bool  $autoColumns
      * @return \FmTod\LaravelTabulator\Concerns\Config\ColumnConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function autoColumns(bool $autoColumns): self
@@ -36,7 +34,6 @@ trait ColumnConfig
     /**
      * Manipulate the automatically generated column definitions.
      *
-     * @param  string|array  $autoColumnsDefinitions
      * @return \FmTod\LaravelTabulator\Concerns\Config\ColumnConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function autoColumnsDefinitions(string|array $autoColumnsDefinitions): self
@@ -49,7 +46,6 @@ trait ColumnConfig
     /**
      * Layout mode for the table columns.
      *
-     * @param  string  $layout
      * @return \FmTod\LaravelTabulator\Concerns\Config\ColumnConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function layout(string $layout): self
@@ -62,7 +58,6 @@ trait ColumnConfig
     /**
      * Change column widths to match data when loaded into table.
      *
-     * @param  bool  $layoutColumnsOnNewData
      * @return \FmTod\LaravelTabulator\Concerns\Config\ColumnConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function layoutColumnsOnNewData(bool $layoutColumnsOnNewData): self
@@ -75,7 +70,6 @@ trait ColumnConfig
     /**
      * Automatically hide/show columns to fit the width of the Tabulator element.
      *
-     * @param  bool  $responsiveLayout
      * @return \FmTod\LaravelTabulator\Concerns\Config\ColumnConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function responsiveLayout(bool $responsiveLayout): self
@@ -88,7 +82,6 @@ trait ColumnConfig
     /**
      * show collapsed column list.
      *
-     * @param  bool  $responsiveLayoutCollapseStartOpen
      * @return \FmTod\LaravelTabulator\Concerns\Config\ColumnConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function responsiveLayoutCollapseStartOpen(bool $responsiveLayoutCollapseStartOpen): self
@@ -101,7 +94,6 @@ trait ColumnConfig
     /**
      * use formatters in collapsed column lists.
      *
-     * @param  bool  $responsiveLayoutCollapseUseFormatters
      * @return \FmTod\LaravelTabulator\Concerns\Config\ColumnConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function responsiveLayoutCollapseUseFormatters(bool $responsiveLayoutCollapseUseFormatters): self
@@ -114,7 +106,6 @@ trait ColumnConfig
     /**
      * create contents of collapsed column list.
      *
-     * @param  string  $responsiveLayoutCollapseFormatter
      * @return \FmTod\LaravelTabulator\Concerns\Config\ColumnConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function responsiveLayoutCollapseFormatter(string $responsiveLayoutCollapseFormatter): self
@@ -127,7 +118,6 @@ trait ColumnConfig
     /**
      * Allow users to move and reorder columns.
      *
-     * @param  bool  $movableColumns
      * @return \FmTod\LaravelTabulator\Concerns\Config\ColumnConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function movableColumns(bool $movableColumns): self
@@ -140,7 +130,6 @@ trait ColumnConfig
     /**
      * Vertical alignment for contents of column header (used in column grouping).
      *
-     * @param  string  $columnHeaderVertAlign
      * @return \FmTod\LaravelTabulator\Concerns\Config\ColumnConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function columnHeaderVertAlign(string $columnHeaderVertAlign): self
@@ -153,7 +142,6 @@ trait ColumnConfig
     /**
      * Default column position after scrollToColumn.
      *
-     * @param  string  $scrollToColumnPosition
      * @return \FmTod\LaravelTabulator\Concerns\Config\ColumnConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function scrollToColumnPosition(string $scrollToColumnPosition): self
@@ -166,7 +154,6 @@ trait ColumnConfig
     /**
      * Allow currently visible columns to be scrolled to.
      *
-     * @param  bool  $scrollToColumnIfVisible
      * @return \FmTod\LaravelTabulator\Concerns\Config\ColumnConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function scrollToColumnIfVisible(bool $scrollToColumnIfVisible): self
@@ -179,7 +166,6 @@ trait ColumnConfig
     /**
      * Where to show column calcs in table.
      *
-     * @param  string|bool  $columnCalcs
      * @return \FmTod\LaravelTabulator\Concerns\Config\ColumnConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function columnCalcs(string|bool $columnCalcs): self
@@ -192,7 +178,6 @@ trait ColumnConfig
     /**
      * Character used to separate nested fields in column definition.
      *
-     * @param  string|bool  $nestedFieldSeparator
      * @return \FmTod\LaravelTabulator\Concerns\Config\ColumnConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function nestedFieldSeparator(string|bool $nestedFieldSeparator): self
@@ -205,7 +190,6 @@ trait ColumnConfig
     /**
      * Disable column header bar.
      *
-     * @param  bool  $headerVisible
      * @return \FmTod\LaravelTabulator\Concerns\Config\ColumnConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function headerVisible(bool $headerVisible): self
@@ -218,7 +202,6 @@ trait ColumnConfig
     /**
      * Maintain total column width when resizing a column.
      *
-     * @param  bool  $resizableColumnFit
      * @return \FmTod\LaravelTabulator\Concerns\Config\ColumnConfig|\FmTod\LaravelTabulator\Helpers\TabulatorConfig
      */
     public function resizableColumnFit(bool $resizableColumnFit): self

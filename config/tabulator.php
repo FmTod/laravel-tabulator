@@ -72,7 +72,7 @@ return [
             FmTod\LaravelTabulator\Filterers\Filters\KeywordsFilter::class => 'keywords',
             FmTod\LaravelTabulator\Filterers\Filters\MinMaxFilter::class => 'minMax',
             FmTod\LaravelTabulator\Filterers\Filters\TextSearchFilter::class => 'textSearch',
-        ]
+        ],
     ],
 
     /**
@@ -122,7 +122,7 @@ return [
              * Save the persistence data per user.
              */
             'per_user' => false,
-        ]
+        ],
     ],
 
     /**
@@ -143,5 +143,5 @@ return [
          * Default config to use when creating a new table.
          */
         'config' => [],
-    ]
+    ],
 ];

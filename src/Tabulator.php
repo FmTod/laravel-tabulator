@@ -24,7 +24,7 @@ class Tabulator
         return TabulatorConfig::make($options);
     }
 
-    public function persistenceRoutes(string $name = 'tabulator.persistence', string $prefix = null): void
+    public function persistenceRoutes(string $name = 'tabulator.persistence', ?string $prefix = null): void
     {
         Route::as("$name.")->prefix($prefix ?? str_replace('.', '/', $name))->group(function () {
             Route::get('/{table}', [PersistenceController::class, 'show'])->name('show');

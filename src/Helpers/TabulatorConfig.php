@@ -164,19 +164,19 @@ use Illuminate\Support\Traits\Macroable;
  */
 class TabulatorConfig extends Fluent
 {
+    use ClipboardConfig;
     use ColumnConfig;
-    use RowConfig;
     use DataConfig;
-    use SortConfig;
+    use DataTreeConfig;
     use FilterConfig;
-    use RowGroupConfig;
+    use Macroable { Macroable::__call as macroCall; }
+    use MenuConfig;
     use PaginationConfig;
     use PersistenceConfig;
-    use ClipboardConfig;
-    use DataTreeConfig;
     use PrintConfig;
-    use MenuConfig;
-    use Macroable { Macroable::__call as macroCall; }
+    use RowConfig;
+    use RowGroupConfig;
+    use SortConfig;
 
     public function __construct(array $options = [])
     {
@@ -233,9 +233,6 @@ class TabulatorConfig extends Fluent
 
     /**
      * Make a new column instance.
-     *
-     * @param  array  $options
-     * @return static
      */
     public static function make(array $options = []): static
     {
@@ -246,8 +243,7 @@ class TabulatorConfig extends Fluent
      * Sets the height of the containing element, can be set to any valid height css value.
      * If set to false (the default), the height of the table will resize to fit the table data.
      *
-     * @param  string|int  $height
-     * @return	$this
+     * @return $this
      */
     public function height(string|int $height): self
     {
@@ -259,8 +255,7 @@ class TabulatorConfig extends Fluent
     /**
      * Sets the minimum height for the table, can be set to any valid height css value.
      *
-     * @param  string|int  $minHeight
-     * @return	$this
+     * @return $this
      */
     public function minHeight(string|int $minHeight): self
     {
@@ -272,8 +267,7 @@ class TabulatorConfig extends Fluent
     /**
      * Sets the maximum height for the table, can be set to any valid height css value.
      *
-     * @param  string|int  $maxHeight
-     * @return	$this
+     * @return $this
      */
     public function maxHeight(string|int $maxHeight): self
     {
@@ -285,8 +279,7 @@ class TabulatorConfig extends Fluent
     /**
      * Set the tables vertical renderer.
      *
-     * @param  string  $renderVertical
-     * @return	$this
+     * @return $this
      */
     public function renderVertical(string $renderVertical): self
     {
@@ -298,8 +291,7 @@ class TabulatorConfig extends Fluent
     /**
      * Manually set the size of the vertical renderer buffer.
      *
-     * @param  int  $renderVerticalBuffer
-     * @return	$this
+     * @return $this
      */
     public function renderVerticalBuffer(int $renderVerticalBuffer): self
     {
@@ -311,8 +303,7 @@ class TabulatorConfig extends Fluent
     /**
      * Set the tables horizontal renderer.
      *
-     * @param  string  $renderHorizontal
-     * @return	$this
+     * @return $this
      */
     public function renderHorizontal(string $renderHorizontal): self
     {
@@ -324,8 +315,7 @@ class TabulatorConfig extends Fluent
     /**
      * placeholder element to display on empty table.
      *
-     * @param  string  $placeholder
-     * @return	$this
+     * @return $this
      */
     public function placeholder(string $placeholder): self
     {
@@ -337,8 +327,7 @@ class TabulatorConfig extends Fluent
     /**
      * Footer element for the table.
      *
-     * @param  string  $footerElement
-     * @return	$this
+     * @return $this
      */
     public function footerElement(string $footerElement): self
     {
@@ -350,8 +339,7 @@ class TabulatorConfig extends Fluent
     /**
      * Enable user interaction history functionality.
      *
-     * @param  bool|string  $history
-     * @return	$this
+     * @return $this
      */
     public function history(bool|string $history): self
     {
@@ -363,8 +351,7 @@ class TabulatorConfig extends Fluent
     /**
      * Keybinding configuration object.
      *
-     * @param  bool|string  $keybindings
-     * @return	$this
+     * @return $this
      */
     public function keybindings(bool|string $keybindings): self
     {
@@ -376,8 +363,7 @@ class TabulatorConfig extends Fluent
     /**
      * set the current localization language.
      *
-     * @param  string|bool  $locale
-     * @return	$this
+     * @return $this
      */
     public function locale(string|bool $locale): self
     {
@@ -389,8 +375,7 @@ class TabulatorConfig extends Fluent
     /**
      * hold localization templates.
      *
-     * @param  array  $langs
-     * @return	$this
+     * @return $this
      */
     public function langs(array $langs): self
     {
@@ -402,8 +387,7 @@ class TabulatorConfig extends Fluent
     /**
      * choose which parts of the table are included in downloaded files.
      *
-     * @param  object  $downloadConfig
-     * @return	$this
+     * @return $this
      */
     public function downloadConfig(object $downloadConfig): self
     {
@@ -415,8 +399,7 @@ class TabulatorConfig extends Fluent
     /**
      * set the range of rows to be included in the downloaded table output.
      *
-     * @param  string  $downloadRowRange
-     * @return	$this
+     * @return $this
      */
     public function downloadRowRange(string $downloadRowRange): self
     {
@@ -428,8 +411,7 @@ class TabulatorConfig extends Fluent
     /**
      * choose which parts of the table are included in getHtml function output.
      *
-     * @param  object  $htmlOutputConfig
-     * @return	$this
+     * @return $this
      */
     public function htmlOutputConfig(object $htmlOutputConfig): self
     {
@@ -441,8 +423,7 @@ class TabulatorConfig extends Fluent
     /**
      * enable data reactivity.
      *
-     * @param  bool  $reactiveData
-     * @return	$this
+     * @return $this
      */
     public function reactiveData(bool $reactiveData): self
     {
@@ -454,8 +435,7 @@ class TabulatorConfig extends Fluent
     /**
      * add new row when user tabs of the end of the table.
      *
-     * @param  bool|array|string  $tabEndNewRow
-     * @return	$this
+     * @return $this
      */
     public function tabEndNewRow(bool|array|string $tabEndNewRow): self
     {
@@ -467,8 +447,7 @@ class TabulatorConfig extends Fluent
     /**
      * set validation mode of the table.
      *
-     * @param  string  $validationMode
-     * @return	$this
+     * @return $this
      */
     public function validationMode(string $validationMode): self
     {
@@ -480,8 +459,7 @@ class TabulatorConfig extends Fluent
     /**
      * set text direction for the table.
      *
-     * @param  string  $textDirection
-     * @return	$this
+     * @return $this
      */
     public function textDirection(string $textDirection): self
     {
@@ -493,8 +471,7 @@ class TabulatorConfig extends Fluent
     /**
      * show console warnings if invalid options are used.
      *
-     * @param  bool  $debugInvalidOptions
-     * @return	$this
+     * @return $this
      */
     public function debugInvalidOptions(bool $debugInvalidOptions): self
     {
@@ -506,8 +483,7 @@ class TabulatorConfig extends Fluent
     /**
      * containing element for popups.
      *
-     * @param  bool|string  $popupContainer
-     * @return	$this
+     * @return $this
      */
     public function popupContainer(bool|string $popupContainer): self
     {
@@ -522,7 +498,6 @@ class TabulatorConfig extends Fluent
      * Enabled by default. With the new optional modular structure this is particularly valuable as it will prompt
      * you if you are trying to use a function on a component for a module that has not been installed.
      *
-     * @param  bool  $debugInvalidComponentFuncs
      * @return $this
      */
     public function debugInvalidComponentFuncs(bool $debugInvalidComponentFuncs = true): self
@@ -537,7 +512,6 @@ class TabulatorConfig extends Fluent
      *
      * Enabled by default.
      *
-     * @param  bool  $debugDeprecation
      * @return $this
      */
     public function debugDeprecation(bool $debugDeprecation = true): self
@@ -550,7 +524,6 @@ class TabulatorConfig extends Fluent
     /**
      * Freeze rows to the top of the table.
      *
-     * @param  int|string|array  $frozenRows
      * @return $this
      */
     public function frozenRows(int|string|array $frozenRows): self
@@ -563,7 +536,6 @@ class TabulatorConfig extends Fluent
     /**
      * Freeze rows based on the value of a field.
      *
-     * @param  string  $frozenRowsField
      * @return $this
      */
     public function frozenRowsField(string $frozenRowsField): self
@@ -576,7 +548,6 @@ class TabulatorConfig extends Fluent
     /**
      * Whether to include the table name in the field sorts and filters.
      *
-     * @param  bool  $includeTableName
      * @return $this
      */
     public function includeTableName(bool $includeTableName = true): self
