@@ -4,4 +4,6 @@ namespace FmTod\LaravelTabulator\Exceptions;
 
 use Exception;
 
-class InvalidFieldException extends Exception {}
+class InvalidFieldException extends Exception
+{
+}

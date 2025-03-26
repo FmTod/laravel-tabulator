@@ -76,7 +76,7 @@ class TabulatorMakeCommand extends GeneratorCommand
 
         if (class_exists($model = $this->getModel())) {
             /** @var \Illuminate\Database\Eloquent\Model $newInstance */
-            $newModelInstance = new $model;
+            $newModelInstance = new $model();
             $columns = Schema::connection($newModelInstance->getConnectionName())
                 ->getColumnListing($newModelInstance->getTable());
 

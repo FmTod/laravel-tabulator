@@ -38,7 +38,7 @@ it('can identify page from the request')
     ->assertJsonPath('current_page', 2);
 
 it('builds the options object to send to the frontend', function () {
-    $table = new UserTable;
+    $table = new UserTable();
 
     ray($table->options());
 
@@ -56,7 +56,7 @@ it('builds the options object to send to the frontend', function () {
 });
 
 it('renders the given view', function () {
-    $table = new UserTable;
+    $table = new UserTable();
 
     /** @var \Illuminate\Http\Response $response */
     $response = $table->render('welcome');
