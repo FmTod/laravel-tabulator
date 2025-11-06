@@ -47,7 +47,7 @@ use Illuminate\Support\Traits\Macroable;
  */
 class Column extends Fluent
 {
-    use Macroable { __call as macroCall; }
+    use Macroable { Macroable::__call as macroCall; }
 
     /**
      * Create a new column instance.
