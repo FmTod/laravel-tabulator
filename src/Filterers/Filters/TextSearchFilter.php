@@ -13,7 +13,8 @@ class TextSearchFilter implements FiltersByType
         $type = $filter['value']['type'] ?? 'contains';
 
         if (! isset($filter['value']['query']) && $type !== 'empty' && $type !== 'filled') {
-            throw new InvalidArgumentException('The filter value must contain a "query" key.');
+            // Do nothing if no query is provided and the type is not empty or filled.
+            return $query;
         }
 
         return match ($type) {
