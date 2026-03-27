@@ -40,7 +40,9 @@ class DefaultFilterer implements FiltersTable
                 continue;
             }
 
-            if (Str::contains($field, '.')) {
+            $isRelation = $column['filterIsRelation'] ?? $column['isRelation'] ?? Str::contains($field, '.');
+
+            if ($isRelation) {
                 $this->applyRelationFilter($query, $field, $filter['type'], $filter['value'], $includeTableName);
 
                 continue;
@@ -71,7 +73,7 @@ class DefaultFilterer implements FiltersTable
 
         foreach ($availableFilters as $filtererClass => $types) {
             if (in_array($type, Arr::wrap($types)) && ! empty($value)) {
-                /** @var \FmTod\LaravelTabulator\Contracts\FiltersByType $filterer */
+                /** @var FiltersByType $filterer */
                 $filterer = app($filtererClass);
 
                 if (! $filterer instanceof FiltersByType) {

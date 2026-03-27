@@ -37,7 +37,9 @@ class DefaultSorter implements SortsTable
                 ?? config('tabulator.sort.include_table_name')
                 ?? false;
 
-            if (Str::contains($field, '.')) {
+            $isRelation = $column['sortIsRelation'] ?? $column['isRelation'] ?? Str::contains($field, '.');
+
+            if ($isRelation) {
                 $sorters = (array) config('tabulator.sort.relations', []);
                 $relationName = Str::before($field, '.');
                 $relationField = Str::after($field, '.');
@@ -89,7 +91,7 @@ class DefaultSorter implements SortsTable
 
         foreach ($sorters as $type => $sorter) {
             if (is_a($instance, $type)) {
-                /** @var \FmTod\LaravelTabulator\Contracts\SortsByRelation $sortBy */
+                /** @var SortsByRelation $sortBy */
                 $sortBy = app($sorter);
 
                 if (! $sortBy instanceof SortsByRelation) {

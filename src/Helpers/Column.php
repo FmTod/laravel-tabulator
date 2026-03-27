@@ -2,6 +2,7 @@
 
 namespace FmTod\LaravelTabulator\Helpers;
 
+use BadMethodCallException;
 use Closure;
 use FmTod\LaravelTabulator\Enums\ColumnSorter;
 use FmTod\LaravelTabulator\Factories\ColumnFactory;
@@ -40,8 +41,11 @@ use Illuminate\Support\Traits\Macroable;
  * @property string|null $filterField
  * @property Closure|callable|null $sortFunc
  * @property Closure|callable|null $filterFunc
- * @property bool|null sortIncludeTableName
- * @property bool|null filterIncludeTableName
+ * @property bool|null $sortIncludeTableName
+ * @property bool|null $filterIncludeTableName
+ * @property bool|null $isRelation
+ * @property bool|null $sortIsRelation
+ * @property bool|null $filterIsRelation
  *
  * @codeCoverageIgnore
  */
@@ -58,6 +62,24 @@ class Column extends Fluent
             config('tabulator.defaults.column', []),
             $attributes,
         ));
+    }
+
+    /**
+     * Handle dynamic method calls into the class.
+     *
+     * @param  string  $method
+     * @param  array  $parameters
+     * @return mixed
+     *
+     * @throws BadMethodCallException
+     */
+    public function __call($method, $parameters)
+    {
+        if (static::hasMacro($method)) {
+            return $this->macroCall($method, $parameters);
+        }
+
+        return parent::__call($method, $parameters);
     }
 
     /**
@@ -94,24 +116,6 @@ class Column extends Fluent
     }
 
     /**
-     * Handle dynamic method calls into the class.
-     *
-     * @param  string  $method
-     * @param  array  $parameters
-     * @return mixed
-     *
-     * @throws \BadMethodCallException
-     */
-    public function __call($method, $parameters)
-    {
-        if (static::hasMacro($method)) {
-            return $this->macroCall($method, $parameters);
-        }
-
-        return parent::__call($method, $parameters);
-    }
-
-    /**
      * Deep clones the current instance of the column.
      *
      * @return $this
@@ -132,7 +136,7 @@ class Column extends Fluent
             $attributes['sorter'] = $this->sorter->value;
         }
 
-        return Arr::except($attributes, ['sortField', 'sortFunc', 'filterField', 'filterFunc']);
+        return Arr::except($attributes, ['sortField', 'sortFunc', 'filterField', 'filterFunc', 'isRelation', 'sortIsRelation', 'filterIsRelation']);
     }
 
     /**
@@ -140,7 +144,7 @@ class Column extends Fluent
      */
     public function toFactory(): ColumnFactory
     {
-        return Column::factory($this->toArray());
+        return self::factory($this->toArray());
     }
 
     // <editor-fold desc="General" defaultstate="collapsed">
@@ -461,9 +465,6 @@ class Column extends Fluent
 
     /**
      * Determines how to sort data in this column.
-     *
-     * @param  \FmTod\LaravelTabulator\Enums\ColumnSorter  $sorter
-     * @return $this
      */
     public function sorter(ColumnSorter|string $sorter): self
     {
@@ -501,11 +502,11 @@ class Column extends Fluent
      *
      * @return $this
      */
-    public function sortField(string $sortField): self
+    public function sortField(string $sortField, ?bool $isRelation = null): self
     {
         $this->attributes['sortField'] = $sortField;
 
-        return $this;
+        return $this->sortIsRelation($isRelation);
     }
 
     /**
@@ -637,11 +638,11 @@ class Column extends Fluent
      *
      * @return $this
      */
-    public function filterField(string $filterField): self
+    public function filterField(string $filterField, ?bool $isRelation = null): self
     {
         $this->attributes['filterField'] = $filterField;
 
-        return $this;
+        return $this->filterIsRelation($isRelation);
     }
 
     /**
@@ -664,6 +665,46 @@ class Column extends Fluent
     public function filterIncludeTableName(bool $filterIncludeTableName = true): self
     {
         $this->attributes['filterIncludeTableName'] = $filterIncludeTableName;
+
+        return $this;
+    }
+
+    /**
+     * Controls whether this column is treated as a relation for both sorting and filtering.
+     * When true, always treated as a relation; when false, always treated as a regular column;
+     * when null (default), falls back to dot-detection behavior.
+     *
+     * @return $this
+     */
+    public function isRelation(?bool $isRelation = true): self
+    {
+        $this->attributes['isRelation'] = $isRelation;
+
+        return $this;
+    }
+
+    /**
+     * Controls whether this column is treated as a relation when sorting.
+     * Overrides isRelation for sorting. When null, falls back to isRelation or dot-detection.
+     *
+     * @return $this
+     */
+    public function sortIsRelation(?bool $sortIsRelation = true): self
+    {
+        $this->attributes['sortIsRelation'] = $sortIsRelation;
+
+        return $this;
+    }
+
+    /**
+     * Controls whether this column is treated as a relation when filtering.
+     * Overrides isRelation for filtering. When null, falls back to isRelation or dot-detection.
+     *
+     * @return $this
+     */
+    public function filterIsRelation(?bool $filterIsRelation = true): self
+    {
+        $this->attributes['filterIsRelation'] = $filterIsRelation;
 
         return $this;
     }
