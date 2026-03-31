@@ -84,8 +84,7 @@ it('can apply query filters', function () {
 
 it('can transform each json record via an optional override', function () {
     Route::get('users/transformed', function () {
-        return (new class() extends UserTable
-        {
+        return (new class () extends UserTable {
             protected function transformJsonRecord(mixed $record): mixed
             {
                 $record->full_name = trim($record->first_name.' '.$record->last_name);
@@ -103,4 +102,3 @@ it('can transform each json record via an optional override', function () {
             ],
         ]);
 });
-
