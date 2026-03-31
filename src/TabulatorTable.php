@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Traits\Macroable;
+use ReflectionMethod;
 
 abstract class TabulatorTable
 {
@@ -29,6 +30,11 @@ abstract class TabulatorTable
     use RenderableTable;
 
     public ?string $optionsKey;
+
+    /**
+     * @var array<class-string, bool>
+     */
+    protected static array $customJsonRecordTransformerByClass = [];
 
     public function __construct(?Request $request = null, Collection|array|null $parameters = null)
     {
@@ -103,9 +109,23 @@ abstract class TabulatorTable
         return $this->getColumnCollection()->where('field', $field)->first();
     }
 
+    protected function transformJsonRecord(mixed $record): mixed
+    {
+        return $record;
+    }
+
+    protected function hasCustomJsonRecordTransformer(): bool
+    {
+        return static::$customJsonRecordTransformerByClass[static::class]
+            ??= new ReflectionMethod($this, 'transformJsonRecord')
+                ->getDeclaringClass()
+                ->getName() !== self::class;
+    }
+
     public function json(): LengthAwarePaginator|Arrayable|Jsonable|array
     {
         $query = $this->getScopedQuery();
+        $hasCustomTransformer = $this->hasCustomJsonRecordTransformer();
 
         if ($this->options('pagination', false) && $this->options('paginationMode') === 'remote') {
             $pageSize = $this->request->input('size');
@@ -113,9 +133,21 @@ abstract class TabulatorTable
                 $pageSize = $query->count();
             }
 
-            return $query->paginate($pageSize);
+            $paginator = $query->paginate($pageSize);
+
+            if (! $hasCustomTransformer) {
+                return $paginator;
+            }
+
+            return $paginator->through(fn (mixed $record): mixed => $this->transformJsonRecord($record));
         }
 
-        return $query->get();
+        $records = $query->get();
+
+        if (! $hasCustomTransformer) {
+            return $records;
+        }
+
+        return $records->map(fn (mixed $record): mixed => $this->transformJsonRecord($record));
     }
 }

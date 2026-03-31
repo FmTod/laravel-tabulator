@@ -4,6 +4,7 @@ use FmTod\LaravelTabulator\Tests\stubs\Models\User;
 use FmTod\LaravelTabulator\Tests\stubs\UserTable;
 use Illuminate\Support\Facades\Route;
 
+use function Pest\Laravel\getJson;
 use function Pest\Laravel\postJson;
 
 beforeEach(function () {
@@ -80,3 +81,26 @@ it('can apply query filters', function () {
         ->assertSuccessful()
         ->assertJsonPath('data', [$user->toArray()]);
 });
+
+it('can transform each json record via an optional override', function () {
+    Route::get('users/transformed', function () {
+        return (new class() extends UserTable
+        {
+            protected function transformJsonRecord(mixed $record): mixed
+            {
+                $record->full_name = trim($record->first_name.' '.$record->last_name);
+
+                return $record;
+            }
+        })->json();
+    });
+
+    getJson('/users/transformed')
+        ->assertSuccessful()
+        ->assertJsonStructure([
+            'data' => [
+                ['full_name'],
+            ],
+        ]);
+});
+
