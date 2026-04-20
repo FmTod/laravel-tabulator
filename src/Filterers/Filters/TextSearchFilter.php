@@ -49,10 +49,11 @@ class TextSearchFilter implements FiltersByType
     private function handleException(Builder $query, array $filter): Builder
     {
         $normalizedQuery = $this->squishValue($filter['value']['query']);
+        $normalizedFieldExpression = DB::raw("REGEXP_REPLACE({$this->getFieldExpression($query, $filter['field'])}, '\\s+', ' ')");
 
-        return $query->where(function (Builder $query) use ($filter, $normalizedQuery) {
+        return $query->where(function (Builder $query) use ($filter, $normalizedQuery, $normalizedFieldExpression) {
             $query->where($filter['field'], 'not like', "%{$normalizedQuery}%")
-                ->orWhere(DB::raw('REGEXP_REPLACE('.$this->getFieldExpression($filter['field']).", '\\s+', ' ')"), 'not like', "%{$normalizedQuery}%");
+                ->orWhere($normalizedFieldExpression, 'not like', "%{$normalizedQuery}%");
         });
     }
 
@@ -62,10 +63,11 @@ class TextSearchFilter implements FiltersByType
     private function handleContains(Builder $query, array $filter): Builder
     {
         $normalizedQuery = $this->squishValue($filter['value']['query']);
+        $normalizedFieldExpression = DB::raw("REGEXP_REPLACE({$this->getFieldExpression($query, $filter['field'])}, '\\s+', ' ')");
 
-        return $query->where(function (Builder $query) use ($filter, $normalizedQuery) {
+        return $query->where(function (Builder $query) use ($filter, $normalizedQuery, $normalizedFieldExpression) {
             $query->where($filter['field'], 'like', "%{$normalizedQuery}%")
-                ->orWhere(DB::raw('REGEXP_REPLACE('.$this->getFieldExpression($filter['field']).", '\\s+', ' ')"), 'like', "%{$normalizedQuery}%");
+                ->orWhere($normalizedFieldExpression, 'like', "%{$normalizedQuery}%");
         });
     }
 
@@ -75,10 +77,11 @@ class TextSearchFilter implements FiltersByType
     private function handleStarts(Builder $query, array $filter): Builder
     {
         $normalizedQuery = $this->squishValue($filter['value']['query']);
+        $normalizedFieldExpression = DB::raw("REGEXP_REPLACE({$this->getFieldExpression($query, $filter['field'])}, '\\s+', ' ')");
 
-        return $query->where(function (Builder $query) use ($filter, $normalizedQuery) {
+        return $query->where(function (Builder $query) use ($filter, $normalizedQuery, $normalizedFieldExpression) {
             $query->where($filter['field'], 'like', "{$normalizedQuery}%")
-                ->orWhere(DB::raw('REGEXP_REPLACE('.$this->getFieldExpression($filter['field']).", '\\s+', ' ')"), 'like', "{$normalizedQuery}%");
+                ->orWhere($normalizedFieldExpression, 'like', "{$normalizedQuery}%");
         });
     }
 
@@ -88,10 +91,11 @@ class TextSearchFilter implements FiltersByType
     private function handleEnds(Builder $query, array $filter): Builder
     {
         $normalizedQuery = $this->squishValue($filter['value']['query']);
+        $normalizedFieldExpression = DB::raw("REGEXP_REPLACE({$this->getFieldExpression($query, $filter['field'])}, '\\s+', ' ')");
 
-        return $query->where(function (Builder $query) use ($filter, $normalizedQuery) {
+        return $query->where(function (Builder $query) use ($filter, $normalizedQuery, $normalizedFieldExpression) {
             $query->where($filter['field'], 'like', "%{$normalizedQuery}")
-                ->orWhere(DB::raw('REGEXP_REPLACE('.$this->getFieldExpression($filter['field']).", '\\s+', ' ')"), 'like', "%{$normalizedQuery}");
+                ->orWhere($normalizedFieldExpression, 'like', "%{$normalizedQuery}");
         });
     }
 
@@ -101,10 +105,11 @@ class TextSearchFilter implements FiltersByType
     private function handleExact(Builder $query, array $filter): Builder
     {
         $normalizedQuery = $this->squishValue($filter['value']['query']);
+        $normalizedFieldExpression = DB::raw("REGEXP_REPLACE({$this->getFieldExpression($query, $filter['field'])}, '\\s+', ' ')");
 
-        return $query->where(function (Builder $query) use ($filter, $normalizedQuery) {
+        return $query->where(function (Builder $query) use ($filter, $normalizedQuery, $normalizedFieldExpression) {
             $query->where($filter['field'], '=', $normalizedQuery)
-                ->orWhere(DB::raw('REGEXP_REPLACE('.$this->getFieldExpression($filter['field']).", '\\s+', ' ')"), '=', $normalizedQuery);
+                ->orWhere($normalizedFieldExpression, '=', $normalizedQuery);
         });
     }
 
@@ -114,24 +119,19 @@ class TextSearchFilter implements FiltersByType
     private function handleNot(Builder $query, array $filter): Builder
     {
         $normalizedQuery = $this->squishValue($filter['value']['query']);
+        $normalizedFieldExpression = DB::raw("REGEXP_REPLACE({$this->getFieldExpression($query, $filter['field'])}, '\\s+', ' ')");
 
-        return $query->where(function (Builder $query) use ($filter, $normalizedQuery) {
+        return $query->where(function (Builder $query) use ($filter, $normalizedQuery, $normalizedFieldExpression) {
             $query->where($filter['field'], '!=', $normalizedQuery)
-                ->orWhere(DB::raw('REGEXP_REPLACE('.$this->getFieldExpression($filter['field']).", '\\s+', ' ')"), '!=', $normalizedQuery);
+                ->orWhere($normalizedFieldExpression, '!=', $normalizedQuery);
         });
     }
 
     /**
      * Get database-specific field expression for REGEXP_REPLACE.
      */
-    private function getFieldExpression(string $field): string
+    private function getFieldExpression(Builder $query, string $field): string
     {
-        $driver = config('database.default');
-
-        if ($driver === 'pgsql') {
-            return "\"$field\"";
-        }
-
-        return "`$field`";
+        return $query->getQuery()->getGrammar()->wrap($field);
     }
 }
