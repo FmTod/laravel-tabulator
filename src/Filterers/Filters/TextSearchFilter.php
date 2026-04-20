@@ -4,6 +4,8 @@ namespace FmTod\LaravelTabulator\Filterers\Filters;
 
 use FmTod\LaravelTabulator\Contracts\FiltersByType;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 
 class TextSearchFilter implements FiltersByType
@@ -18,12 +20,12 @@ class TextSearchFilter implements FiltersByType
         }
 
         return match ($type) {
-            'except' => $query->where($filter['field'], 'not like', "%{$filter['value']['query']}%"),
-            'contains' => $query->where($filter['field'], 'like', "%{$filter['value']['query']}%"),
-            'starts' => $query->where($filter['field'], 'like', "{$filter['value']['query']}%"),
-            'ends' => $query->where($filter['field'], 'like', "%{$filter['value']['query']}"),
-            'exact' => $query->where($filter['field'], '=', $filter['value']['query']),
-            'not' => $query->where($filter['field'], '!=', $filter['value']['query']),
+            'except' => $this->handleException($query, $filter),
+            'contains' => $this->handleContains($query, $filter),
+            'starts' => $this->handleStarts($query, $filter),
+            'ends' => $this->handleEnds($query, $filter),
+            'exact' => $this->handleExact($query, $filter),
+            'not' => $this->handleNot($query, $filter),
             'empty' => $query->where(function (Builder $query) use ($filter) {
                 $query->where($filter['field'], '=', '')
                     ->orWhereNull($filter['field']);
@@ -31,5 +33,105 @@ class TextSearchFilter implements FiltersByType
             'filled' => $query->whereNotNull($filter['field']),
             default => throw new InvalidArgumentException("Invalid comparison type: $type"),
         };
+    }
+
+    /**
+     * Squish whitespace from a value (collapse multiple spaces to single space).
+     */
+    private function squishValue(string $value): string
+    {
+        return Str::squish($value);
+    }
+
+    /**
+     * Handle "except" filter type.
+     */
+    private function handleException(Builder $query, array $filter): Builder
+    {
+        $normalizedQuery = $this->squishValue($filter['value']['query']);
+
+        return $query->where(function (Builder $query) use ($filter, $normalizedQuery) {
+            $query->where($filter['field'], 'not like', "%{$normalizedQuery}%")
+                ->orWhere(DB::raw('REGEXP_REPLACE('.$this->getFieldExpression($filter['field']).", '\\s+', ' ')"), 'not like', "%{$normalizedQuery}%");
+        });
+    }
+
+    /**
+     * Handle "contains" filter type.
+     */
+    private function handleContains(Builder $query, array $filter): Builder
+    {
+        $normalizedQuery = $this->squishValue($filter['value']['query']);
+
+        return $query->where(function (Builder $query) use ($filter, $normalizedQuery) {
+            $query->where($filter['field'], 'like', "%{$normalizedQuery}%")
+                ->orWhere(DB::raw('REGEXP_REPLACE('.$this->getFieldExpression($filter['field']).", '\\s+', ' ')"), 'like', "%{$normalizedQuery}%");
+        });
+    }
+
+    /**
+     * Handle "starts" filter type.
+     */
+    private function handleStarts(Builder $query, array $filter): Builder
+    {
+        $normalizedQuery = $this->squishValue($filter['value']['query']);
+
+        return $query->where(function (Builder $query) use ($filter, $normalizedQuery) {
+            $query->where($filter['field'], 'like', "{$normalizedQuery}%")
+                ->orWhere(DB::raw('REGEXP_REPLACE('.$this->getFieldExpression($filter['field']).", '\\s+', ' ')"), 'like', "{$normalizedQuery}%");
+        });
+    }
+
+    /**
+     * Handle "ends" filter type.
+     */
+    private function handleEnds(Builder $query, array $filter): Builder
+    {
+        $normalizedQuery = $this->squishValue($filter['value']['query']);
+
+        return $query->where(function (Builder $query) use ($filter, $normalizedQuery) {
+            $query->where($filter['field'], 'like', "%{$normalizedQuery}")
+                ->orWhere(DB::raw('REGEXP_REPLACE('.$this->getFieldExpression($filter['field']).", '\\s+', ' ')"), 'like', "%{$normalizedQuery}");
+        });
+    }
+
+    /**
+     * Handle "exact" filter type.
+     */
+    private function handleExact(Builder $query, array $filter): Builder
+    {
+        $normalizedQuery = $this->squishValue($filter['value']['query']);
+
+        return $query->where(function (Builder $query) use ($filter, $normalizedQuery) {
+            $query->where($filter['field'], '=', $normalizedQuery)
+                ->orWhere(DB::raw('REGEXP_REPLACE('.$this->getFieldExpression($filter['field']).", '\\s+', ' ')"), '=', $normalizedQuery);
+        });
+    }
+
+    /**
+     * Handle "not" filter type.
+     */
+    private function handleNot(Builder $query, array $filter): Builder
+    {
+        $normalizedQuery = $this->squishValue($filter['value']['query']);
+
+        return $query->where(function (Builder $query) use ($filter, $normalizedQuery) {
+            $query->where($filter['field'], '!=', $normalizedQuery)
+                ->orWhere(DB::raw('REGEXP_REPLACE('.$this->getFieldExpression($filter['field']).", '\\s+', ' ')"), '!=', $normalizedQuery);
+        });
+    }
+
+    /**
+     * Get database-specific field expression for REGEXP_REPLACE.
+     */
+    private function getFieldExpression(string $field): string
+    {
+        $driver = config('database.default');
+
+        if ($driver === 'pgsql') {
+            return "\"$field\"";
+        }
+
+        return "`$field`";
     }
 }
