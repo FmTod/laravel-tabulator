@@ -97,7 +97,8 @@ abstract class TabulatorTable
             callback: function (Collection $columns) {
                 $actions = Column::make(config('tabulator.action', 'actions'))
                     ->width(config('tabulator.action.width', 75) * count($this->actions()))
-                    ->formatterParams(['actions' => array_filter($this->actions())]);
+                    ->formatterParams(['actions' => array_filter($this->actions())])
+                    ->resizable(false);
 
                 return $columns->push($actions);
             }
