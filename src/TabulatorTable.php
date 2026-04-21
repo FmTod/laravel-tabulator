@@ -95,10 +95,13 @@ abstract class TabulatorTable
             && ($columns->doesntContain('field', 'actions')
                 || $columns->doesntContain('formatter', 'actions')),
             callback: function (Collection $columns) {
+                $actionsWidth = config('tabulator.action.width', 90) * count($this->actions());
                 $actions = Column::make(config('tabulator.action', 'actions'))
-                    ->width(config('tabulator.action.width', 75) * count($this->actions()))
                     ->formatterParams(['actions' => array_filter($this->actions())])
-                    ->resizable(false);
+                    ->resizable(false)
+                    ->minWidth($actionsWidth)
+                    ->maxWidth($actionsWidth)
+                    ->width($actionsWidth);
 
                 return $columns->push($actions);
             }
