@@ -3,6 +3,7 @@
 namespace FmTod\LaravelTabulator\Filterers\Filters;
 
 use FmTod\LaravelTabulator\Contracts\FiltersByType;
+use Illuminate\Contracts\Database\Query\Expression;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -36,20 +37,12 @@ class TextSearchFilter implements FiltersByType
     }
 
     /**
-     * Squish whitespace from a value (collapse multiple spaces to single space).
-     */
-    private function squishValue(string $value): string
-    {
-        return Str::squish($value);
-    }
-
-    /**
      * Handle "except" filter type.
      */
     private function handleException(Builder $query, array $filter): Builder
     {
         $normalizedQuery = $this->squishValue($filter['value']['query']);
-        $normalizedFieldExpression = DB::raw("REGEXP_REPLACE({$this->getFieldExpression($query, $filter['field'])}, '\\s+', ' ')");
+        $normalizedFieldExpression = $this->squishColumn($query, $filter['field']);
 
         return $query->where(function (Builder $query) use ($filter, $normalizedQuery, $normalizedFieldExpression) {
             $query->where($filter['field'], 'not like', "%{$normalizedQuery}%")
@@ -63,7 +56,7 @@ class TextSearchFilter implements FiltersByType
     private function handleContains(Builder $query, array $filter): Builder
     {
         $normalizedQuery = $this->squishValue($filter['value']['query']);
-        $normalizedFieldExpression = DB::raw("REGEXP_REPLACE({$this->getFieldExpression($query, $filter['field'])}, '\\s+', ' ')");
+        $normalizedFieldExpression = $this->squishColumn($query, $filter['field']);
 
         return $query->where(function (Builder $query) use ($filter, $normalizedQuery, $normalizedFieldExpression) {
             $query->where($filter['field'], 'like', "%{$normalizedQuery}%")
@@ -77,7 +70,7 @@ class TextSearchFilter implements FiltersByType
     private function handleStarts(Builder $query, array $filter): Builder
     {
         $normalizedQuery = $this->squishValue($filter['value']['query']);
-        $normalizedFieldExpression = DB::raw("REGEXP_REPLACE({$this->getFieldExpression($query, $filter['field'])}, '\\s+', ' ')");
+        $normalizedFieldExpression = $this->squishColumn($query, $filter['field']);
 
         return $query->where(function (Builder $query) use ($filter, $normalizedQuery, $normalizedFieldExpression) {
             $query->where($filter['field'], 'like', "{$normalizedQuery}%")
@@ -91,7 +84,7 @@ class TextSearchFilter implements FiltersByType
     private function handleEnds(Builder $query, array $filter): Builder
     {
         $normalizedQuery = $this->squishValue($filter['value']['query']);
-        $normalizedFieldExpression = DB::raw("REGEXP_REPLACE({$this->getFieldExpression($query, $filter['field'])}, '\\s+', ' ')");
+        $normalizedFieldExpression = $this->squishColumn($query, $filter['field']);
 
         return $query->where(function (Builder $query) use ($filter, $normalizedQuery, $normalizedFieldExpression) {
             $query->where($filter['field'], 'like', "%{$normalizedQuery}")
@@ -105,7 +98,7 @@ class TextSearchFilter implements FiltersByType
     private function handleExact(Builder $query, array $filter): Builder
     {
         $normalizedQuery = $this->squishValue($filter['value']['query']);
-        $normalizedFieldExpression = DB::raw("REGEXP_REPLACE({$this->getFieldExpression($query, $filter['field'])}, '\\s+', ' ')");
+        $normalizedFieldExpression = $this->squishColumn($query, $filter['field']);
 
         return $query->where(function (Builder $query) use ($filter, $normalizedQuery, $normalizedFieldExpression) {
             $query->where($filter['field'], '=', $normalizedQuery)
@@ -119,7 +112,7 @@ class TextSearchFilter implements FiltersByType
     private function handleNot(Builder $query, array $filter): Builder
     {
         $normalizedQuery = $this->squishValue($filter['value']['query']);
-        $normalizedFieldExpression = DB::raw("REGEXP_REPLACE({$this->getFieldExpression($query, $filter['field'])}, '\\s+', ' ')");
+        $normalizedFieldExpression = $this->squishColumn($query, $filter['field']);
 
         return $query->where(function (Builder $query) use ($filter, $normalizedQuery, $normalizedFieldExpression) {
             $query->where($filter['field'], '!=', $normalizedQuery)
@@ -128,7 +121,23 @@ class TextSearchFilter implements FiltersByType
     }
 
     /**
-     * Get database-specific field expression for REGEXP_REPLACE.
+     * Squish whitespace from a value (collapse multiple spaces to single space).
+     */
+    private function squishValue(string $value): string
+    {
+        return Str::squish($value);
+    }
+
+    /**
+     * Squish whitespace from a column expression (collapse multiple spaces to single space).
+     */
+    private function squishColumn(Builder $query, string $field): Expression
+    {
+        return DB::raw("REGEXP_REPLACE({$this->getFieldExpression($query, $field)}, '\\\\s+', ' ')");
+    }
+
+    /**
+     * Get a database-specific field expression for REGEXP_REPLACE.
      */
     private function getFieldExpression(Builder $query, string $field): string
     {
