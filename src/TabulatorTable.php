@@ -11,16 +11,20 @@ use FmTod\LaravelTabulator\Concerns\RenderableTable;
 use FmTod\LaravelTabulator\Contracts\TabulatorModel;
 use FmTod\LaravelTabulator\Helpers\Column;
 use FmTod\LaravelTabulator\Helpers\TabulatorConfig;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Traits\Macroable;
 use ReflectionMethod;
 
+/**
+ * @template TModel of \Illuminate\Database\Eloquent\Model
+ * @template TJsonRecord = TModel
+ */
 abstract class TabulatorTable
 {
     use HasParameters;
@@ -51,8 +55,14 @@ abstract class TabulatorTable
 
     abstract public function config(): TabulatorConfig;
 
-    abstract public function query(): Builder|Model;
+    /**
+     * @return Builder<TModel>
+     */
+    abstract public function query(): Builder;
 
+    /**
+     * @return Collection<int, Column>|array<int, Column>|Model|string
+     */
     abstract public function columns(): Collection|Model|array|string;
 
     public function actions(): array
@@ -60,6 +70,9 @@ abstract class TabulatorTable
         return [];
     }
 
+    /**
+     * @return Builder<TModel>
+     */
     public function getScopedQuery(): Builder
     {
         return tap($this->query(), function (Builder $query) {
@@ -75,6 +88,11 @@ abstract class TabulatorTable
         });
     }
 
+    /**
+     * @return Collection<int, Column>
+     *
+     * @throws \Throwable
+     */
     public function getColumnCollection(): Collection
     {
         if (is_string($columns = $this->columns()) || $columns instanceof Model) {
@@ -113,6 +131,10 @@ abstract class TabulatorTable
         return $this->getColumnCollection()->where('field', $field)->first();
     }
 
+    /**
+     * @param TModel $record
+     * @return TJsonRecord
+     */
     protected function transformJsonRecord(mixed $record): mixed
     {
         return $record;
@@ -126,6 +148,9 @@ abstract class TabulatorTable
                 ->getName() !== self::class;
     }
 
+    /**
+     * @return LengthAwarePaginator<int, TJsonRecord>|Arrayable<int, TJsonRecord>|array<int, TJsonRecord>|Jsonable
+     */
     public function json(): LengthAwarePaginator|Arrayable|Jsonable|array
     {
         $query = $this->getScopedQuery();
