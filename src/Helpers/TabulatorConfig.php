@@ -17,6 +17,7 @@ use FmTod\LaravelTabulator\Concerns\Config\SortConfig;
 use FmTod\LaravelTabulator\TabulatorTable;
 use Illuminate\Support\Fluent;
 use Illuminate\Support\Traits\Macroable;
+use Traversable;
 
 /**
  * Tabulator configuration instance.
@@ -234,9 +235,13 @@ class TabulatorConfig extends Fluent
     /**
      * Make a new column instance.
      */
-    public static function make(array $options = []): static
+    public static function make($attributes = []): static
     {
-        return new static($options);
+        return new static(match (true) {
+            $attributes instanceof Traversable => iterator_to_array($attributes),
+            is_array($attributes) => $attributes,
+            default => [$attributes],
+        });
     }
 
     /**
