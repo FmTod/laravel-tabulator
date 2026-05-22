@@ -15,9 +15,9 @@ use FmTod\LaravelTabulator\Concerns\Config\RowConfig;
 use FmTod\LaravelTabulator\Concerns\Config\RowGroupConfig;
 use FmTod\LaravelTabulator\Concerns\Config\SortConfig;
 use FmTod\LaravelTabulator\TabulatorTable;
-use InvalidArgumentException;
 use Illuminate\Support\Fluent;
 use Illuminate\Support\Traits\Macroable;
+use InvalidArgumentException;
 use Traversable;
 
 /**
