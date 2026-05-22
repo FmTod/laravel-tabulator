@@ -15,6 +15,7 @@ use FmTod\LaravelTabulator\Concerns\Config\RowConfig;
 use FmTod\LaravelTabulator\Concerns\Config\RowGroupConfig;
 use FmTod\LaravelTabulator\Concerns\Config\SortConfig;
 use FmTod\LaravelTabulator\TabulatorTable;
+use InvalidArgumentException;
 use Illuminate\Support\Fluent;
 use Illuminate\Support\Traits\Macroable;
 use Traversable;
@@ -240,7 +241,10 @@ class TabulatorConfig extends Fluent
         return new static(match (true) {
             $attributes instanceof Traversable => iterator_to_array($attributes),
             is_array($attributes) => $attributes,
-            default => [$attributes],
+            default => throw new InvalidArgumentException(sprintf(
+                'TabulatorConfig::make expects attributes to be an array or Traversable, %s given.',
+                get_debug_type($attributes)
+            )),
         });
     }
 
