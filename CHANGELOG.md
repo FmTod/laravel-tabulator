@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-tabulator` will be documented in this file.
 
+## v12.0.0 - 2026-05-26
+
+### What's Changed
+
+* fix: align Fluent make signatures for Laravel 12 by @viicslen in https://github.com/FmTod/laravel-tabulator/pull/44
+
+### New Contributors
+
+* @viicslen made their first contribution in https://github.com/FmTod/laravel-tabulator/pull/44
+
+**Full Changelog**: https://github.com/FmTod/laravel-tabulator/compare/v11.0.1...v12.0.0
+
 ## v11.0.1 - 2026-05-26
 
 **Full Changelog**: https://github.com/FmTod/laravel-tabulator/compare/v11.0.0...v11.0.1
