@@ -84,8 +84,10 @@ class Column extends Fluent
 
     /**
      * Make a new column instance.
+     *
+     * @param  array|string  $options
      */
-    public static function make(array|string $options = []): static
+    public static function make($options = []): static
     {
         return new static(is_string($options) ? [
             'title' => Str::of($options)->replace('_', ' ')->title()->toString(),
