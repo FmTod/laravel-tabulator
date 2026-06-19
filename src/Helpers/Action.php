@@ -10,7 +10,7 @@ use Illuminate\Support\Traits\Macroable;
  *
  * @method \FmTod\LaravelTabulator\Helpers\Action tag(string $tag)
  * @method \FmTod\LaravelTabulator\Helpers\Action hidden(string $hidden)
- * @method \FmTod\LaravelTabulator\Helpers\Action class(string $class)
+ * @method \FmTod\LaravelTabulator\Helpers\Action className(string $className)
  * @method \FmTod\LaravelTabulator\Helpers\Action style(string $style)
  * @method \FmTod\LaravelTabulator\Helpers\Action href(string $href)
  * @method \FmTod\LaravelTabulator\Helpers\Action role(string $role)
