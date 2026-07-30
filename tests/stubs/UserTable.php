@@ -42,6 +42,7 @@ class UserTable extends TabulatorTable
             Column::make('company')->title('Company'),
             Column::make('email')->title('Email'),
             Column::make('phone')->title('Phone'),
+            Column::make('full_name')->title('Full Name')->headerSort(false),
         ];
     }
 }

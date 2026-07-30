@@ -22,6 +22,13 @@ class DefaultSorter implements SortsTable
 
         foreach ($sorts as $sort) {
             $column = $table->getFieldColumn($sort['field']);
+
+            // Clients may send a stale persisted sort for a column that is no longer sortable
+            // (e.g. a computed/appended attribute), which would fail as an unknown SQL column.
+            if ($column !== null && ($column['headerSort'] ?? true) === false) {
+                continue;
+            }
+
             $field = $column['sortField'] ?? $sort['field'];
 
             if (isset($column['sortFunc']) && (is_callable($column['sortFunc']) || $column['sortFunc'] instanceof Closure)) {

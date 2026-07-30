@@ -82,6 +82,18 @@ it('can apply query filters', function () {
         ->assertJsonPath('data', [$user->toArray()]);
 });
 
+it('ignores sorts on columns that are not sortable', function () {
+    Route::post('users/sorted', fn () => ['sql' => (new UserTable())->getScopedQuery()->toSql()]);
+
+    postJson('users/sorted', ['sort' => [['field' => 'full_name', 'dir' => 'asc']]])
+        ->assertSuccessful()
+        ->assertJsonPath('sql', fn (string $sql) => ! str_contains($sql, 'order by'));
+
+    postJson('users/sorted', ['sort' => [['field' => 'first_name', 'dir' => 'asc']]])
+        ->assertSuccessful()
+        ->assertJsonPath('sql', fn (string $sql) => str_contains($sql, 'order by "first_name" asc'));
+});
+
 it('can transform each json record via an optional override', function () {
     Route::get('users/transformed', function () {
         return (new class () extends UserTable {
