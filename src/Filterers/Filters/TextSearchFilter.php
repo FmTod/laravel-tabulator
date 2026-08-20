@@ -44,9 +44,12 @@ class TextSearchFilter implements FiltersByType
         $normalizedQuery = $this->squishValue($filter['value']['query']);
         $normalizedFieldExpression = $this->squishColumn($query, $filter['field']);
 
+        // Both halves must hold: a row whose stored value still carries the runs of whitespace the
+        // normalized query no longer has would otherwise satisfy the raw comparison and be kept by
+        // an OR, which is the opposite of what an exclusion filter is asked for.
         return $query->where(function (Builder $query) use ($filter, $normalizedQuery, $normalizedFieldExpression) {
             $query->where($filter['field'], 'not like', "%{$normalizedQuery}%")
-                ->orWhere($normalizedFieldExpression, 'not like', "%{$normalizedQuery}%");
+                ->where($normalizedFieldExpression, 'not like', "%{$normalizedQuery}%");
         });
     }
 
@@ -114,9 +117,11 @@ class TextSearchFilter implements FiltersByType
         $normalizedQuery = $this->squishValue($filter['value']['query']);
         $normalizedFieldExpression = $this->squishColumn($query, $filter['field']);
 
+        // AND for the same reason as handleException(): an exclusion cannot be satisfied by either
+        // comparison alone.
         return $query->where(function (Builder $query) use ($filter, $normalizedQuery, $normalizedFieldExpression) {
             $query->where($filter['field'], '!=', $normalizedQuery)
-                ->orWhere($normalizedFieldExpression, '!=', $normalizedQuery);
+                ->where($normalizedFieldExpression, '!=', $normalizedQuery);
         });
     }
 
