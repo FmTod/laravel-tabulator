@@ -3,7 +3,7 @@
 namespace FmTod\LaravelTabulator\Sorters;
 
 use Closure;
-use FmTod\LaravelTabulator\Concerns\SkipsUnbackedFields;
+use FmTod\LaravelTabulator\Concerns\ResolvesBackingColumns;
 use FmTod\LaravelTabulator\Contracts\SortsByRelation;
 use FmTod\LaravelTabulator\Contracts\SortsTable;
 use FmTod\LaravelTabulator\Exceptions\InvalidFieldException;
@@ -17,7 +17,7 @@ use Illuminate\Support\Str;
 
 class DefaultSorter implements SortsTable
 {
-    use SkipsUnbackedFields;
+    use ResolvesBackingColumns;
 
     public function __invoke(TabulatorTable $table, Builder $query, ?array $sorts): Builder
     {

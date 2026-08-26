@@ -3,7 +3,7 @@
 namespace FmTod\LaravelTabulator\Filterers;
 
 use Closure;
-use FmTod\LaravelTabulator\Concerns\SkipsUnbackedFields;
+use FmTod\LaravelTabulator\Concerns\ResolvesBackingColumns;
 use FmTod\LaravelTabulator\Contracts\FiltersByType;
 use FmTod\LaravelTabulator\Contracts\FiltersTable;
 use FmTod\LaravelTabulator\Exceptions\InvalidFieldException;
@@ -16,7 +16,7 @@ use Illuminate\Support\Str;
 
 class DefaultFilterer implements FiltersTable
 {
-    use SkipsUnbackedFields;
+    use ResolvesBackingColumns;
 
     public function __invoke(TabulatorTable $table, Builder $query, ?array $filters): Builder
     {

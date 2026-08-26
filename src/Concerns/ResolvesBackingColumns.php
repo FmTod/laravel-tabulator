@@ -6,15 +6,19 @@ use Illuminate\Contracts\Database\Query\Expression;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use ReflectionMethod;
 use ReflectionNamedType;
 
-trait SkipsUnbackedFields
+trait ResolvesBackingColumns
 {
     /**
-     * Column names of the model's own table, resolved at most once per request.
+     * Column names per `connection.table`, resolved at most once per instance.
+     *
+     * The sorter and the filterer are resolved separately, so a request that both
+     * sorts and filters warms two of these caches.
      *
      * @var array<string, array<int, string>>
      */
@@ -29,20 +33,30 @@ trait SkipsUnbackedFields
      * since dropped — would fail the whole list request with an unknown column
      * error. A column that needs to be sortable or filterable without a matching
      * database column defines a `sortFunc`/`filterFunc`, which runs before this.
+     *
+     * A field ruled out here is dropped silently: the list loads unsorted or
+     * unfiltered rather than erroring.
      */
     protected function hasBackingColumn(Builder $query, string $field): bool
     {
         $model = $query->getModel();
+
+        // A real column always wins, even where a relation shares its name.
+        if (in_array(Str::before($field, '->'), $this->columnListing($model), true)) {
+            return true;
+        }
+
+        // Joins and raw select aliases expose columns the model's own schema knows
+        // nothing about — `withCount()` alone adds one, and MySQL resolves a select
+        // alias in `order by` — so such a query cannot be ruled out by the schema.
+        // There, only a field naming a relation is rejected.
         $builder = $query->getQuery();
 
-        // Joined tables and raw select aliases expose columns the model's own schema
-        // knows nothing about (MySQL resolves a select alias in `order by`), so such a
-        // query cannot be vetted against the schema; only relations are rejected there.
         if (! empty($builder->joins) || $this->hasRawColumns($builder)) {
             return ! $this->isRelationBackedField($model, $field);
         }
 
-        return in_array(Str::before($field, '->'), $this->columnListing($model), true);
+        return false;
     }
 
     /**
@@ -79,7 +93,7 @@ trait SkipsUnbackedFields
             ??= Schema::connection($connection)->getColumnListing($model->getTable());
     }
 
-    private function hasRawColumns(mixed $builder): bool
+    private function hasRawColumns(QueryBuilder $builder): bool
     {
         foreach ($builder->columns ?? [] as $column) {
             if ($column instanceof Expression) {
