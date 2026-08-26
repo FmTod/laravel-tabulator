@@ -20,21 +20,37 @@ class DatabaseStorage implements PersistenceStorageDriver
         $this->model = config('tabulator.persistence.database.model', TabulatorPersistence::class);
     }
 
+    /**
+     * Rows the current user owns. Everything that writes goes through here, so a
+     * shared row is never overwritten or deleted on one user's behalf.
+     */
     protected function query(): Builder
     {
         return $this->model::when($this->perUser, fn (Builder $query) => $query->where('user_id', auth()->id()));
     }
 
+    /**
+     * Rows the current user can read: their own, plus the rows belonging to no user —
+     * the tenant-wide fallback. Ordered so the user's own row comes first and wins.
+     */
+    protected function readQuery(): Builder
+    {
+        return $this->model::when($this->perUser, fn (Builder $query) => $query
+            ->where(fn (Builder $owned) => $owned->where('user_id', auth()->id())->orWhereNull('user_id'))
+            ->orderByRaw('user_id is null'));
+    }
+
     public function all(string $table): array
     {
-        return $this->query()
+        return $this->readQuery()
             ->where('table', $table)
             ->get(['type', 'data'])
-            ->reduce(function (array $carry, $persistence) {
-                $carry[$persistence->type] = $persistence->data;
-
-                return $carry;
-            }, []);
+            ->reduce(
+                // Union keeps the first row for a type, and own rows are ordered first, so a
+                // fallback only fills in a type the user has not overridden.
+                fn (array $carry, $persistence) => $carry + [$persistence->type => $persistence->data],
+                []
+            );
     }
 
     public function store(string $table, array $data): array
@@ -48,7 +64,7 @@ class DatabaseStorage implements PersistenceStorageDriver
 
     public function get(string $table, string $type): ?Model
     {
-        return $this->query()
+        return $this->readQuery()
             ->where('table', $table)
             ->where('type', $type)
             ->first();

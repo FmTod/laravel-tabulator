@@ -24,6 +24,7 @@ class PersistenceController extends Controller
             'sort' => 'sometimes|nullable|array',
             'page' => 'sometimes|nullable|array',
             'filter' => 'sometimes|nullable|array',
+            'headerFilters' => 'sometimes|nullable|array',
             'group' => 'sometimes|nullable|array',
         ]);
 

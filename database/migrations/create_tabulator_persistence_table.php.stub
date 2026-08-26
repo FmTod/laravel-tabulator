@@ -10,7 +10,10 @@ return new class extends Migration
     {
         Schema::create('tabulator_persistence', function (Blueprint $table) {
             $table->id();
-            // $table->foreignId('user_id')->nullable()->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete();
+            // Nullable even when per_user is off: a row with no user is
+            // the shared fallback a per-user row overrides. No constraint — the users table is
+            // not necessarily on this connection.
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('table');
             $table->string('type');
             $table->json('data');
