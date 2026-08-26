@@ -3,6 +3,7 @@
 namespace FmTod\LaravelTabulator\Filterers;
 
 use Closure;
+use FmTod\LaravelTabulator\Concerns\SkipsUnbackedFields;
 use FmTod\LaravelTabulator\Contracts\FiltersByType;
 use FmTod\LaravelTabulator\Contracts\FiltersTable;
 use FmTod\LaravelTabulator\Exceptions\InvalidFieldException;
@@ -15,6 +16,8 @@ use Illuminate\Support\Str;
 
 class DefaultFilterer implements FiltersTable
 {
+    use SkipsUnbackedFields;
+
     public function __invoke(TabulatorTable $table, Builder $query, ?array $filters): Builder
     {
         $filters = Arr::wrap($filters);
@@ -55,6 +58,10 @@ class DefaultFilterer implements FiltersTable
                 $childrenRelation = $table->options('dataTreeChildField', '_children');
                 $this->applyTreeChildFilter($childrenRelation, $query, $field, $filter['type'], $filter['value'], $includeTableName);
 
+                continue;
+            }
+
+            if (! $this->hasBackingColumn($query, $field)) {
                 continue;
             }
 

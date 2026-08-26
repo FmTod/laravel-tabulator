@@ -3,6 +3,7 @@
 namespace FmTod\LaravelTabulator\Sorters;
 
 use Closure;
+use FmTod\LaravelTabulator\Concerns\SkipsUnbackedFields;
 use FmTod\LaravelTabulator\Contracts\SortsByRelation;
 use FmTod\LaravelTabulator\Contracts\SortsTable;
 use FmTod\LaravelTabulator\Exceptions\InvalidFieldException;
@@ -16,6 +17,8 @@ use Illuminate\Support\Str;
 
 class DefaultSorter implements SortsTable
 {
+    use SkipsUnbackedFields;
+
     public function __invoke(TabulatorTable $table, Builder $query, ?array $sorts): Builder
     {
         $sorts = Arr::wrap($sorts);
@@ -65,6 +68,10 @@ class DefaultSorter implements SortsTable
 
                 $this->applyTreeChildSort($relationName, $query, $field, $sort['dir'], $sorters, $includeTableName);
 
+                continue;
+            }
+
+            if (! $this->hasBackingColumn($query, $field)) {
                 continue;
             }
 
