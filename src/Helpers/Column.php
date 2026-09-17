@@ -138,7 +138,8 @@ class Column extends Fluent
             $attributes['sorter'] = $this->sorter->value;
         }
 
-        // A custom filterFunc filters an expression MinMaxFilter never sees, so it cannot honour `nulls`.
+        // A custom filterFunc filters an expression MinMaxFilter never sees, so it defaults to off
+        // there; one that implements `nulls` itself opts back in with an explicit `nullable`.
         if (($attributes['headerFilter'] ?? null) === 'minMax') {
             $attributes['headerFilterParams']['nullable'] ??= ! isset($attributes['filterFunc']);
 
