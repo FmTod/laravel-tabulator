@@ -138,6 +138,17 @@ class Column extends Fluent
             $attributes['sorter'] = $this->sorter->value;
         }
 
+        // A custom filterFunc filters an expression MinMaxFilter never sees, so it defaults to off
+        // there; one that implements `nulls` itself opts back in with an explicit `nullable`.
+        if (($attributes['headerFilter'] ?? null) === 'minMax') {
+            $attributes['headerFilterParams']['nullable'] ??= ! isset($attributes['filterFunc']);
+
+            // Fits the empty-value select above side-by-side min/max inputs.
+            if ($attributes['headerFilterParams']['nullable'] && is_numeric($attributes['minWidth'] ?? 0)) {
+                $attributes['minWidth'] = max((float) ($attributes['minWidth'] ?? 0), 150);
+            }
+        }
+
         return Arr::except($attributes, ['sortField', 'sortFunc', 'filterField', 'filterFunc', 'isRelation', 'sortIsRelation', 'filterIsRelation']);
     }
 
