@@ -1,0 +1,26 @@
+name: Notify Composer Registry
+
+on:
+  push:
+    tags: ['*']
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          owner: FmTod
+          repositories: composer-registry
+
+      - name: Dispatch package-updated
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          repository: FmTod/composer-registry
+          event-type: package-updated
+          client-payload: '{"package": "fmtod/laravel-tabulator", "repository": "${{ github.server_url }}/${{ github.repository }}"}'
